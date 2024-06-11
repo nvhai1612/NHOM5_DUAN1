@@ -4,20 +4,48 @@
  */
 package Views;
 
+import DomainModel.KhachHang;
+import Service.Impl.KhachHangService;
+import ViewModel.KhachHangVM;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
  */
 public class KhachHangJPanel extends javax.swing.JPanel {
 
+     KhachHangService service = new KhachHangService();
+    DefaultTableModel tableModel;
+    int index = -1;
     /**
      * Creates new form KhachHangJPanel
      */
     public KhachHangJPanel() {
 
         initComponents();
+        loadTableKhachHang();
     }
+    
+     private void loadTableKhachHang() {
+        tableModel = (DefaultTableModel) tblKhachHang.getModel();
+        tableModel.setRowCount(0);
+        ArrayList<KhachHangVM> list = service.getAll();
+        for (KhachHangVM kh : list) {
+            tableModel.addRow(new Object[]{
+                kh.getMaKH(),
+                kh.getTenKH(),
+                kh.getNgaySinh(),
+                kh.getGioiTinh(),
+                kh.getSdt(),
+                kh.getDiaChi()
+            });
+        }
 
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -281,6 +309,11 @@ public class KhachHangJPanel extends javax.swing.JPanel {
 
         jLabel7.setText("Tìm kiếm theo mã");
 
+        txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimKiemActionPerformed(evt);
+            }
+        });
         txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtTimKiemKeyReleased2(evt);
@@ -372,30 +405,165 @@ public class KhachHangJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        
+        String ma = txtMaKH.getText();
+        if (ma.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không để trống mã");
+            return;
+        }
+        for (KhachHangVM khachHangVM : service.getAll()) {
+            if (ma.equals(khachHangVM.getMaKH())) {
+                JOptionPane.showMessageDialog(this, "Mã đã tồn tại!");
+                return;
+            }
+        }
+        String ten = txtTenKH.getText();
+        if (ten.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không để trống tên khách hàng");
+            return;
+        }
+        String ngaySinh = txtNgaySinh.getText();
+        int gioiTinh = rdoNam.isSelected() == true ? 1 : 0;
+        String sdt = txtSdt.getText();
+        String diaChi = taDiaChi.getText();
+        KhachHang kh = new KhachHang();
+        kh.setMaKH(ma);
+        kh.setTenKH(ten);
+        kh.setNgaySinh(ngaySinh);
+        kh.setGioiTinh(gioiTinh);
+        kh.setSdt(sdt);
+        kh.setDiaChi(diaChi);
+        service.add(kh);
+        loadTableKhachHang();
+        xoa();
     }//GEN-LAST:event_btnThemActionPerformed
-
+    
+    void xoa() {
+        txtMaKH.setText("");
+        txtTenKH.setText("");
+        txtNgaySinh.setText("");
+        txtSdt.setText("");
+        rdoNam.isSelected();
+        taDiaChi.setText("");
+    }  
+    
     private void btnSuaActionPerformed2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed2
-     
+        // Lấy thông tin từ giao diện
+         int selectedRow = tblKhachHang.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một khách hàng để sửa!");
+            return; // Thoát ra khỏi phương thức nếu chưa có dòng nào được chọn
+        }
+        int check = JOptionPane.showConfirmDialog(this, "Xác nhận sửa!");
+        if (check == JOptionPane.YES_OPTION) {
+            KhachHang kh = new KhachHang();
+        // Lấy thông tin từ giao diện và thiết lập các giá trị cho đối tượng KhachHang
+            kh.setMaKH(txtMaKH.getText());
+            kh.setTenKH(txtTenKH.getText());
+
+            kh.setNgaySinh(txtNgaySinh.getText());
+            kh.setGioiTinh(rdoNam.isSelected() == true ? 1 : 0);
+            kh.setSdt(txtSdt.getText());
+            kh.setDiaChi(taDiaChi.getText());
+
+            service.update(kh);
+            loadTableKhachHang();
+            xoa();
+            JOptionPane.showMessageDialog(this, "Sửa thành công!");
+        }else{
+            JOptionPane.showMessageDialog(this, "Sửa thất bại!");
+        }
+        
     }//GEN-LAST:event_btnSuaActionPerformed2
 
     private void btnLamMoiActionPerformed2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed2
-       
+       xoa();
     }//GEN-LAST:event_btnLamMoiActionPerformed2
 
     private void tblKhachHangMouseClicked2(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhachHangMouseClicked2
-       
+       index = tblKhachHang.getSelectedRow();
+        showTable(index);
+        if (index != -1) {
+            String maKH = tblKhachHang.getValueAt(index, 0).toString(); // Lấy mã khách hàng từ bảng
+            //showHoaDonHistory(maKH); // Gọi hàm để hiển thị lịch sử hóa đơn của khách hàng được chọn
+        }
     }//GEN-LAST:event_tblKhachHangMouseClicked2
     
+     private void showTable(int index) {
+        KhachHangVM kh = service.getAll().get(index);
+        txtMaKH.setText(kh.getMaKH());
+        txtTenKH.setText(kh.getTenKH());
+        txtNgaySinh.setText(kh.getNgaySinh());
+        System.out.println("GioiTinh: " + kh.getGioiTinh());
+        if (kh.getGioiTinh().equals(1)) {
+            rdoNam.setSelected(true);
+        } else {
+            rdoNu.setSelected(true);
+        }
+        txtSdt.setText(kh.getSdt());
+        taDiaChi.setText(kh.getDiaChi());
+    }
+    
+    
     private void txtTimKiemKeyReleased2(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased2
-        
+        String keyword = txtTimKiem.getText().trim();
+        if (keyword != null) {
+            tableModel = (DefaultTableModel) tblKhachHang.getModel();
+            tableModel.setRowCount(0);
+            ArrayList<KhachHang> list = service.search(keyword);
+            for (KhachHang kh : list) {
+                tableModel.addRow(new Object[]{
+                    kh.getMaKH(),
+                    kh.getTenKH(),
+                    kh.getNgaySinh(),
+                    kh.getGioiTinh(),
+                    kh.getSdt(),
+                    kh.getDiaChi()
+                });
+            }
+        }
     }//GEN-LAST:event_txtTimKiemKeyReleased2
 
     private void btnTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTimActionPerformed
 
+    private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTimKiemActionPerformed
 
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(QuenMKJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(QuenMKJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(QuenMKJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(QuenMKJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new KhachHangJPanel().setVisible(true);
+               
+            }
+        });
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton btnSua;
