@@ -4,6 +4,7 @@
  */
 package Repository.Impl;
 
+import DomainModel.HoaDon;
 import DomainModel.KhachHang;
 import Repository.IKhachHangRepos;
 import Utiliti.DBConnection;
@@ -12,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -115,25 +117,25 @@ public class KhachHangRepos implements IKhachHangRepos{
     return khachHangList;
     }
     
-//    public List<HoaDon> getTransactionHistoryByCustomer(String maKH) {
-//        List<HoaDon> lichSu = new ArrayList<>();
-//        try {
-//            Connection con = connection.getConnection();
-//            String sql = "select hd.MAHD,hd.NGAYTAO,hd.TONGTIEN from KHACHHANG kh join HOADON hd on hd.IDKH = kh.ID where kh.maKH = ?";
-//            PreparedStatement ps = con.prepareStatement(sql);
-//            ps.setString(1, maKH);
-//            ResultSet rs = ps.executeQuery();
-//            while (rs.next()) {
-//                HoaDon hd = new HoaDon();
-//                hd.setMaHD(rs.getString("MAHD"));
-//                hd.setNgayTao(rs.getDate("NGAYTAO"));
-//                hd.setTongTien(rs.getFloat("TONGTIEN"));
-//                lichSu.add(hd);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return lichSu;
-//    }
+    public List<HoaDon> getLichSuaGiaoDich(String maKH) {
+        List<HoaDon> lichSu = new ArrayList<>();
+        try {
+            Connection con = connection.getConnection();
+            String sql = "select hd.MAHD,hd.NGAYTAO,hd.TONGTIEN from KHACHHANG kh join HOADON hd on hd.IDKH = kh.ID where kh.maKH = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, maKH);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                HoaDon hd = new HoaDon();
+                hd.setMaHD(rs.getString("MAHD"));
+                hd.setNgayTao(rs.getDate("NGAYTAO"));
+                hd.setTongTien(rs.getFloat("TONGTIEN"));
+                lichSu.add(hd);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lichSu;
+    }
     
 }

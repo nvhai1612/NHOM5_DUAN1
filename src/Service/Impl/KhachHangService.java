@@ -4,11 +4,13 @@
  */
 package Service.Impl;
 
+import DomainModel.HoaDon;
 import DomainModel.KhachHang;
 import Repository.Impl.KhachHangRepos;
 import Service.IKhachHangService;
 import ViewModel.KhachHangVM;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -48,7 +50,10 @@ public class KhachHangService implements IKhachHangService{
          ArrayList<KhachHang> listKH = khachHangRepos.search(ma);
          return listKH;
     }
-
+    
+    public List<HoaDon> getLichSu(String maKH) {
+         return khachHangRepos.getLichSuaGiaoDich(maKH);
+     }
      
         
    

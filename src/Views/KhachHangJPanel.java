@@ -4,10 +4,12 @@
  */
 package Views;
 
+import DomainModel.HoaDon;
 import DomainModel.KhachHang;
 import Service.Impl.KhachHangService;
 import ViewModel.KhachHangVM;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,6 +21,7 @@ public class KhachHangJPanel extends javax.swing.JPanel {
 
      KhachHangService service = new KhachHangService();
     DefaultTableModel tableModel;
+    DefaultTableModel tableModelHoaDon;
     int index = -1;
     /**
      * Creates new form KhachHangJPanel
@@ -446,6 +449,20 @@ public class KhachHangJPanel extends javax.swing.JPanel {
         taDiaChi.setText("");
     }  
     
+    private void showHoaDonHistory(String maKH) {
+        List<HoaDon> list = service.getLichSu(maKH);
+        tableModelHoaDon = (DefaultTableModel) tblHoaDonKH.getModel();
+        tableModelHoaDon.setRowCount(0);
+        for (HoaDon hoaDon : list) {
+            tableModelHoaDon.addRow(new Object[]{
+                hoaDon.getMaHD(),
+                hoaDon.getNgayTao(),
+                hoaDon.getTongTien()
+            });
+        }
+
+    }
+    
     private void btnSuaActionPerformed2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed2
         // Lấy thông tin từ giao diện
          int selectedRow = tblKhachHang.getSelectedRow();
@@ -484,7 +501,7 @@ public class KhachHangJPanel extends javax.swing.JPanel {
         showTable(index);
         if (index != -1) {
             String maKH = tblKhachHang.getValueAt(index, 0).toString(); // Lấy mã khách hàng từ bảng
-            //showHoaDonHistory(maKH); // Gọi hàm để hiển thị lịch sử hóa đơn của khách hàng được chọn
+            showHoaDonHistory(maKH); // Gọi hàm để hiển thị lịch sử hóa đơn của khách hàng được chọn
         }
     }//GEN-LAST:event_tblKhachHangMouseClicked2
     
