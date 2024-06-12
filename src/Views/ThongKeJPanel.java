@@ -4,17 +4,33 @@
  */
 package Views;
 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
  */
 public class ThongKeJPanel extends javax.swing.JPanel {
 
+    private Service.Impl.ThongKe sm = new Service.Impl.ThongKe();
+    private DefaultTableModel mol = new DefaultTableModel();
+    private int i = -1;
+
     /**
      * Creates new form ThongKeJPanel
      */
     public ThongKeJPanel() {
         initComponents();
+        this.fillTableSP(sm.getAll());
+    }
+
+    public void fillTableSP(ArrayList<DomainModel.ThongKe> list) {
+        mol = (DefaultTableModel) tbSanPham.getModel();
+        mol.setRowCount(0);
+        for (DomainModel.ThongKe x : list) {
+            mol.addRow(x.toDataRow());
+        }
     }
 
     /**
