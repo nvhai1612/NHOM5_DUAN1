@@ -18,4 +18,5 @@ public interface IHDCTRepos {
     public Boolean add(HoaDon hd, Map<String, Integer> ctsps);
     public Boolean update(HoaDon hd, Map<String, Integer> ctsps);
     public Boolean delete(HoaDon hd, Map<String, Integer> ctsps);
+    public ArrayList<HoaDonDTO> search(String ma);
 }

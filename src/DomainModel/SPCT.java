@@ -12,14 +12,14 @@ import java.util.UUID;
  */
 public class SPCT {
     private UUID id, IdSP, IdCL, IdKC, IdMS, IdTH;
-    private String MaSPCT, MoTa, TenMS, TenCL, TenTH, TenKC, TenSP, NguoiTao;
+    private String MaSPCT, MoTa, TenMS, TenCL, TenTH, TenKC, TenSP, NguoiTao ,KM;
     private int SoLuongTon, TrangThaiSPCT;
     private float DonGia;
 
     public SPCT() {
     }
 
-    public SPCT(UUID id, UUID IdSP, UUID IdCL, UUID IdKC, UUID IdMS, UUID IdTH, String MaSPCT, String MoTa, String TenMS, String TenCL, String TenTH, String TenKC, String TenSP, String NguoiTao, int SoLuongTon, int TrangThaiSPCT, float DonGia) {
+    public SPCT(UUID id, UUID IdSP, UUID IdCL, UUID IdKC, UUID IdMS, UUID IdTH, String MaSPCT, String MoTa, String TenMS, String TenCL, String TenTH, String TenKC, String TenSP, String NguoiTao, String KM, int SoLuongTon, int TrangThaiSPCT, float DonGia) {
         this.id = id;
         this.IdSP = IdSP;
         this.IdCL = IdCL;
@@ -34,6 +34,7 @@ public class SPCT {
         this.TenKC = TenKC;
         this.TenSP = TenSP;
         this.NguoiTao = NguoiTao;
+        this.KM = KM;
         this.SoLuongTon = SoLuongTon;
         this.TrangThaiSPCT = TrangThaiSPCT;
         this.DonGia = DonGia;
@@ -149,6 +150,14 @@ public class SPCT {
 
     public void setNguoiTao(String NguoiTao) {
         this.NguoiTao = NguoiTao;
+    }
+
+    public String getKM() {
+        return KM;
+    }
+
+    public void setKM(String KM) {
+        this.KM = KM;
     }
 
     public int getSoLuongTon() {

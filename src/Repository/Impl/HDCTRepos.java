@@ -132,5 +132,29 @@ public class HDCTRepos implements IHDCTRepos{
         }
         return null;
     }
+
+    @Override
+    public ArrayList<HoaDonDTO> search(String ma) {ArrayList<HoaDonDTO> hoadonseach = new ArrayList<>();
+        try {
+            Connection coon = connection.getConnection();
+            String sql = "select MaHD,TENKH,TENNV,h.TRANGTHAIHD,MASP,TENSP,SOLUONG,hc.DONGIA from hoadonct hc left join hoadon h on h.id = hc.IDHD left join SANPHAMCHITIET sc on sc.id = hc.IDSPCT left join sanpham s on s.id = sc.IDSP left join NHANVIEN on NHANVIEN.ID=h.IDNV left join  KHACHHANG on KHACHHANG.ID=h.IDKH where MAHD like ?";
+            PreparedStatement prsm = coon.prepareStatement(sql);
+            prsm.setString(1, "%" + ma + "%");
+
+            ResultSet rs = prsm.executeQuery();
+            while (rs.next()) {
+                HoaDonDTO kh = new HoaDonDTO();
+                kh.setMaHD(rs.getString("MaHD"));
+                kh.setTrangThai(Integer.valueOf(rs.getString("TRANGTHAIHD")));
+                kh.setTenNV(rs.getString("TENNV"));
+                kh.setTenKH(rs.getString("TENKH"));
+
+                hoadonseach.add(kh);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hoadonseach;
+    }
     
 }
