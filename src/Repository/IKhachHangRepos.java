@@ -4,10 +4,16 @@
  */
 package Repository;
 
+import DomainModel.KhachHang;
+import java.util.ArrayList;
+
 /**
  *
  * @author Admin
  */
 public interface IKhachHangRepos {
-    
+    public ArrayList<KhachHang> getAllKhachHang();
+    public Boolean add(KhachHang kh);
+    public Boolean update(KhachHang kh);
+    public ArrayList<KhachHang> search(String ma);
 }
