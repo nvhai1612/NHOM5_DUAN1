@@ -4,10 +4,16 @@
  */
 package Repository;
 
+import DomainModel.ChatLieu;
+import java.util.ArrayList;
+
 /**
  *
  * @author Admin
  */
 public interface IChatLieuRepos {
-    
+    public ArrayList<ChatLieu> getListFormDB();
+    public Boolean add(ChatLieu cl);
+    public Boolean update(ChatLieu cl);
+    public ArrayList<ChatLieu> search();
 }

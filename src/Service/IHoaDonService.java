@@ -4,10 +4,15 @@
  */
 package Service;
 
+import DomainModel.HoaDon;
+import ViewModel.HoaDonVM;
+import java.util.ArrayList;
+
 /**
  *
  * @author Admin
  */
 public interface IHoaDonService {
-    
+    ArrayList<HoaDonVM> getAll();
+    ArrayList<HoaDon> getAllDomain();
 }

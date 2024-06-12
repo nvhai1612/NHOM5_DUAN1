@@ -4,17 +4,30 @@
  */
 package Views;
 
+import DomainModel.NhanVien;
+import Service.Impl.NhanVienService;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Admin
  */
 public class LoginJFrame extends javax.swing.JFrame {
 
+    private NhanVienService service = new NhanVienService();
+    List<NhanVien> list = new ArrayList<>();
+
     /**
      * Creates new form LoginJFrame
      */
     public LoginJFrame() {
         initComponents();
+        list = service.getAllDoMain();
     }
 
     /**
@@ -165,7 +178,36 @@ public class LoginJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_lblQuenMKMouseClicked
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
-        
+        String Email = txtUN.getText();
+        String matKhau = txtMatKhau.getText();
+
+        if (Email.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Email không được để trống");
+            return;
+        }
+        if (matKhau.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu không được để trống");
+            return;
+        }
+      
+
+        Optional<NhanVien> nvOptional = service.CheckLogin(Email, matKhau);
+        if (nvOptional.isPresent()) {
+            NhanVien nv = nvOptional.get();
+            if (nv.getTrangThaiNV() == 1) {
+                JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
+                
+                BanHangJFrame banHangForm = new BanHangJFrame();
+                banHangForm.setTenNhanVien(nv.getTenNV());
+                 banHangForm.setVisible(true);         
+            // Ẩn form đăng nhập hiện tại
+            this.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(this, "Nhân viên đã nghỉ việc");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Email hoặc mật khẩu không đúng");
+        }
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     /**
