@@ -4,10 +4,17 @@
  */
 package Repository;
 
+import DomainModel.MauSac;
+import ViewModel.MauSacVM;
+import java.util.ArrayList;
+
 /**
  *
  * @author Admin
  */
 public interface IMauSacRepos {
-    
+    public ArrayList<MauSac> getListFormDB();
+    public Boolean add(MauSac ms);
+    public Boolean update(MauSac ms);
+    public ArrayList<MauSac> search();
 }
