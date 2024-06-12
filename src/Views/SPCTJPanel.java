@@ -4,7 +4,12 @@
  */
 package Views;
 
+import DomainModel.ChatLieu;
+import DomainModel.KichCo;
+import DomainModel.MauSac;
 import DomainModel.SPCT;
+import DomainModel.SanPham;
+import DomainModel.ThuongHieu;
 import Repository.Impl.SPCTRepos;
 import Service.Impl.ChatLieuService;
 import Service.Impl.KichCoService;
@@ -348,6 +353,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
         btnThemSPCT = new javax.swing.JButton();
         btnSuaSPCT = new javax.swing.JButton();
         btnXoaSPCT = new javax.swing.JButton();
+        btnLamMoiSPCT = new javax.swing.JButton();
 
         SanPhamDialog.setMinimumSize(new java.awt.Dimension(380, 600));
 
@@ -378,8 +384,18 @@ public class SPCTJPanel extends javax.swing.JPanel {
         rdoDungHDSP.setText("Còn hàng");
 
         btnThemSP.setText("Thêm");
+        btnThemSP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemSPActionPerformed(evt);
+            }
+        });
 
         btnSuaSP.setText("Sửa");
+        btnSuaSP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaSPActionPerformed(evt);
+            }
+        });
 
         btnLamMoiSP.setText("Làm mới");
         btnLamMoiSP.addActionListener(new java.awt.event.ActionListener() {
@@ -394,28 +410,32 @@ public class SPCTJPanel extends javax.swing.JPanel {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTenSP)
-                            .addComponent(txtMaSP)))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtTenSP, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                                    .addComponent(txtMaSP)))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rdoDangHDSP)
+                                .addGap(18, 18, 18)
+                                .addComponent(rdoDungHDSP)))
+                        .addContainerGap(33, Short.MAX_VALUE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rdoDangHDSP)
-                        .addGap(18, 18, 18)
-                        .addComponent(rdoDungHDSP))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnThemSP)
                         .addGap(18, 18, 18)
                         .addComponent(btnSuaSP)
-                        .addGap(39, 39, 39)
-                        .addComponent(btnLamMoiSP)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(27, 27, 27)
+                        .addComponent(btnLamMoiSP)
+                        .addGap(24, 24, 24))))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -433,16 +453,12 @@ public class SPCTJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel14)
                     .addComponent(rdoDangHDSP)
                     .addComponent(rdoDungHDSP))
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnThemSP)
-                            .addComponent(btnSuaSP)))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(btnLamMoiSP)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(8, 8, 8)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLamMoiSP)
+                    .addComponent(btnSuaSP)
+                    .addComponent(btnThemSP))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jPanel7.setBackground(new java.awt.Color(222, 229, 226));
@@ -469,6 +485,11 @@ public class SPCTJPanel extends javax.swing.JPanel {
                 "ID", "Mã SP", "Tên SP", "Trạng thái"
             }
         ));
+        tblSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSanPhamMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblSanPham);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -580,10 +601,25 @@ public class SPCTJPanel extends javax.swing.JPanel {
         rdoDungHDKC.setText("Dừng hoạt động");
 
         btnThemKC.setText("Thêm");
+        btnThemKC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemKCActionPerformed(evt);
+            }
+        });
 
         btnSuaKC.setText("Sửa");
+        btnSuaKC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaKCActionPerformed(evt);
+            }
+        });
 
         btnLMKC.setText("Làm mới");
+        btnLMKC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLMKCActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
@@ -663,6 +699,11 @@ public class SPCTJPanel extends javax.swing.JPanel {
                 "ID", "Mã KC", "Tên KC", "Trạng thái"
             }
         ));
+        tblKichCo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblKichCoMouseClicked(evt);
+            }
+        });
         jScrollPane7.setViewportView(tblKichCo);
 
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
@@ -763,10 +804,25 @@ public class SPCTJPanel extends javax.swing.JPanel {
         rdoDungHDMS.setText("Dừng hoạt động");
 
         btnThemMS.setText("Thêm");
+        btnThemMS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemMSActionPerformed(evt);
+            }
+        });
 
         btnSuaMS.setText("Sửa");
+        btnSuaMS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaMSActionPerformed(evt);
+            }
+        });
 
         btnLamMoiMS.setText("Làm mới");
+        btnLamMoiMS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLamMoiMSActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -846,6 +902,11 @@ public class SPCTJPanel extends javax.swing.JPanel {
                 "ID", "Mã MS", "Tên MS", "Trạng thái"
             }
         ));
+        tblMauSac.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMauSacMouseClicked(evt);
+            }
+        });
         jScrollPane6.setViewportView(tblMauSac);
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
@@ -946,10 +1007,25 @@ public class SPCTJPanel extends javax.swing.JPanel {
         rdoDungHDTH.setText("Dừng hoạt động");
 
         btnThemTH.setText("Thêm");
+        btnThemTH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemTHActionPerformed(evt);
+            }
+        });
 
         btnSuaTH.setText("Sửa");
+        btnSuaTH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaTHActionPerformed(evt);
+            }
+        });
 
         btnLMTH.setText("Làm mới");
+        btnLMTH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLMTHActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -1029,6 +1105,11 @@ public class SPCTJPanel extends javax.swing.JPanel {
                 "ID", "Mã TH", "Tên TH", "Trạng thái"
             }
         ));
+        tblThuongHieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblThuongHieuMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(tblThuongHieu);
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
@@ -1408,7 +1489,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(rdoHetHang))))
                     .addComponent(txtMaSPCT))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1568,6 +1649,13 @@ public class SPCTJPanel extends javax.swing.JPanel {
 
         btnXoaSPCT.setText("Xóa");
 
+        btnLamMoiSPCT.setText("Mới");
+        btnLamMoiSPCT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLamMoiSPCTActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -1579,7 +1667,9 @@ public class SPCTJPanel extends javax.swing.JPanel {
                 .addComponent(btnSuaSPCT)
                 .addGap(18, 18, 18)
                 .addComponent(btnXoaSPCT)
-                .addContainerGap(468, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnLamMoiSPCT)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -1593,7 +1683,8 @@ public class SPCTJPanel extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThemSPCT)
                     .addComponent(btnSuaSPCT)
-                    .addComponent(btnXoaSPCT))
+                    .addComponent(btnXoaSPCT)
+                    .addComponent(btnLamMoiSPCT))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1702,7 +1793,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
 
     private void btnThemSPCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPCTActionPerformed
         String MaSPCT = ((SanPhamVM) cbbSP.getSelectedItem()).getMaSP();
-        UUID TenSP = spctrp.SelectSPByTen(txtTenSP.getText());
+        UUID TenSP = ((SanPhamVM) cbbSP.getSelectedItem()).getId();
         String SoLuongTon = txtSLTon.getText();
         String NguoiTao = txtNguoiTao.getText();
         int TrangThai = rdoConHang.isSelected()== true ? 1 : 0;
@@ -1730,7 +1821,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThemSPCTActionPerformed
 
     private void btnLamMoiSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiSPActionPerformed
-        LamMoiSPCT();
+        LamMoiSP();
     }//GEN-LAST:event_btnLamMoiSPActionPerformed
 
     private void btnSuaSPCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaSPCTActionPerformed
@@ -1765,6 +1856,206 @@ public class SPCTJPanel extends javax.swing.JPanel {
     private void btnTimSPCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimSPCTActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTimSPCTActionPerformed
+
+    private void btnThemSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPActionPerformed
+        String MaSP = txtMaSP.getText();
+        String TenSP = txtTenSP.getText();
+        int TrangThai = rdoDangHDSP.isSelected() == true ? 1 : 0;
+
+        SanPham sp = new SanPham();
+        sp.setMaSP(MaSP);
+        sp.setTenSP(TenSP);
+        sp.setTrangThaiSP(TrangThai);
+
+        this.sanPhamService.add(sp);
+        LamMoiSP();
+        this.LoadTableSP();
+    }//GEN-LAST:event_btnThemSPActionPerformed
+
+    private void btnSuaSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaSPActionPerformed
+        String MaSP = txtMaSP.getText();
+        String TenSP = txtTenSP.getText();
+        int TrangThai = rdoDangHDSP.isSelected() == true ? 1 : 0;
+
+        SanPham sp = new SanPham();
+        sp.setMaSP(MaSP);
+        sp.setTenSP(TenSP);
+        sp.setTrangThaiSP(TrangThai);
+
+        this.sanPhamService.update(sp);
+        LamMoiSP();
+        this.LoadTableSP();
+    }//GEN-LAST:event_btnSuaSPActionPerformed
+
+    private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
+        int row = tblSanPham.getSelectedRow();
+        if(row == -1){
+            return;
+        }
+
+        String MaSP = tblSanPham.getValueAt(row, 1).toString();
+        String TenSP = tblSanPham.getValueAt(row, 2).toString();
+        String TrangThai = tblSanPham.getValueAt(row, 3).toString();
+
+        txtMaCL.setText(MaSP);
+        txtTenCL.setText(TenSP);
+        if(TrangThai.equalsIgnoreCase("Đang Hoạt Động")){
+            this.rdoDangHDSP.setSelected(true);
+        }else{
+            this.rdoDungHDSP.setSelected(true);
+        }
+    }//GEN-LAST:event_tblSanPhamMouseClicked
+
+    private void btnThemKCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKCActionPerformed
+        String MaKC = txtMaKC.getText();
+        String TenKC = txtMaKC.getText();
+
+        KichCo kc = new KichCo();
+        kc.setMaKC(MaKC);
+        kc.setTenKC(TenKC);
+
+        kichCoService.add(kc);
+        LamMoiKC();
+        LoadTableKC();
+    }//GEN-LAST:event_btnThemKCActionPerformed
+
+    private void btnSuaKCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaKCActionPerformed
+        String MaKC = txtMaKC.getText();
+        String TenKC = txtMaKC.getText();
+
+        KichCo kc = new KichCo();
+        kc.setMaKC(MaKC);
+        kc.setTenKC(TenKC);
+
+        kichCoService.add(kc);
+        LamMoiKC();
+        LoadTableKC();
+    }//GEN-LAST:event_btnSuaKCActionPerformed
+
+    private void btnLMKCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLMKCActionPerformed
+        LamMoiKC();
+    }//GEN-LAST:event_btnLMKCActionPerformed
+
+    private void tblKichCoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKichCoMouseClicked
+        int row = tblKichCo.getSelectedRow();
+        if(row == -1){
+            return;
+        }
+
+        String MaKC = tblKichCo.getValueAt(row, 1).toString();
+        String TenKC = tblKichCo.getValueAt(row, 2).toString();
+        String TrangThai = tblKichCo.getValueAt(row, 3).toString();
+
+        txtMaCL.setText(MaKC);
+        txtTenCL.setText(TenKC);
+        if(TrangThai.equalsIgnoreCase("Đang Hoạt Động")){
+            this.rdoDangHDSP.setSelected(true);
+        }else{
+            this.rdoDungHDSP.setSelected(true);
+        }
+    }//GEN-LAST:event_tblKichCoMouseClicked
+
+    private void btnThemMSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemMSActionPerformed
+        String MaMS = txtMaMS.getText();
+        String TenMS = txtMaMS.getText();
+
+        MauSac ms = new MauSac();
+        ms.setMaMS(MaMS);
+        ms.setTenMS(TenMS);
+
+        mauSacService.add(ms);
+        LamMoiMS();
+        LoadTableMS();
+    }//GEN-LAST:event_btnThemMSActionPerformed
+
+    private void btnSuaMSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaMSActionPerformed
+        String MaMS = txtMaMS.getText();
+        String TenMS = txtMaMS.getText();
+
+        MauSac ms = new MauSac();
+        ms.setMaMS(MaMS);
+        ms.setTenMS(TenMS);
+
+        mauSacService.update(ms);
+        LamMoiMS();
+        LoadTableMS();
+    }//GEN-LAST:event_btnSuaMSActionPerformed
+
+    private void btnLamMoiMSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiMSActionPerformed
+        LamMoiMS();
+    }//GEN-LAST:event_btnLamMoiMSActionPerformed
+
+    private void tblMauSacMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMauSacMouseClicked
+        int row = tblMauSac.getSelectedRow();
+        if(row == -1){
+            return;
+        }
+
+        String MaMS = tblMauSac.getValueAt(row, 1).toString();
+        String TenMS = tblMauSac.getValueAt(row, 2).toString();
+        String TrangThai = tblMauSac.getValueAt(row, 3).toString();
+
+        txtMaMS.setText(MaMS);
+        txtTenMS.setText(TenMS);
+        if(TrangThai.equalsIgnoreCase("Đang Hoạt Động")){
+            this.rdoDangHDMS.setSelected(true);
+        }else{
+            this.rdoDungHDMS.setSelected(true);
+        }
+    }//GEN-LAST:event_tblMauSacMouseClicked
+
+    private void btnThemTHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemTHActionPerformed
+        String MaTH = txtMaTH.getText();
+        String TenTH = txtTenTH.getText();
+
+        ThuongHieu th = new ThuongHieu();
+        th.setMaTH(MaTH);
+        th.setTenTH(TenTH);
+
+        thuongHieuService.add(th);
+        LamMoiTH();
+        LoadTableTH();
+    }//GEN-LAST:event_btnThemTHActionPerformed
+
+    private void btnSuaTHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaTHActionPerformed
+        String MaTH = txtMaTH.getText();
+        String TenTH = txtTenTH.getText();
+
+        ThuongHieu th = new ThuongHieu();
+        th.setMaTH(MaTH);
+        th.setTenTH(TenTH);
+
+        thuongHieuService.update(th);
+        LamMoiTH();
+        LoadTableTH();
+    }//GEN-LAST:event_btnSuaTHActionPerformed
+
+    private void btnLMTHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLMTHActionPerformed
+        LamMoiTH();
+    }//GEN-LAST:event_btnLMTHActionPerformed
+
+    private void tblThuongHieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThuongHieuMouseClicked
+        int row = tblThuongHieu.getSelectedRow();
+        if(row == -1){
+            return;
+        }
+
+        String MaTH = tblThuongHieu.getValueAt(row, 1).toString();
+        String TenTH = tblThuongHieu.getValueAt(row, 2).toString();
+        String TrangThai = tblThuongHieu.getValueAt(row, 3).toString();
+
+        txtMaTH.setText(MaTH);
+        txtTenTH.setText(TenTH);
+        if(TrangThai.equalsIgnoreCase("Đang Hoạt Động")){
+            this.rdoDangHDTH.setSelected(true);
+        }else{
+            this.rdoDungHDTH.setSelected(true);
+        }
+    }//GEN-LAST:event_tblThuongHieuMouseClicked
+
+    private void btnLamMoiSPCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiSPCTActionPerformed
+        LamMoiSPCT();
+    }//GEN-LAST:event_btnLamMoiSPCTActionPerformed
     
     public void LamMoiSPCT() {
         txtMaSPCT.setText("");
@@ -1779,7 +2070,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
         txtDonGia.setText("0");
     }
     
-    public void MoiSP(){
+    public void LamMoiSP(){
         txtMaSP.setText("");
         txtTenSP.setText("");
         rdoDangHDSP.setSelected(true);
@@ -1822,6 +2113,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnLMTH;
     private javax.swing.JButton btnLamMoiMS;
     private javax.swing.JButton btnLamMoiSP;
+    private javax.swing.JButton btnLamMoiSPCT;
     private javax.swing.JButton btnMauSac;
     private javax.swing.JButton btnMoiCL;
     private javax.swing.JButton btnMoiKC;

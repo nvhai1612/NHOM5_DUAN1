@@ -178,6 +178,9 @@ public class BanHangJFrame extends javax.swing.JFrame {
         txtTienThua.setText(String.valueOf(Tienthua));
     }
 
+    public void setTenNhanVien(String TenNV){
+        txtNguoiDung.setText(TenNV);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
