@@ -4,10 +4,18 @@
  */
 package Service;
 
+import DomainModel.KichCo;
+import ViewModel.KichCoVM;
+import java.util.ArrayList;
+
 /**
  *
  * @author Admin
  */
 public interface IKichCoService {
-    
+    ArrayList<KichCoVM> getAll();
+    ArrayList<KichCo> getAllDomain();
+    void add(KichCo kc);
+    void update(KichCo kc);
+    ArrayList<KichCo> search (String MaKC);
 }
