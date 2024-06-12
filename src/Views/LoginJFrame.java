@@ -195,8 +195,10 @@ public class LoginJFrame extends javax.swing.JFrame {
         if (nvOptional.isPresent()) {
             NhanVien nv = nvOptional.get();
             if (nv.getTrangThaiNV() == 1) {
-                JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");              
+                JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
+                
                 BanHangJFrame banHangForm = new BanHangJFrame();
+                banHangForm.setTenNhanVien(nv.getTenNV());
                  banHangForm.setVisible(true);         
             // Ẩn form đăng nhập hiện tại
             this.setVisible(false);
