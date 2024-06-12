@@ -13,27 +13,27 @@ import java.util.ArrayList;
  *
  * @author Buivuhoang
  */
-public class ThongKe {
+public class ThongKeSP {
 
     private Connection con = null;       // Biến kết nối với csdl
     private PreparedStatement pr = null; // Chuẩn bị thực hiện lệnh
     private ResultSet rs = null;         // Tập kết quả truy vấn select
     private String sql = null;           // Câu lệnh sql
 
-    public ThongKe() {
+    public ThongKeSP() {
         con = Utiliti.DBConnection.getConnection();
     }
 
-    public ArrayList<DomainModel.ThongKe> getAll() {
+    public ArrayList<DomainModel.ThongKeSP> getAll() {
         // lấy tất cả dl từ bảng mylove trong sql server
         // đổ vào list
         sql = "select SANPHAM.MASP,SANPHAM.TENSP,SANPHAMCHITIET.SOLUONGTON,CHATLIEU.TENCL,MAUSAC.TENMS,KICHCO.TENKC,SANPHAM.TRANGTHAISP from SANPHAM \n"
-                + "INNER JOIN SANPHAMCHITIET ON SANPHAM.ID = SANPHAM.ID\n"
+                + "INNER JOIN SANPHAMCHITIET ON SANPHAM.ID = SANPHAMCHITIET.ID\n"
                 + "INNER JOIN CHATLIEU ON SANPHAM.ID = CHATLIEU.ID\n"
                 + "INNER JOIN MAUSAC ON SANPHAM.ID = MAUSAC.ID\n"
                 + "INNER JOIN KICHCO ON SANPHAM.ID = KICHCO.ID";
 
-        ArrayList list_ThongKe = new ArrayList<>();
+        ArrayList list_ThongKeSP = new ArrayList<>();
         try {
             // Kết nối thành công
             pr = con.prepareStatement(sql);
@@ -50,10 +50,10 @@ public class ThongKe {
                 mauSac = rs.getString(5);
                 kichThuoc = rs.getString(6);
                 trangThai = rs.getBoolean(7);
-                DomainModel.ThongKe tk = new DomainModel.ThongKe(maSp, tenSp, soLuong, chatLieu, mauSac, kichThuoc, trangThai);
-                list_ThongKe.add(tk);
+                DomainModel.ThongKeSP tkSP = new DomainModel.ThongKeSP(maSp, tenSp, soLuong, chatLieu, mauSac, kichThuoc, trangThai);
+                list_ThongKeSP.add(tkSP);
             }// đóng white
-            return list_ThongKe;
+            return list_ThongKeSP;
 
         } catch (Exception e) {
             // Kết nối lỗi

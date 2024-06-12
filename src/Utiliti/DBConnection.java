@@ -1,8 +1,6 @@
-
 package Utiliti;
 
 import java.sql.*;
-
 
 public class DBConnection {
 
@@ -10,15 +8,14 @@ public class DBConnection {
     public static final String PORT = "1433";
     public static final String DBNAME = "DUAN1_NHOM5";
     public static final String USERNAME = "sa";
-    public static final String PASSWORD = "123456";
-
+    public static final String PASSWORD = "123";
 
     /**
      * Get connection to MSSQL Server
      *
      * @return Connection
      */
- public static Connection getConnection() {
+    public static Connection getConnection() {
 
         // Create a variable for the connection string.
         String connectionUrl = "jdbc:sqlserver://" + HOSTNAME + ":" + PORT + ";"
@@ -32,7 +29,6 @@ public class DBConnection {
         }
         return null;
     }
- 
 
     public static void main(String[] args) {
         getConnection();

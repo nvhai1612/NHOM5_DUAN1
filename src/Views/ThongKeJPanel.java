@@ -13,7 +13,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ThongKeJPanel extends javax.swing.JPanel {
 
-    private Service.Impl.ThongKe sm = new Service.Impl.ThongKe();
+    private Service.Impl.ThongKeSP sm = new Service.Impl.ThongKeSP();
+    private Service.Impl.ThongKeHD sms = new Service.Impl.ThongKeHD();
     private DefaultTableModel mol = new DefaultTableModel();
     private int i = -1;
 
@@ -23,12 +24,21 @@ public class ThongKeJPanel extends javax.swing.JPanel {
     public ThongKeJPanel() {
         initComponents();
         this.fillTableSP(sm.getAll());
+        this.fillTableHD(sms.getAll());
     }
 
-    public void fillTableSP(ArrayList<DomainModel.ThongKe> list) {
+    public void fillTableSP(ArrayList<DomainModel.ThongKeSP> list) {
         mol = (DefaultTableModel) tbSanPham.getModel();
         mol.setRowCount(0);
-        for (DomainModel.ThongKe x : list) {
+        for (DomainModel.ThongKeSP x : list) {
+            mol.addRow(x.toDataRow());
+        }
+    }
+
+    public void fillTableHD(ArrayList<DomainModel.ThongKeHD> list) {
+        mol = (DefaultTableModel) tbHienThiHoaDon.getModel();
+        mol.setRowCount(0);
+        for (DomainModel.ThongKeHD x : list) {
             mol.addRow(x.toDataRow());
         }
     }
@@ -380,7 +390,7 @@ public class ThongKeJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE))
+                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 813, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -548,6 +558,11 @@ public class ThongKeJPanel extends javax.swing.JPanel {
 
         jLabel5.setText("Mã sản phẩm ");
 
+        txtTimKiemSanPham.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimKiemSanPhamActionPerformed(evt);
+            }
+        });
         txtTimKiemSanPham.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtTimKiemSanPhamKeyReleased(evt);
@@ -940,6 +955,10 @@ public class ThongKeJPanel extends javax.swing.JPanel {
     private void txtTimKiemHoaDonKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemHoaDonKeyReleased
 
     }//GEN-LAST:event_txtTimKiemHoaDonKeyReleased
+
+    private void txtTimKiemSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemSanPhamActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTimKiemSanPhamActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
