@@ -52,7 +52,7 @@ public class HoaDonService implements IHoaDonService{
         HoaDon hd2 = hoadonrepos.findHoaDonByMa(hd.getMaHD());
         hd.setId(hd2.getId());
 //        hd.setIdKH(khachhngRespo.SelectById(hd2.getTenKH()));
-//        hd.setIdNV(.SelectByname(hd2.getTenNV()));
+        hd.setIdNV(NhanVienRepos.SelectByname(hd2.getTenNV()));
         hoadonrepos.update(hd2);
         hdctrepos.add(hd2, maSPs);
     }

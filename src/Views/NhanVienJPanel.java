@@ -841,18 +841,18 @@ public class NhanVienJPanel extends javax.swing.JPanel {
 
     private void btnTimCVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimCVActionPerformed
         String MaCV = txtSearchByMa.getText();
-         if (MaCV.trim().isEmpty()) {
+        if (MaCV.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập mã Chúc Vu trước khi tìm kiếm.");
             return;
         }
-          try {
+        try {
             List<ChucVu> listCV = chucVuService.search(MaCV);
             if (!listCV.isEmpty()) {
                 ChucVu chucVu = listCV.get(0);
                 txtMaCV.setText(chucVu.getMaCV());
                 txtTenCV.setText(chucVu.getTenCV());
                 loadTableCV();
-        } else {
+            } else {
                 JOptionPane.showMessageDialog(this, "Không tìm thấy chức vụ với mã " + MaCV);
             }
         } catch (Exception ex) {
