@@ -4,10 +4,18 @@
  */
 package Repository;
 
+import DomainModel.ChucVu;
+import DomainModel.NhanVien;
+import java.util.ArrayList;
+
 /**
  *
  * @author Admin
  */
 public interface IChucVuRepos {
-    
+    public ArrayList<ChucVu> getListFormDB();
+    public Boolean add(ChucVu cv);
+    public Boolean update(ChucVu cv);
+    public ArrayList<ChucVu> search(String maCV);
+    public ArrayList<NhanVien> searchbyCV(String TenCV);
 }

@@ -4,10 +4,26 @@
  */
 package Repository;
 
+import DomainModel.NhanVien;
+import java.util.ArrayList;
+import java.util.Optional;
+
 /**
  *
  * @author Admin
  */
 public interface INhanVienRepos {
-    
+
+    public ArrayList<NhanVien> getListFormDB();
+
+    public Boolean add(NhanVien nv);
+
+    public Boolean update(NhanVien nv);
+
+    public ArrayList<NhanVien> search(String MaNV);
+
+    public Boolean existsByMaNV(String MaNV);
+
+    Optional<NhanVien> CheckLogin(String Email, String MatKhau);
+
 }
