@@ -4,10 +4,18 @@
  */
 package Service;
 
+import DomainModel.ChatLieu;
+import ViewModel.ChatLieuVM;
+import java.util.ArrayList;
+
 /**
  *
  * @author Admin
  */
 public interface IChatLieuService {
-    
+    ArrayList<ChatLieuVM> getAll();
+    ArrayList<ChatLieu> getAllDomain();
+    void add(ChatLieu cl);
+    void update(ChatLieu cl);
+    ArrayList<ChatLieu> search (String MaCL);
 }

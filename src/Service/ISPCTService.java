@@ -4,10 +4,18 @@
  */
 package Service;
 
+import DomainModel.SPCT;
+import ViewModel.SPCTVM;
+import java.util.ArrayList;
+
 /**
  *
  * @author Admin
  */
 public interface ISPCTService {
-    
+    ArrayList<SPCTVM> getAll();
+    ArrayList<SPCT>getAllDoMain();
+    void add(SPCT ctsp);
+    void update(SPCT ctsp);
+    ArrayList<SPCT> search (String MaCTSP);
 }

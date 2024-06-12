@@ -4,10 +4,18 @@
  */
 package Repository;
 
+import DomainModel.HoaDon;
+import ViewModel.HoaDonDTO;
+import java.util.ArrayList;
+import java.util.Map;
+
 /**
  *
  * @author Admin
  */
 public interface IHDCTRepos {
-    
+    public ArrayList<HoaDonDTO> getListFormDB();
+    public Boolean add(HoaDon hd, Map<String, Integer> ctsps);
+    public Boolean update(HoaDon hd, Map<String, Integer> ctsps);
+    public Boolean delete(HoaDon hd, Map<String, Integer> ctsps);
 }

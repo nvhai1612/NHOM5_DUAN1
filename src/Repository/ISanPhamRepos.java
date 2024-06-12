@@ -4,10 +4,17 @@
  */
 package Repository;
 
+import DomainModel.SanPham;
+import java.util.ArrayList;
+import java.util.UUID;
+
 /**
  *
  * @author Admin
  */
 public interface ISanPhamRepos {
-    
+    public ArrayList<SanPham> getListFormDB();
+    public UUID add(SanPham sp);
+    public Boolean update(SanPham sp);
+    public ArrayList<SanPham> search();
 }

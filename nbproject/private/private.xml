@@ -4,7 +4,20 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/LoginJFrame.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Service/Impl/ChucVuService.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Service/INhanVienService.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/Impl/ChucVuRepos.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/DomainModel/NhanVien.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/BanHangJFrame.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/NhanVienJPanel.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/SPCTJPanel.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Service/IChucVuService.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/Impl/SanPhamRepos.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/IChucVuRepos.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Service/Impl/NhanVienService.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/ViewModel/ChucVuVM.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/Impl/NhanVienRepos.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/QuenMKJFrame.java</file>
         </group>
     </open-files>
 </project-private>
