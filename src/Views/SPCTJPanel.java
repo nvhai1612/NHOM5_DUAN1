@@ -1792,7 +1792,9 @@ public class SPCTJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCLActionPerformed
 
     private void btnThemSPCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPCTActionPerformed
-        String MaSPCT = ((SanPhamVM) cbbSP.getSelectedItem()).getMaSP();
+        String MaSPCT = txtMaSPCT.getText();
+//        String MaSPCT = ((SanPhamVM) cbbTenSP.getSelectedItem()).getMaSP();
+//        UUID TenSP = spctrp.SelectSPByTen(txtTenSP.getText());
         UUID TenSP = ((SanPhamVM) cbbSP.getSelectedItem()).getId();
         String SoLuongTon = txtSLTon.getText();
         String NguoiTao = txtNguoiTao.getText();

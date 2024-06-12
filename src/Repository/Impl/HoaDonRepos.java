@@ -250,6 +250,10 @@ public class HoaDonRepos implements IHoaDonRepos{
             e.printStackTrace();
         }
     }
+    
+    public void UpdateXoaSPGH(String MaHD, String MaHDCT, String MaSPCT, Integer SL){
+        
+    }
 
     @Override
     public Boolean delete(UUID id) {
