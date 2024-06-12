@@ -18,8 +18,10 @@ import java.util.UUID;
  *
  * @author Admin
  */
-public class ChucVuRepos implements IChucVuRepos{
-    private  DBConnection connection;
+public class ChucVuRepos implements IChucVuRepos {
+
+    private DBConnection connection;
+
     @Override
     public ArrayList<ChucVu> getListFormDB() {
         ArrayList<ChucVu> listCV = new ArrayList<>();
@@ -42,12 +44,13 @@ public class ChucVuRepos implements IChucVuRepos{
 
     @Override
     public Boolean add(ChucVu cv) {
+        int check ;
         try (Connection con = connection.getConnection()) {
             String sql = "INSERT INTO CHUCVU (MACV,TENCV) VALUES  (?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setObject(1, cv.getMaCV());
             ps.setObject(2, cv.getTenCV());
-            ps.executeUpdate();
+            check= ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,12 +59,13 @@ public class ChucVuRepos implements IChucVuRepos{
 
     @Override
     public Boolean update(ChucVu cv) {
+        int check;
         try (Connection con = connection.getConnection()) {
             String sql = "UPDATE CHUCVU SET TENCV=? WHERE MACV=?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setObject(1, cv.getMaCV());
-            ps.setObject(2, cv.getTenCV());
-            ps.executeUpdate();
+            ps.setObject(2, cv.getTenCV()); 
+            check=ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,13 +73,30 @@ public class ChucVuRepos implements IChucVuRepos{
     }
 
     @Override
-    public ArrayList<ChucVu> search(String maCV) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ArrayList<ChucVu> search(String MaCV) {
+        ArrayList<ChucVu> chucVuList = new ArrayList<>();
+        try (Connection con = connection.getConnection()) {
+            String sql = "SELECT * FROM ChucVu WHERE MACV = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, MaCV);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                UUID id = UUID.fromString(rs.getString("id"));
+                String maCV = rs.getString("MACV");
+                String tenCV = rs.getString("TenCV");
+                ChucVu chucVu = new ChucVu();
+                chucVuList.add(chucVu);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return chucVuList;
     }
+       
 
     @Override
     public ArrayList<NhanVien> searchbyCV(String TenCV) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
 }

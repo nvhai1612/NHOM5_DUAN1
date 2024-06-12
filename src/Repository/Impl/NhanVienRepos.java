@@ -214,6 +214,23 @@ public class NhanVienRepos implements INhanVienRepos {
             e.printStackTrace();
             return Optional.empty();
         }
+    }
+    
+    public UUID SelectByname(String id) {
+        
+        try (Connection con = connection.getConnection();
+                PreparedStatement ps = con.prepareStatement("SELECT ID FROM NHANVIEN WHERE TENNV = ?")){
+            ps.setObject(1, id);
+            ResultSet rs = ps.executeQuery();
+           
+            while (rs.next()) {                
+                return UUID.fromString(rs.getString(1));
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        return null;
     }
 }

@@ -21,5 +21,7 @@ public interface IChucVuService {
     public void add(ChucVu cv);
 
     public void update(ChucVu cv);
+    
+        public ArrayList<ChucVu> search(String MaCV);
 
 }

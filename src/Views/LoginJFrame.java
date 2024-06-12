@@ -27,6 +27,7 @@ public class LoginJFrame extends javax.swing.JFrame {
      */
     public LoginJFrame() {
         initComponents();
+        setLocationRelativeTo(null);
         list = service.getAllDoMain();
     }
 
