@@ -8,7 +8,7 @@ package DomainModel;
  *
  * @author Buivuhoang
  */
-public class ThongKe {
+public class ThongKeSP {
 
     private String maSP;
     private String tenSP;
@@ -18,10 +18,10 @@ public class ThongKe {
     private String kichThuoc;
     private boolean trangThai;
 
-    public ThongKe() {
+    public ThongKeSP() {
     }
 
-    public ThongKe(String maSP, String tenSP, int soLuong, String chatLieu, String mauSac, String kichThuoc, boolean trangThai) {
+    public ThongKeSP(String maSP, String tenSP, int soLuong, String chatLieu, String mauSac, String kichThuoc, boolean trangThai) {
         this.maSP = maSP;
         this.tenSP = tenSP;
         this.soLuong = soLuong;

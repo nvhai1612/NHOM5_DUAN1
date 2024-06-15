@@ -1750,7 +1750,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
         dcbbtsp.setSelectedItem(sanPhamService.getAll().stream().filter(i -> i.getTenSP().equalsIgnoreCase(TenSP)).findFirst().get());
         txtSLTon.setText(SoLuongTon);
         txtNguoiTao.setText(NguoiTao);
-        if (TrangThaiSPCT.equalsIgnoreCase("Đang hoạt động")) {
+        if (TrangThaiSPCT.equalsIgnoreCase("Còn hàng")) {
             this.rdoConHang.setSelected(true);
         } else {
             this.rdoHetHang.setSelected(true);
@@ -1814,6 +1814,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
     private void btnThemSPCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPCTActionPerformed
         String MaSPCT = ((SanPhamVM) cbbSP.getSelectedItem()).getMaSP();
         UUID TenSP = ((SanPhamVM) cbbSP.getSelectedItem()).getId();
+//        UUID TenSP = spctrp.SelectSPByTen(txtTenSP.getText());
         String SoLuongTon = txtSLTon.getText();
         String NguoiTao = txtNguoiTao.getText();
         int TrangThai = rdoConHang.isSelected()== true ? 1 : 0;
@@ -1845,7 +1846,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLamMoiSPActionPerformed
 
     private void btnSuaSPCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaSPCTActionPerformed
-        String MaSPCT = ((SanPhamVM) cbbSP.getSelectedItem()).getMaSP();
+        String MaSPCT = txtMaSPCT.getText();
         UUID TenSP = ((SanPhamVM) cbbSP.getSelectedItem()).getId();
         String SoLuongTon = txtSLTon.getText();
         String NguoiTao = txtNguoiTao.getText();

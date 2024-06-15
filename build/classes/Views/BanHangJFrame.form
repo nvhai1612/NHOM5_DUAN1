@@ -44,6 +44,11 @@
     <Component class="javax.swing.JSeparator" name="jSeparator34">
     </Component>
     <Container class="javax.swing.JDialog" name="KhachHangDialog">
+      <Properties>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[880, 620]"/>
+        </Property>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -839,6 +844,35 @@
                                     <Column editable="true" title="Tha&#x300;nh ti&#xea;&#x300;n" type="java.lang.Object"/>
                                   </Table>
                                 </Property>
+                                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                                  <TableColumnModel selectionModel="0">
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                      <Title/>
+                                      <Editor/>
+                                      <Renderer/>
+                                    </Column>
+                                  </TableColumnModel>
+                                </Property>
                                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                                 </Property>
@@ -1107,32 +1141,30 @@
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Group type="102" attributes="0">
-                                                          <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                               <Group type="102" alignment="0" attributes="0">
                                                                   <Component id="jLabel60" min="-2" max="-2" attributes="0"/>
                                                                   <EmptySpace max="-2" attributes="0"/>
-                                                                  <Component id="txtKhuyenMai" min="-2" pref="89" max="-2" attributes="0"/>
+                                                                  <Component id="cbbKhuyenMai" max="32767" attributes="0"/>
                                                               </Group>
                                                               <Group type="102" alignment="0" attributes="0">
                                                                   <Component id="jLabel62" min="-2" max="-2" attributes="0"/>
                                                                   <EmptySpace max="-2" attributes="0"/>
                                                                   <Component id="cbbPTTT" min="-2" pref="113" max="-2" attributes="0"/>
                                                               </Group>
-                                                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                                                  <Group type="102" alignment="0" attributes="0">
-                                                                      <Component id="jLabel61" min="-2" max="-2" attributes="0"/>
-                                                                      <EmptySpace max="-2" attributes="0"/>
-                                                                      <Component id="txtCanThanhToan" max="32767" attributes="0"/>
-                                                                  </Group>
-                                                                  <Group type="102" alignment="0" attributes="0">
-                                                                      <Component id="jLabel59" min="-2" max="-2" attributes="0"/>
-                                                                      <EmptySpace max="-2" attributes="0"/>
-                                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                                          <Component id="txtTongTien" min="-2" pref="130" max="-2" attributes="0"/>
-                                                                          <Group type="102" alignment="1" attributes="0">
-                                                                              <Component id="btnChonKH1" min="-2" max="-2" attributes="0"/>
-                                                                              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                                                                          </Group>
+                                                              <Group type="102" alignment="0" attributes="0">
+                                                                  <Component id="jLabel61" min="-2" max="-2" attributes="0"/>
+                                                                  <EmptySpace max="-2" attributes="0"/>
+                                                                  <Component id="txtCanThanhToan" max="32767" attributes="0"/>
+                                                              </Group>
+                                                              <Group type="102" alignment="0" attributes="0">
+                                                                  <Component id="jLabel59" min="-2" max="-2" attributes="0"/>
+                                                                  <EmptySpace max="-2" attributes="0"/>
+                                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                                      <Component id="txtTongTien" min="-2" pref="130" max="-2" attributes="0"/>
+                                                                      <Group type="102" alignment="1" attributes="0">
+                                                                          <Component id="btnChonKH1" min="-2" max="-2" attributes="0"/>
+                                                                          <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                                                                       </Group>
                                                                   </Group>
                                                               </Group>
@@ -1203,12 +1235,12 @@
                                       <Component id="jLabel59" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="txtTongTien" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel60" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txtKhuyenMai" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cbbKhuyenMai" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel61" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="txtCanThanhToan" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1303,11 +1335,6 @@
                             <Property name="text" type="java.lang.String" value="Khuy&#xea;&#x301;n Ma&#x303;i (%):"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JLabel" name="txtKhuyenMai">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="0"/>
-                          </Properties>
-                        </Component>
                         <Component class="javax.swing.JLabel" name="jLabel61">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="C&#x1ea7;n thanh to&#xe1;n:"/>
@@ -1396,6 +1423,21 @@
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThanhToanActionPerformed"/>
                           </Events>
+                        </Component>
+                        <Component class="javax.swing.JComboBox" name="cbbKhuyenMai">
+                          <Properties>
+                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="e3" green="e7" red="de" type="rgb"/>
+                            </Property>
+                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                              <StringArray count="1">
+                                <StringItem index="0" value="Cho&#x323;n..."/>
+                              </StringArray>
+                            </Property>
+                          </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>

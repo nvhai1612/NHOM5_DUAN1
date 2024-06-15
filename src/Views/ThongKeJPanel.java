@@ -5,6 +5,7 @@
 package Views;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -13,7 +14,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ThongKeJPanel extends javax.swing.JPanel {
 
-    private Service.Impl.ThongKe sm = new Service.Impl.ThongKe();
+    private Service.Impl.ThongKeSP sm = new Service.Impl.ThongKeSP();
+    private Service.Impl.ThongKeHD sms = new Service.Impl.ThongKeHD();
     private DefaultTableModel mol = new DefaultTableModel();
     private int i = -1;
 
@@ -23,12 +25,21 @@ public class ThongKeJPanel extends javax.swing.JPanel {
     public ThongKeJPanel() {
         initComponents();
         this.fillTableSP(sm.getAll());
+        this.fillTableHD(sms.getAll());
     }
 
-    public void fillTableSP(ArrayList<DomainModel.ThongKe> list) {
+    public void fillTableSP(ArrayList<DomainModel.ThongKeSP> list) {
         mol = (DefaultTableModel) tbSanPham.getModel();
         mol.setRowCount(0);
-        for (DomainModel.ThongKe x : list) {
+        for (DomainModel.ThongKeSP x : list) {
+            mol.addRow(x.toDataRow());
+        }
+    }
+
+    public void fillTableHD(ArrayList<DomainModel.ThongKeHD> list) {
+        mol = (DefaultTableModel) tbHienThiHoaDon.getModel();
+        mol.setRowCount(0);
+        for (DomainModel.ThongKeHD x : list) {
             mol.addRow(x.toDataRow());
         }
     }
@@ -112,6 +123,7 @@ public class ThongKeJPanel extends javax.swing.JPanel {
         jPanel20 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         txtTimKiemHoaDon = new javax.swing.JTextField();
+        btnTimKiemHD = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbHienThiHoaDon = new javax.swing.JTable();
 
@@ -380,7 +392,7 @@ public class ThongKeJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE))
+                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 813, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -548,6 +560,11 @@ public class ThongKeJPanel extends javax.swing.JPanel {
 
         jLabel5.setText("Mã sản phẩm ");
 
+        txtTimKiemSanPham.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimKiemSanPhamActionPerformed(evt);
+            }
+        });
         txtTimKiemSanPham.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtTimKiemSanPhamKeyReleased(evt);
@@ -828,6 +845,13 @@ public class ThongKeJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnTimKiemHD.setText("Tìm Kiếm");
+        btnTimKiemHD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemHDActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
         jPanel20Layout.setHorizontalGroup(
@@ -837,6 +861,8 @@ public class ThongKeJPanel extends javax.swing.JPanel {
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
                 .addComponent(txtTimKiemHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTimKiemHD, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel20Layout.setVerticalGroup(
@@ -844,8 +870,9 @@ public class ThongKeJPanel extends javax.swing.JPanel {
             .addGroup(jPanel20Layout.createSequentialGroup()
                 .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTimKiemHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(0, 6, Short.MAX_VALUE))
+                    .addComponent(jLabel6)
+                    .addComponent(btnTimKiemHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         tbHienThiHoaDon.setAutoCreateRowSorter(true);
@@ -876,7 +903,7 @@ public class ThongKeJPanel extends javax.swing.JPanel {
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -941,6 +968,14 @@ public class ThongKeJPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_txtTimKiemHoaDonKeyReleased
 
+    private void txtTimKiemSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemSanPhamActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTimKiemSanPhamActionPerformed
+
+    private void btnTimKiemHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemHDActionPerformed
+
+    }//GEN-LAST:event_btnTimKiemHDActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LbDaHuyhd;
@@ -952,6 +987,7 @@ public class ThongKeJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnDaBan;
     private javax.swing.JButton btnDangBan;
     private javax.swing.JButton btnLammoi;
+    private javax.swing.JButton btnTimKiemHD;
     private javax.swing.JComboBox<String> cbbNamDt;
     private javax.swing.JLabel h;
     private javax.swing.JLabel hh;
