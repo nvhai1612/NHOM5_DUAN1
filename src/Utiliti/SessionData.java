@@ -4,7 +4,7 @@
  */
 package Utiliti;
 
-import ViewModel.KhachHang_Respon;
+import ViewModel.KhachHangVM;
 
 /**
  *
@@ -12,6 +12,6 @@ import ViewModel.KhachHang_Respon;
  */
 public class SessionData {
     public static String account;
-    public static KhachHang_Respon  sdtKH;
+    public static KhachHangVM sdtKH;
     public static String maHD;
 }
