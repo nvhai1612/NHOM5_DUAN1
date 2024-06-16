@@ -9,6 +9,7 @@
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/Impl/ChucVuRepos.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/DomainModel/NhanVien.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/BanHangJFrame.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/DoiMatKhauJPanel.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/NhanVienJPanel.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/SPCTJPanel.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Service/IChucVuService.java</file>
@@ -16,8 +17,10 @@
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/IChucVuRepos.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Service/Impl/NhanVienService.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/ViewModel/ChucVuVM.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/KhachHangJPanel.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/Impl/NhanVienRepos.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/QuenMKJFrame.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/Impl/MauSacRepos.java</file>
         </group>
     </open-files>
 </project-private>
