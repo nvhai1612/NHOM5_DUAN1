@@ -6,6 +6,7 @@ package Views;
 
 import DomainModel.NhanVien;
 import Service.Impl.NhanVienService;
+import Utiliti.SessionData;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import javax.swing.JOptionPane;
  * @author Admin
  */
 public class LoginJFrame extends javax.swing.JFrame {
-
+    
     private NhanVienService service = new NhanVienService();
     List<NhanVien> list = new ArrayList<>();
 
@@ -181,6 +182,7 @@ public class LoginJFrame extends javax.swing.JFrame {
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         String Email = txtUN.getText();
         String matKhau = txtMatKhau.getText();
+        
 
         if (Email.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Email không được để trống");
@@ -200,7 +202,8 @@ public class LoginJFrame extends javax.swing.JFrame {
                 
                 BanHangJFrame banHangForm = new BanHangJFrame();
                 banHangForm.setTenNhanVien(nv.getTenNV());
-                 banHangForm.setVisible(true);         
+                 banHangForm.setVisible(true);   
+                 SessionData.account = Email;
             // Ẩn form đăng nhập hiện tại
             this.setVisible(false);
             } else {

@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -103,6 +104,7 @@ public class KhachHangRepos implements IKhachHangRepos{
         ResultSet rs = prsm.executeQuery();
         while (rs.next()) {
             KhachHang kh = new KhachHang();
+            kh.setId(UUID.fromString(rs.getString("id")));
             kh.setMaKH(rs.getString("MAKH"));
             kh.setTenKH(rs.getString("TENKH"));
             kh.setNgaySinh(rs.getString("NGAYSINH"));

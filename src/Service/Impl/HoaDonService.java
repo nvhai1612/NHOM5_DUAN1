@@ -73,6 +73,10 @@ public class HoaDonService implements IHoaDonService{
     public void DeleteSPGH(String MaHD, String MaSPCT, Integer SL, Integer SLTon){
         hoadonrepos.DeleteSPGH(MaHD, MaSPCT, SL, SLTon);
     }
+    
+    public void HuyThanhToan(String MaHD, String LyDoHuy, Integer SL, Integer SLTon, String MaSPCT){
+        hoadonrepos.HuyThanhToan(MaHD, LyDoHuy, SL, SLTon, MaSPCT);
+    }
 
     public void update(HoaDon hd, Map<String, Integer> maSPs) {
         HoaDon hd2 = hoadonrepos.findHoaDonByMa(hd.getMaHD());

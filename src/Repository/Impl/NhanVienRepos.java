@@ -215,18 +215,24 @@ public class NhanVienRepos implements INhanVienRepos {
             return Optional.empty();
         }
     }
-    
+
     public UUID SelectByname(String id) {
-        
-        try (Connection con = connection.getConnection();
-                PreparedStatement ps = con.prepareStatement("SELECT ID FROM NHANVIEN WHERE TENNV = ?")){
-            ps.setObject(1, id);
+
+        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("SELECT ID FROM NHANVIEN WHERE TENNV = ? or email = ?")) {
+            if (id.contains("@")) {
+                ps.setObject(2, id);
+                ps.setObject(1, "");
+
+            } else {
+                ps.setObject(1, id);
+                ps.setObject(2, "");
+            }
             ResultSet rs = ps.executeQuery();
-           
-            while (rs.next()) {                
+
+            while (rs.next()) {
                 return UUID.fromString(rs.getString(1));
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
