@@ -28,5 +28,11 @@ public interface INhanVienService {
     public Boolean existsByMaNV(String MaNV);
 
     Optional<NhanVien> CheckLogin(String Email, String MatKhau);
+    
+        public Optional<NhanVien> findByEmail(String email);
+
+    public Boolean updateMatKhau(String maNV, String newMatKhau);
+    
+     public  Boolean checkMK(String maNV, String matKhauCu);
 
 }

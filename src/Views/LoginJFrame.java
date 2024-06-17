@@ -21,6 +21,8 @@ public class LoginJFrame extends javax.swing.JFrame {
     private NhanVienService service = new NhanVienService();
     List<NhanVien> list = new ArrayList<>();
 
+
+
     /**
      * Creates new form LoginJFrame
      */
@@ -182,7 +184,7 @@ public class LoginJFrame extends javax.swing.JFrame {
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         String Email = txtUN.getText();
-
+        
         String matKhau = ptxtMatKhau.getText();
 
 
@@ -200,6 +202,9 @@ public class LoginJFrame extends javax.swing.JFrame {
             NhanVien nv = nvOptional.get();
             if (nv.getTrangThaiNV() == 1) {
                 JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
+
+
+                SessionData.thongTinNV = nv ;
 
                 BanHangJFrame banHangForm = new BanHangJFrame();
                 banHangForm.setTenNhanVien(nv.getTenNV());

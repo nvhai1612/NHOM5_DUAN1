@@ -20,16 +20,16 @@ import java.util.UUID;
  *
  * @author Admin
  */
-public class KhachHangRepos implements IKhachHangRepos{
+public class KhachHangRepos implements IKhachHangRepos {
 
     DBConnection connection;
+
     @Override
     public ArrayList<KhachHang> getAllKhachHang() {
         ArrayList<KhachHang> listKH = new ArrayList<>();
 
-        try (Connection con = connection.getConnection();
-               PreparedStatement ps = con.prepareStatement("SELECT MaKH, TenKH, NgaySinh, GioiTinh, Sdt, DiaChi FROM KhachHang")) {
-                ResultSet rs = ps.executeQuery();
+        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("SELECT MaKH, TenKH, NgaySinh, GioiTinh, Sdt, DiaChi FROM KhachHang")) {
+            ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 KhachHang kh = new KhachHang();
@@ -39,7 +39,7 @@ public class KhachHangRepos implements IKhachHangRepos{
                 kh.setGioiTinh(rs.getInt("GIOITINH"));
                 kh.setSdt(rs.getString("SDT"));
                 kh.setDiaChi(rs.getString("DIACHI"));
-           
+
                 listKH.add(kh);
             }
 
@@ -54,19 +54,24 @@ public class KhachHangRepos implements IKhachHangRepos{
         try {
             Connection coon = connection.getConnection();
             PreparedStatement prsm = coon.prepareStatement("INSERT INTO KHACHHANG (maKH, tenKH, ngaySinh, gioiTinh, sdt, diaChi) VALUES (?, ?, ?, ?, ?, ?)");
-                prsm.setString(1, kh.getMaKH());
-                prsm.setString(2, kh.getTenKH());
+            prsm.setString(1, kh.getMaKH());
+            prsm.setString(2, kh.getTenKH());
+            if (kh.getNgaySinh() == null || kh.getNgaySinh().isEmpty()) {
+                prsm.setNull(3, java.sql.Types.DATE);
+            } else {
                 prsm.setString(3, kh.getNgaySinh());
-                prsm.setInt(4, kh.getGioiTinh());
-                prsm.setString(5, kh.getSdt());
-                prsm.setString(6, kh.getDiaChi());
-                check = prsm.executeUpdate();
-                return check>0;
+            }
+            prsm.setInt(4, kh.getGioiTinh());
+            prsm.setString(5, kh.getSdt());
+            prsm.setString(6, kh.getDiaChi());
+            check = prsm.executeUpdate();
+            return check > 0;
         } catch (Exception e) {
-             e.printStackTrace();
+            e.printStackTrace();
             return false;
-        }    
+        }
     }
+
     @Override
     public Boolean update(KhachHang kh) {
         int check;
@@ -74,51 +79,54 @@ public class KhachHangRepos implements IKhachHangRepos{
             Connection coon = connection.getConnection();
             PreparedStatement prsm = coon.prepareStatement("UPDATE KHACHHANG SET TENKH = ?, NGAYSINH = ?, GIOITINH = ?, SDT = ?, DIACHI = ? WHERE MAKH = ?");
             prsm.setString(6, kh.getMaKH());
-            prsm.setString(1, kh.getTenKH());               
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date utilDate = sdf.parse(kh.getNgaySinh());
-            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-            prsm.setDate(2, sqlDate);          
+            prsm.setString(1, kh.getTenKH());
+            if (kh.getNgaySinh() == null || kh.getNgaySinh().isEmpty()) {
+                prsm.setNull(2, java.sql.Types.DATE);
+            } else {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date utilDate = sdf.parse(kh.getNgaySinh());
+                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                prsm.setDate(2, sqlDate);
+            }
             prsm.setInt(3, kh.getGioiTinh());
             prsm.setString(4, kh.getSdt());
             prsm.setString(5, kh.getDiaChi());
-            
+
             check = prsm.executeUpdate();
             return check > 0;
         } catch (Exception e) {
-             e.printStackTrace();
+            e.printStackTrace();
             return false;
-        }    
+        }
     }
-
 
     @Override
     public ArrayList<KhachHang> search(String ma) {
         ArrayList<KhachHang> khachHangList = new ArrayList<>();
-    try {
-        Connection coon = connection.getConnection();
-        String sql = "SELECT * FROM KHACHHANG WHERE MAKH LIKE ?";
-        PreparedStatement prsm = coon.prepareStatement(sql);
-        prsm.setString(1, "%" + ma + "%");
+        try {
+            Connection coon = connection.getConnection();
+            String sql = "SELECT * FROM KHACHHANG WHERE MAKH LIKE ?";
+            PreparedStatement prsm = coon.prepareStatement(sql);
+            prsm.setString(1, "%" + ma + "%");
 
-        ResultSet rs = prsm.executeQuery();
-        while (rs.next()) {
-            KhachHang kh = new KhachHang();
-            kh.setId(UUID.fromString(rs.getString("ID")));
-            kh.setMaKH(rs.getString("MAKH"));
-            kh.setTenKH(rs.getString("TENKH"));
-            kh.setNgaySinh(rs.getString("NGAYSINH"));
-            kh.setGioiTinh(rs.getInt("GIOITINH"));
-            kh.setSdt(rs.getString("SDT"));
-            kh.setDiaChi(rs.getString("DIACHI"));
-            khachHangList.add(kh);
+            ResultSet rs = prsm.executeQuery();
+            while (rs.next()) {
+                KhachHang kh = new KhachHang();
+                kh.setId(UUID.fromString(rs.getString("ID")));
+                kh.setMaKH(rs.getString("MAKH"));
+                kh.setTenKH(rs.getString("TENKH"));
+                kh.setNgaySinh(rs.getString("NGAYSINH"));
+                kh.setGioiTinh(rs.getInt("GIOITINH"));
+                kh.setSdt(rs.getString("SDT"));
+                kh.setDiaChi(rs.getString("DIACHI"));
+                khachHangList.add(kh);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return khachHangList;
     }
-    return khachHangList;
-    }
-    
+
     public List<HoaDon> getLichSuaGiaoDich(String maKH) {
         List<HoaDon> lichSu = new ArrayList<>();
         try {
@@ -139,5 +147,5 @@ public class KhachHangRepos implements IKhachHangRepos{
         }
         return lichSu;
     }
-    
+
 }

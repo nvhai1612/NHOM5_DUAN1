@@ -58,5 +58,24 @@ public class NhanVienService implements INhanVienService{
     public Optional<NhanVien> CheckLogin(String Email, String MatKhau) {
     return nvRepo.CheckLogin(Email, MatKhau);
     }
+
+    @Override
+    public Optional<NhanVien> findByEmail(String email) {
+    
+        return nvRepo.findByEmail(email);
+    
+    }
+
+    @Override
+    public Boolean updateMatKhau(String maNV, String newMatKhau) {
+    
+        return nvRepo.updateMatKhau(maNV, newMatKhau);
+    
+    }
+
+    @Override
+    public Boolean checkMK(String maNV, String matKhauCu) {
+       return  nvRepo.checkMK(maNV, matKhauCu);
+    }
     
 }

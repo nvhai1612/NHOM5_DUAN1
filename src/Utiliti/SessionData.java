@@ -4,6 +4,7 @@
  */
 package Utiliti;
 
+import DomainModel.NhanVien;
 import ViewModel.KhachHangVM;
 
 /**
@@ -14,4 +15,5 @@ public class SessionData {
     public static String account;
     public static KhachHangVM sdtKH;
     public static String maHD;
+    public static NhanVien thongTinNV;
 }
