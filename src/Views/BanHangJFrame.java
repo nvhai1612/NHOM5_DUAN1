@@ -62,6 +62,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
     DefaultTableModel tableModel;
     DefaultTableModel tableModel1HoaDon;
     Map<String, Integer> Sps = new HashMap<>();
+    public static String maHD;
 
     KhachHangService service = new KhachHangService();
     DefaultTableModel tableModelHoaDon;
@@ -1547,6 +1548,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         int row = tblHoaDon.getSelectedRow();
+        
         if (row < 0) {
             JOptionPane.showMessageDialog(this, "Chọn hoá đơn bạn muốn thanh toán");
             return;
@@ -1557,10 +1559,10 @@ public class BanHangJFrame extends javax.swing.JFrame {
             return;
         }
 
-        if (tblGioHang.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(this, "Hóa đơn chưa có sản phẩm");
-            return;
-        }
+//        if (tblGioHang.getSelectedRow() == -1) {
+//            JOptionPane.showMessageDialog(this, "Hóa đơn chưa có sản phẩm");
+//            return;
+//        }
 
         try {
             if (Double.parseDouble(txtTienKhachDua.getText()) < Double.parseDouble(txtCanThanhToan.getText())) {
