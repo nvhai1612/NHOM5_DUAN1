@@ -179,7 +179,7 @@ public class LoginJFrame extends javax.swing.JFrame {
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         String Email = txtUN.getText();
-        String matKhau = txtMatKhau.getText();
+        String matKhau = ptxtMatKhau.getText();
 
         if (Email.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Email không được để trống");
