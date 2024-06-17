@@ -30,7 +30,7 @@ public class KhuyenMaiRepons implements IkhuyenMairepons {
         ArrayList<KhuyenMai> khuyenmai = new ArrayList<>();
 
         try (Connection con = Connection.getConnection(); PreparedStatement ps = con.prepareStatement(
-                "Select ID,IDSP,MAKM,TENKM,MUCGIAMGIA,THOIGIANBATDAU,THOIGIANKETTHUC,TRANGTHAIKM,SOLUONG\n"
+                "Select ID,IDHD,MAKM,TENKM,MUCGIAMGIA,THOIGIANBATDAU,THOIGIANKETTHUC,TRANGTHAIKM,SOLUONG\n"
                 + "from KHUYENMAI ")) {
 
             ResultSet rs = ps.executeQuery();
@@ -38,7 +38,7 @@ public class KhuyenMaiRepons implements IkhuyenMairepons {
             while (rs.next()) {
                 KhuyenMai km = new KhuyenMai();
                 km.setIdKM(rs.getObject(1, UUID.class));
-                km.setIDSP(rs.getObject(2, UUID.class));
+                km.setIDHD(rs.getObject(2, UUID.class));
                 km.setMaKM(rs.getString(3));
                 km.setTenKM(rs.getString(4));
                 km.setMucGiamGia(rs.getFloat(5));

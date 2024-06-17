@@ -1258,13 +1258,13 @@ public class BanHangJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBanHangActionPerformed
 
     private void btnLichSuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLichSuActionPerformed
-//        try {
-//            pnlCards.removeAll();
-//            pnlCards.add(new LichSuJPanel());
-//            pnlCards.repaint();
-//            pnlCards.revalidate();
-//        } catch (Exception e) {
-//        }
+        try {
+            pnlCards.removeAll();
+            pnlCards.add(new LichSuJPanel());
+            pnlCards.repaint();
+            pnlCards.revalidate();
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnLichSuActionPerformed
 
     private void btnSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSanPhamActionPerformed
