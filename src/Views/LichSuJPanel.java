@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class LichSuJPanel extends javax.swing.JPanel {
 
-    private HDCTRepos hDCTCTRepos = new HDCTRepos();
+   private HDCTRepos hDCTCTRepos = new HDCTRepos();
     DefaultTableModel dtmsp = new DefaultTableModel();
     DefaultTableModel dtmgh = new DefaultTableModel();
     DefaultTableModel dtmhd = new DefaultTableModel();
@@ -42,37 +42,19 @@ public class LichSuJPanel extends javax.swing.JPanel {
     private void LoadTable() {
         DefaultTableModel dtm = (DefaultTableModel) tblHoaDon.getModel();
         dtm.setRowCount(0);
-
         ArrayList<HoaDonDTO> listDTO = hDCTCTRepos.getListFormDB();
-
         for (HoaDonDTO hdct : listDTO) {
             dtm.addRow(new Object[]{
                 hdct.getMaHD(),
                 hdct.getTenNV(),
-                hdct.getTenKH(),
+                hdct.getTenKH()== null ? "KH vãng lai" : hdct.getTenKH(),
                 //new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(hdvm.getNgayTao()),
-                hdct.getTrangThai() == 1 ? "Đã thanh toán" : "Hủy",});
+                hdct.getTrangThai() == 0 ? "Đã thanh toán" : "Hủy",});
         }
     }
-//       private void LoadTableHoaDon() {
-//        dtmhd = (DefaultTableModel) tblHoaDon.getModel();
-//        dtmhd.setRowCount(0);
-//
-//        ArrayList<HoaDonVM> listHDVM = hoaDonService.getAll().isEmpty() ? hoaDonService.getAllHoaDon() : hoaDonService.getAll();
-//        for (HoaDonVM hdvm : listHDVM) {
-//            dtmhd.addRow(new Object[]{
-//                hdvm.getMaHD(),
-//                hdvm.getTenNV(),
-//                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(hdvm.getNgayTao()),
-//                hdvm.getTrangThaiHD() == 1 ? "Chờ thanh toán" : "Đã thanh toán"
-//            });
-//        }
-//    }
-
     private void LoadHoaDonCho(String MaHD) {
         dtmgh = (DefaultTableModel) tblTTSP.getModel();
         dtmgh.setRowCount(0);
-
         ArrayList<SPCT> listHDC = hoaDonService.HoaDonCho(MaHD);
         for (SPCT spct : listHDC) {
             dtmgh.addRow(new Object[]{
@@ -84,54 +66,41 @@ public class LichSuJPanel extends javax.swing.JPanel {
         }
         TinhTien();
     }
-
     public void TinhTien() {
-
         float CanThanhToan = 0;
         float ThanhTien = 0;
-        double Khuyenmai = 0.20f * 100;
+        double Khuyenmai = 0;
         int Tienkhachdua = 0;
         float Tienthua = 0;
         for (int i = 0; i < tblTTSP.getRowCount(); i++) {
             ThanhTien += Float.valueOf(tblTTSP.getValueAt(i, 4).toString());
-            CanThanhToan = (float) (ThanhTien - (ThanhTien * Khuyenmai / 100));
+            CanThanhToan = (float) (ThanhTien - Khuyenmai);
             Tienthua = Tienkhachdua - CanThanhToan;
         }
-
         txtTongTien.setText(String.valueOf(CanThanhToan));
-//        txtKhuyenMai.setText(String.valueOf(Khuyenmai));
-//        txtCanThanhToan.setText(String.valueOf(CanThanhToan));
-//        txtTienKhachDua.setText(String.valueOf(Tienkhachdua));
-//        txtTienThua.setText(String.valueOf(Tienthua));
-//        txtTrangThai.setText(String.valueOf("đã thanh toán"));
     }
-
+        public void reset() {
+        txtTongTien.setText("0");
+        txtDiaChi.setText("0");
+        txtTenKH.setText("KH Vãng Lai");
+        txtDiaChi.setText("0");
+        txtTenNV.setText("0");
+        txtTenKH.setText("Vãng lai");
+        txtNgayThanhToan.setText("");
+        dtmgh = (DefaultTableModel) tblHoaDon.getModel();
+        dtmgh.setRowCount(0);
+    }
     private void showTable(int row) {
         HoaDonDTO kh = hDCTCTRepos.getListFormDB().get(row);
         txtMa.setText(kh.getMaHD());
         txtTenNV.setText(kh.getTenNV());
-        txtTenKH.setText(kh.getTenKH());
+        txtTenKH.setText(kh.getTenKH()==null ? "KH vãng Lai":kh.getTenKH());
         txtSDT.setText(kh.getSDT());
         txtDiaChi.setText(kh.getDiachi());
         int trangThai = kh.getTrangThai();
         String trangThaiStr = (trangThai == 1) ? "Đã thanh toán" : "Hủy";
         txtTrangThai.setText(trangThaiStr);
         txtNgayThanhToan.setText(kh.getNgayTao());
-//        txtNgayThanhToan.setText(DATE.toString(kh.getNgayThanhToan()));
-        
-//       txtTrangThai.setText(Integer.toString(kh.getTrangThai())== 1 ? "Đã thanh toán" : "Hủy") ;
-
-//         txtTrangThai.setText(Integer.valueOf(kh.getTrangThai()));
-//        txtTenKH.setText(kh.getTenKH());
-//        txtNgaySinh.setText(kh.getNgaySinh());
-//         System.out.println("GioiTinh: " + kh.getGioiTinh());
-//        if (kh.getGioiTinh().equals(1)){
-//            rdoNam.setSelected(true);
-//        }else{
-//            rdoNu.setSelected(true);
-//        }
-//        txtSdt.setText(kh.getSdt());
-//        taDiaChi.setText(kh.getDiaChi());
     }
 
     /**
@@ -460,7 +429,7 @@ public class LichSuJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tblHoaDonMouseClicked
 
     private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
-        String keyword = txtTimKiem.getText().trim();
+       String keyword = txtTimKiem.getText().trim();
         if (keyword != null) {
             DefaultTableModel tableModel = (DefaultTableModel) tblHoaDon.getModel();
             tableModel.setRowCount(0);
@@ -468,8 +437,8 @@ public class LichSuJPanel extends javax.swing.JPanel {
             for (HoaDonDTO kh : list) {
                 tableModel.addRow(new Object[]{
                     kh.getMaHD(),
-                    kh.getTenKH(),
-                    kh.getTenNV(),
+                    kh.getTenKH()==null ? "KH vãng lai":kh.getTenKH(),
+                    kh.getTenNV()==null ? "nguyễn văn tùng":kh.getTenNV(),
                     kh.getTrangThai() == 1 ? "Đã thanh toán" : "Hủy",});
             }
         }

@@ -1588,6 +1588,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
         hoaDonService.updateTrangThaiHoaDon(MaHD, TrangThaiHD, Float.valueOf(TongTien), MaHD);
         LoadTableHoaDon();
         reset();
+        JOptionPane.showMessageDialog(this, "Tạo hóa đơn thành công!");
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void btnThemKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKHActionPerformed

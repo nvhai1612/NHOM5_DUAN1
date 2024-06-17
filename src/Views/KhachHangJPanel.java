@@ -438,6 +438,7 @@ public class KhachHangJPanel extends javax.swing.JPanel {
         service.add(kh);
         loadTableKhachHang();
         xoa();
+        JOptionPane.showMessageDialog(this, "Thêm mới thành công");
     }//GEN-LAST:event_btnThemActionPerformed
     
     void xoa() {

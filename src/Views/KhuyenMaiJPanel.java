@@ -4,17 +4,157 @@
  */
 package Views;
 
+import DomainModel.KhuyenMai;
+import DomainModel.SPCT;
+import Service.Impl.KhuyenMaiService;
+import Service.Impl.SPCTService;
+import ViewModel.khuyeMaiVM;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
  */
 public class KhuyenMaiJPanel extends javax.swing.JPanel {
+    
+    ArrayList<KhuyenMai> list = new ArrayList<>();
+    SPCTService seviec2 = new SPCTService();
+    KhuyenMaiService seviec = new KhuyenMaiService();
+
+    DefaultTableModel dtm;
 
     /**
      * Creates new form KhuyenMaiJPanel
      */
     public KhuyenMaiJPanel() {
         initComponents();
+        LoadTable();
+    }
+    private void LoadTable() {
+        DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
+        dtm.setRowCount(0);
+        ArrayList<khuyeMaiVM> listSPVM = seviec.getAll();
+
+        for (khuyeMaiVM x : listSPVM) {
+            dtm.addRow(new Object[]{
+                x.getMaKM(),
+                x.getTenKM(),
+                x.getMucGiamGia(),
+                x.getThoiGianBatDau(),
+                x.getThoiGianKetThuc(),
+                x.getSoLuong(),
+                x.getTrangThai() == 1 ? "Hoạt động" : "Dừng Hoạt động",
+            }
+            );
+        }
+    }
+    public boolean checkvailidate() {
+        if (jTextField1.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "bạn cần nhập mã");
+            return false;
+        }
+        if (jTextField2.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "bạn cần nhập tên");
+            return false;
+        }
+        if (jTextField4.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "bạn cần nhập mức giảm giá");
+            return false;
+        }
+        if (jTextField5.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "bạn cần nhập thời gian bắt đâuuf");
+            return false;
+        }
+        if (jTextField6.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "bạn cần nhập thời gian kết thúc");
+            return false;
+
+        }
+        if (jTextField7.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "bạn cần nhập số lượng");
+            return false;
+
+        }
+        return true;
+    }
+
+    public boolean getform() {
+//        String UUIDString=UUID.fromString(TOOL_TIP_TEXT_KEY)
+        String makm = jTextField1.getText();
+        String tensp = jTextField2.getText();
+        String mucgiangia = jTextField4.getText();
+        int TrangThai = jRadioButton1.isSelected() == true ? 1 : 0;
+        Date ngaybatdau = Date.valueOf(jTextField5.getText());
+        Date ngayketthuc = Date.valueOf(jTextField6.getText());
+        String soluong = jTextField7.getText();
+        KhuyenMai km = new KhuyenMai();
+//        km.setIDHD(UUID.fromString());
+        km.setMaKM(makm);
+        km.setTenKM(tensp);
+        km.setMucGiamGia(Float.valueOf(mucgiangia));
+        km.setThoiGianBatDau(ngaybatdau);
+        km.setThoiGianKetThuc(ngayketthuc);
+        km.setTrangThai(TrangThai);
+        km.setSoLuong(Integer.valueOf(soluong));
+        this.seviec.add(km);
+        lammoi();
+        this.LoadTable();
+        return true;
+    }
+
+    public boolean updateform() {
+        String makm = jTextField1.getText();
+        String tensp = jTextField2.getText();
+        String mucgiangia = jTextField4.getText();
+        int TrangThai = jRadioButton1.isSelected() == true ? 1 : 0;
+        Date ngaybatdau = Date.valueOf(jTextField5.getText());
+        Date ngayketthuc = Date.valueOf(jTextField6.getText());
+
+        String soluong = jTextField7.getText();
+        KhuyenMai km = new KhuyenMai();
+        km.setMaKM(makm);
+        km.setTenKM(tensp);
+        km.setMucGiamGia(Float.valueOf(mucgiangia));
+        km.setThoiGianBatDau(ngaybatdau);
+        km.setThoiGianKetThuc(ngayketthuc);
+        km.setTrangThai(TrangThai);
+        km.setSoLuong(Integer.valueOf(soluong));
+        this.seviec.update(km);
+        lammoi();
+        this.LoadTable();
+        return true;
+    }
+
+    public void lammoi() {
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+
+    }
+
+    private void showSPKM(String maSPCT) {
+        List<SPCT> list = seviec.getSPCT(maSPCT);
+        DefaultTableModel tableModel1HoaDon = (DefaultTableModel) jTable1.getModel();
+        tableModel1HoaDon.setRowCount(0);
+        for (SPCT sp : list) {
+            tableModel1HoaDon.addRow(new Object[]{
+                sp.getMaSPCT(),
+                sp.getTenSP(),
+                sp.getTenKC(),
+                sp.getTenMS(),
+                sp.getTenCL(), sp.getTenTH(), sp.getDonGia(),
+                sp.getKM()
+
+            });
+        }
     }
 
     /**
@@ -26,6 +166,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -135,6 +276,11 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm khuyến mại", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         jButton1.setText("Tìm kiếm");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -167,6 +313,11 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
                 "Mã KM", "Tên KM", "Mức KM", "Bắt đầu", "Kết thúc", "Số lượng", "Trạng thái"
             }
         ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -207,18 +358,36 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
 
         jLabel6.setText("Số lượng :");
 
+        buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setSelected(true);
         jRadioButton1.setText("Đang hoạt động");
 
+        buttonGroup1.add(jRadioButton2);
         jRadioButton2.setText("Ngưng hoạt động");
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton2.setText("Lưu");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton4.setText("Cập nhật");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton4MouseClicked(evt);
+            }
+        });
 
         jButton5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton5.setText("Làm mới");
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton5MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -345,8 +514,85 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+         ArrayList<khuyeMaiVM> km = seviec.getAll();
+        String TimKiem = this.jTextField3.getText();
+        int index = -1;
+        for (khuyeMaiVM listkm : km) {
+            if (TimKiem.equalsIgnoreCase(listkm.getMaKM())) {
+                index = km.indexOf(listkm);
+            }
+        }
+        if (index == -1) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy !");
+            return;
+        }
+        jTextField1.setText(km.get(index).getMaKM());
+        jTextField2.setText(km.get(index).getTenKM());
+        jTextField4.setText(String.valueOf(km.get(index).getMucGiamGia()));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        jTextField5.setText(sdf.format(km.get(index).getThoiGianBatDau()));
+        SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd");
+        jTextField6.setText(sdt.format(km.get(index).getThoiGianKetThuc()));
+        jTextField7.setText(String.valueOf(km.get(index).getSoLuong()));
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+          if (checkvailidate()) {
+            boolean km = this.getform();
+            if (seviec.add(km)!= null) {
+                JOptionPane.showMessageDialog(this, "them thành công");
+                this.LoadTable();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "thâme thất bại");
+            }
+        }
+
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
+          if (checkvailidate()) {
+            boolean km = this.updateform();
+            if (seviec.update(km) != null) {
+                JOptionPane.showMessageDialog(this, "them thành công");
+                this.LoadTable();
+            } else {
+                JOptionPane.showMessageDialog(this, "thâme thất bại");
+            }
+        }
+    }//GEN-LAST:event_jButton4MouseClicked
+
+    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+       lammoi();
+    }//GEN-LAST:event_jButton5MouseClicked
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+           int row = jTable2.getSelectedRow();
+        if (row == -1) {
+            return;
+        }
+        jTextField1.setText(jTable2.getValueAt(row, 0).toString());
+        jTextField2.setText(jTable2.getValueAt(row, 1).toString());
+        jTextField4.setText(jTable2.getValueAt(row, 2).toString());
+        jTextField5.setText(jTable2.getValueAt(row, 3).toString());
+        jTextField6.setText(jTable2.getValueAt(row, 4).toString());
+        jTextField7.setText(jTable2.getValueAt(row, 5).toString());
+
+        String t = jTable2.getValueAt(row, 6).toString();
+
+        if (t.equals("Yes")) {
+            jRadioButton1.setSelected(true);
+        } else {
+            jRadioButton2.setSelected(true);
+        }
+        String maSP = jTable2.getValueAt(row, 0).toString();
+        showSPKM(maSP);
+    }//GEN-LAST:event_jTable2MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
