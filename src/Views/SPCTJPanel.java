@@ -1867,32 +1867,44 @@ public class SPCTJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLamMoiSPActionPerformed
 
     private void btnSuaSPCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaSPCTActionPerformed
-        String MaSPCT = txtMaSPCT.getText();
-        UUID TenSP = ((SanPhamVM) cbbSP.getSelectedItem()).getId();
-        String SoLuongTon = txtSLTon.getText();
-        String NguoiTao = txtNguoiTao.getText();
-        int TrangThai = rdoConHang.isSelected() == true ? 1 : 0;
-        UUID TenCL = ((ChatLieuVM) cbbCL.getSelectedItem()).getId();
-        UUID TenKC = ((KichCoVM) cbbKC.getSelectedItem()).getId();
-        UUID TenMS = ((MauSacVM) cbbMS.getSelectedItem()).getId();
-        UUID TenTH = ((ThuongHieuVM) cbbTH.getSelectedItem()).getId();
-        String DonGia = txtDonGia.getText();
+        int selectedRow = tblSPCT.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm chi tiết để sửa!");
+            return;
+        }
+        int check = JOptionPane.showConfirmDialog(this, "Xác nhận sửa!");
+            if (check == JOptionPane.YES_OPTION) {
+            String MaSPCT = txtMaSPCT.getText();
+            UUID TenSP = ((SanPhamVM) cbbSP.getSelectedItem()).getId();
+            String SoLuongTon = txtSLTon.getText();
+            String NguoiTao = txtNguoiTao.getText();
+            int TrangThai = rdoConHang.isSelected() == true ? 1 : 0;
+            UUID TenCL = ((ChatLieuVM) cbbCL.getSelectedItem()).getId();
+            UUID TenKC = ((KichCoVM) cbbKC.getSelectedItem()).getId();
+            UUID TenMS = ((MauSacVM) cbbMS.getSelectedItem()).getId();
+            UUID TenTH = ((ThuongHieuVM) cbbTH.getSelectedItem()).getId();
+            String DonGia = txtDonGia.getText();
 
-        SPCT spct = new SPCT();
-        spct.setMaSPCT(MaSPCT);
-        spct.setIdSP(TenSP);
-        spct.setSoLuongTon(Integer.valueOf(SoLuongTon));
-        spct.setNguoiTao(NguoiTao);
-        spct.setTrangThaiSPCT(TrangThai);
-        spct.setIdCL(TenCL);
-        spct.setIdKC(TenKC);
-        spct.setIdMS(TenMS);
-        spct.setIdTH(TenTH);
-        spct.setDonGia(Float.valueOf(DonGia));
+            SPCT spct = new SPCT();
+            spct.setMaSPCT(MaSPCT);
+            spct.setIdSP(TenSP);
+            spct.setSoLuongTon(Integer.valueOf(SoLuongTon));
+            spct.setNguoiTao(NguoiTao);
+            spct.setTrangThaiSPCT(TrangThai);
+            spct.setIdCL(TenCL);
+            spct.setIdKC(TenKC);
+            spct.setIdMS(TenMS);
+            spct.setIdTH(TenTH);
+            spct.setDonGia(Float.valueOf(DonGia));
 
-        this.SPCTService.update(spct);
-        LamMoiSPCT();
-        this.LoadTableSPCT();
+            this.SPCTService.update(spct);
+            LamMoiSPCT();
+            this.LoadTableSPCT();
+            JOptionPane.showMessageDialog(this, "Sủa thành công!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Hủy sửa sản phẩm chi tiết!");
+            return;
+        }
     }//GEN-LAST:event_btnSuaSPCTActionPerformed
 
     private void btnTimSPCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimSPCTActionPerformed
