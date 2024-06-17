@@ -7,11 +7,9 @@ package Views;
 import DomainModel.NhanVien;
 import Service.Impl.NhanVienService;
 import Utiliti.SessionData;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -53,8 +51,8 @@ public class LoginJFrame extends javax.swing.JFrame {
         lblQuenMK = new javax.swing.JLabel();
         btnDangNhap = new javax.swing.JButton();
         txtUN = new javax.swing.JTextField();
-        txtMatKhau = new javax.swing.JTextField();
         btnShowPW = new javax.swing.JButton();
+        ptxtMatKhau = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,12 +93,12 @@ public class LoginJFrame extends javax.swing.JFrame {
         txtUN.setBackground(new java.awt.Color(222, 231, 227));
         txtUN.setBorder(null);
 
-        txtMatKhau.setBackground(new java.awt.Color(222, 231, 227));
-        txtMatKhau.setBorder(null);
-
         btnShowPW.setBackground(new java.awt.Color(222, 231, 227));
         btnShowPW.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/showpass.png"))); // NOI18N
         btnShowPW.setBorder(null);
+
+        ptxtMatKhau.setBackground(new java.awt.Color(222, 231, 227));
+        ptxtMatKhau.setBorder(null);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -119,7 +117,7 @@ public class LoginJFrame extends javax.swing.JFrame {
                         .addComponent(txtUN)
                         .addComponent(jLabel8))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ptxtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnShowPW, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(35, Short.MAX_VALUE))
@@ -138,9 +136,9 @@ public class LoginJFrame extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnShowPW, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnShowPW, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(ptxtMatKhau))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -183,7 +181,7 @@ public class LoginJFrame extends javax.swing.JFrame {
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         String Email = txtUN.getText();
-        String matKhau = txtMatKhau.getText();
+        String matKhau = ptxtMatKhau.getText();
 
         if (Email.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Email không được để trống");
@@ -200,7 +198,9 @@ public class LoginJFrame extends javax.swing.JFrame {
             if (nv.getTrangThaiNV() == 1) {
                 JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
 
+
                 SessionData.thongTinNV = nv ;
+
                 BanHangJFrame banHangForm = new BanHangJFrame();
                 banHangForm.setTenNhanVien(nv.getTenNV());
                 banHangForm.setVisible(true);
@@ -261,7 +261,7 @@ public class LoginJFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JLabel lblQuenMK;
-    private javax.swing.JTextField txtMatKhau;
+    private javax.swing.JPasswordField ptxtMatKhau;
     private javax.swing.JTextField txtUN;
     // End of variables declaration//GEN-END:variables
 }

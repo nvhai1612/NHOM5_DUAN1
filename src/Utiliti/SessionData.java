@@ -16,5 +16,5 @@ public class SessionData {
     public static String account;
     public static KhachHang_Respon sdtKH;
     public static String maHD;
-    public static NhanVien loggedInUser;
+    public static NhanVien thongTinNV;
 }

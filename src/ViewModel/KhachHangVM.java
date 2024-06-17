@@ -22,6 +22,12 @@ public class KhachHangVM {
     public KhachHangVM() {
     }
 
+    public KhachHangVM(String MaKH, String TenKH, String sdt) {
+        this.MaKH = MaKH;
+        this.TenKH = TenKH;
+        this.sdt = sdt;
+    }
+
     public KhachHangVM(UUID id, String MaKH, String TenKH, String NgaySinh, Integer GioiTinh, String sdt, String DiaChi) {
         this.id = id;
         this.MaKH = MaKH;

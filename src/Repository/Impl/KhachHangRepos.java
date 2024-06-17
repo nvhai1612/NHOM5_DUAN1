@@ -104,7 +104,7 @@ public class KhachHangRepos implements IKhachHangRepos{
         ResultSet rs = prsm.executeQuery();
         while (rs.next()) {
             KhachHang kh = new KhachHang();
-            kh.setId(UUID.fromString(rs.getString("id")));
+            kh.setId(UUID.fromString(rs.getString("ID")));
             kh.setMaKH(rs.getString("MAKH"));
             kh.setTenKH(rs.getString("TENKH"));
             kh.setNgaySinh(rs.getString("NGAYSINH"));
