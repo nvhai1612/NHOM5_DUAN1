@@ -427,6 +427,10 @@ public class KhachHangJPanel extends javax.swing.JPanel {
         String ngaySinh = txtNgaySinh.getText();
         int gioiTinh = rdoNam.isSelected() == true ? 1 : 0;
         String sdt = txtSdt.getText();
+        if (sdt.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không để trống sdt khách hàng");
+            return;
+        }
         String diaChi = taDiaChi.getText();
         KhachHang kh = new KhachHang();
         kh.setMaKH(ma);
@@ -454,13 +458,18 @@ public class KhachHangJPanel extends javax.swing.JPanel {
         List<HoaDon> list = service.getLichSu(maKH);
         tableModelHoaDon = (DefaultTableModel) tblHoaDonKH.getModel();
         tableModelHoaDon.setRowCount(0);
+        double tongtien = 0;
         for (HoaDon hoaDon : list) {
             tableModelHoaDon.addRow(new Object[]{
                 hoaDon.getMaHD(),
                 hoaDon.getNgayTao(),
                 hoaDon.getTongTien()
             });
+            tongtien += hoaDon.getTongTien();
         }
+        txtTongTien.setText(String.valueOf(tongtien));
+       
+      
 
     }
     
