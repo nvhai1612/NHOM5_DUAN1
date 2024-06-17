@@ -35,6 +35,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Admin
  */
 public class SPCTJPanel extends javax.swing.JPanel {
+
     private SPCTService SPCTService = new SPCTService();
     private MauSacService mauSacService = new MauSacService();
     private ChatLieuService chatLieuService = new ChatLieuService();
@@ -46,14 +47,13 @@ public class SPCTJPanel extends javax.swing.JPanel {
     /**
      * Creates new form SPCTJPanel
      */
-    
     private DefaultComboBoxModel dcbbtsp;
     private DefaultComboBoxModel dcbbmsp;
     private DefaultComboBoxModel dcbbmcl;
     private DefaultComboBoxModel dcbbmkc;
     private DefaultComboBoxModel dcbbmms;
     private DefaultComboBoxModel dcbbmth;
-    
+
     public SPCTJPanel() {
         initComponents();
         dcbbmcl = (DefaultComboBoxModel) cbbCL.getModel();
@@ -75,7 +75,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
         dcbbmth.addAll(thuongHieuService.getAll());
         for (int i = 0; i < dcbbmth.getSize(); i++) {
         }
-        
+
         dcbbtsp = (DefaultComboBoxModel) cbbSP.getModel();
         dcbbtsp.addAll(sanPhamService.getAll());
         for (int i = 0; i < dcbbtsp.getSize(); i++) {
@@ -88,7 +88,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
         LoadTableMS();
         LoadTableTH();
     }
-    
+
     private void LoadTableSP() {
         DefaultTableModel dtm = (DefaultTableModel) tblSanPham.getModel();
         dtm.setRowCount(0);
@@ -121,69 +121,68 @@ public class SPCTJPanel extends javax.swing.JPanel {
                 spctvm.getTenMS(),
                 spctvm.getTenTH(),
                 spctvm.getTenCL(),
-                spctvm.getDonGia(),
-            });
+                spctvm.getDonGia(),});
 
             System.out.println(spctvm);
         }
     }
-    
-    public void LoadTableCL(){
+
+    public void LoadTableCL() {
         DefaultTableModel dtm = (DefaultTableModel) tblChatLieu.getModel();
         dtm.setRowCount(0);
         ArrayList<ChatLieuVM> ListSP = chatLieuService.getAll();
-        
-        for(ChatLieuVM clvm : ListSP){
+
+        for (ChatLieuVM clvm : ListSP) {
             dtm.addRow(new Object[]{
-            clvm.getId(),
-            clvm.getMaCL(),
-            clvm.getTenCL(),
-            clvm.getTrangThaiCL()== 1 ? "Đang hoạt động" : "Dừng hoạt động"
+                clvm.getId(),
+                clvm.getMaCL(),
+                clvm.getTenCL(),
+                clvm.getTrangThaiCL() == 1 ? "Đang hoạt động" : "Dừng hoạt động"
             });
         }
     }
-     
-    public void LoadTableKC(){
-         DefaultTableModel dtm = (DefaultTableModel) tblKichCo.getModel();
+
+    public void LoadTableKC() {
+        DefaultTableModel dtm = (DefaultTableModel) tblKichCo.getModel();
         dtm.setRowCount(0);
-         ArrayList<KichCoVM> Listkc = kichCoService.getAll();
-        
-        for(KichCoVM kcvm : Listkc){
+        ArrayList<KichCoVM> Listkc = kichCoService.getAll();
+
+        for (KichCoVM kcvm : Listkc) {
             dtm.addRow(new Object[]{
-            kcvm.getId(),
-            kcvm.getMaKC(),
-            kcvm.getTenKC(),
-            kcvm.getTrangThai()== 1 ? "Đang hoạt động" : "Dừng hoạt động"
+                kcvm.getId(),
+                kcvm.getMaKC(),
+                kcvm.getTenKC(),
+                kcvm.getTrangThai() == 1 ? "Đang hoạt động" : "Dừng hoạt động"
             });
         }
     }
-    
-    public void LoadTableMS(){
-         DefaultTableModel dtm = (DefaultTableModel) tblMauSac.getModel();
+
+    public void LoadTableMS() {
+        DefaultTableModel dtm = (DefaultTableModel) tblMauSac.getModel();
         dtm.setRowCount(0);
-         ArrayList<MauSacVM> Listms = mauSacService.getAll();
-        
-        for(MauSacVM msvm : Listms){
+        ArrayList<MauSacVM> Listms = mauSacService.getAll();
+
+        for (MauSacVM msvm : Listms) {
             dtm.addRow(new Object[]{
-            msvm.getId(),
-            msvm.getMaMS(),
-            msvm.getTenMS(),
-            msvm.getTrangThai()== 1 ? "Đang hoạt động" : "Dừng hoạt động"
+                msvm.getId(),
+                msvm.getMaMS(),
+                msvm.getTenMS(),
+                msvm.getTrangThai() == 1 ? "Đang hoạt động" : "Dừng hoạt động"
             });
         }
     }
-    
-    public void LoadTableTH(){
-         DefaultTableModel dtm = (DefaultTableModel) tblThuongHieu.getModel();
+
+    public void LoadTableTH() {
+        DefaultTableModel dtm = (DefaultTableModel) tblThuongHieu.getModel();
         dtm.setRowCount(0);
-         ArrayList<ThuongHieuVM> Listth = thuongHieuService.getAll();
-        
-        for(ThuongHieuVM thvm : Listth){
+        ArrayList<ThuongHieuVM> Listth = thuongHieuService.getAll();
+
+        for (ThuongHieuVM thvm : Listth) {
             dtm.addRow(new Object[]{
-            thvm.getId(),
-            thvm.getMaTH(),
-            thvm.getTenTH(),
-            thvm.getTrangThaiTH()== 1 ? "Đang hoạt động" : "Dừng hoạt động"
+                thvm.getId(),
+                thvm.getMaTH(),
+                thvm.getTenTH(),
+                thvm.getTrangThaiTH() == 1 ? "Đang hoạt động" : "Dừng hoạt động"
             });
         }
     }
@@ -1721,7 +1720,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtMaSPCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaSPCTActionPerformed
-        
+
     }//GEN-LAST:event_txtMaSPCTActionPerformed
 
     private void tblSPCTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSPCTMouseClicked
@@ -1817,7 +1816,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
 //        UUID TenSP = spctrp.SelectSPByTen(txtTenSP.getText());
         String SoLuongTon = txtSLTon.getText();
         String NguoiTao = txtNguoiTao.getText();
-        int TrangThai = rdoConHang.isSelected()== true ? 1 : 0;
+        int TrangThai = rdoConHang.isSelected() == true ? 1 : 0;
         UUID TenCL = ((ChatLieuVM) cbbCL.getSelectedItem()).getId();
         UUID TenKC = ((KichCoVM) cbbKC.getSelectedItem()).getId();
         UUID TenMS = ((MauSacVM) cbbMS.getSelectedItem()).getId();
@@ -1850,7 +1849,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
         UUID TenSP = ((SanPhamVM) cbbSP.getSelectedItem()).getId();
         String SoLuongTon = txtSLTon.getText();
         String NguoiTao = txtNguoiTao.getText();
-        int TrangThai = rdoConHang.isSelected()== true ? 1 : 0;
+        int TrangThai = rdoConHang.isSelected() == true ? 1 : 0;
         UUID TenCL = ((ChatLieuVM) cbbCL.getSelectedItem()).getId();
         UUID TenKC = ((KichCoVM) cbbKC.getSelectedItem()).getId();
         UUID TenMS = ((MauSacVM) cbbMS.getSelectedItem()).getId();
@@ -1910,7 +1909,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
 
     private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
         int row = tblSanPham.getSelectedRow();
-        if(row == -1){
+        if (row == -1) {
             return;
         }
 
@@ -1920,9 +1919,9 @@ public class SPCTJPanel extends javax.swing.JPanel {
 
         txtMaSP.setText(MaSP);
         txtTenSP.setText(TenSP);
-        if(TrangThai.equalsIgnoreCase("Còn hàng")){
+        if (TrangThai.equalsIgnoreCase("Còn hàng")) {
             this.rdoDangHDSP.setSelected(true);
-        }else{
+        } else {
             this.rdoDungHDSP.setSelected(true);
         }
     }//GEN-LAST:event_tblSanPhamMouseClicked
@@ -1946,7 +1945,6 @@ public class SPCTJPanel extends javax.swing.JPanel {
         String MaKC = txtMaKC.getText();
         String TenKC = txtMaKC.getText();
         int TrangThaiKC = rdoDangHDKC.isSelected() == true ? 1 : 0;
-        
 
         KichCo kc = new KichCo();
         kc.setMaKC(MaKC);
@@ -1964,7 +1962,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
 
     private void tblKichCoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKichCoMouseClicked
         int row = tblKichCo.getSelectedRow();
-        if(row == -1){
+        if (row == -1) {
             return;
         }
 
@@ -1974,9 +1972,9 @@ public class SPCTJPanel extends javax.swing.JPanel {
 
         txtMaKC.setText(MaKC);
         txtTenKC.setText(TenKC);
-        if(TrangThai.equalsIgnoreCase("Đang Hoạt Động")){
+        if (TrangThai.equalsIgnoreCase("Đang Hoạt Động")) {
             this.rdoDangHDKC.setSelected(true);
-        }else{
+        } else {
             this.rdoDungHDKC.setSelected(true);
         }
     }//GEN-LAST:event_tblKichCoMouseClicked
@@ -1985,7 +1983,6 @@ public class SPCTJPanel extends javax.swing.JPanel {
         String MaMS = txtMaMS.getText();
         String TenMS = txtMaMS.getText();
         int TrangThaiMS = rdoDangHDMS.isSelected() == true ? 1 : 0;
-        
 
         MauSac ms = new MauSac();
         ms.setMaMS(MaMS);
@@ -2018,7 +2015,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
 
     private void tblMauSacMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMauSacMouseClicked
         int row = tblMauSac.getSelectedRow();
-        if(row == -1){
+        if (row == -1) {
             return;
         }
 
@@ -2028,9 +2025,9 @@ public class SPCTJPanel extends javax.swing.JPanel {
 
         txtMaMS.setText(MaMS);
         txtTenMS.setText(TenMS);
-        if(TrangThai.equalsIgnoreCase("Đang hoạt động")){
+        if (TrangThai.equalsIgnoreCase("Đang hoạt động")) {
             this.rdoDangHDMS.setSelected(true);
-        }else{
+        } else {
             this.rdoDungHDMS.setSelected(true);
         }
     }//GEN-LAST:event_tblMauSacMouseClicked
@@ -2071,7 +2068,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
 
     private void tblThuongHieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThuongHieuMouseClicked
         int row = tblThuongHieu.getSelectedRow();
-        if(row == -1){
+        if (row == -1) {
             return;
         }
 
@@ -2081,9 +2078,9 @@ public class SPCTJPanel extends javax.swing.JPanel {
 
         txtMaTH.setText(MaTH);
         txtTenTH.setText(TenTH);
-        if(TrangThai.equalsIgnoreCase("Đang Hoạt Động")){
+        if (TrangThai.equalsIgnoreCase("Đang Hoạt Động")) {
             this.rdoDangHDTH.setSelected(true);
-        }else{
+        } else {
             this.rdoDungHDTH.setSelected(true);
         }
     }//GEN-LAST:event_tblThuongHieuMouseClicked
@@ -2094,7 +2091,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
 
     private void tblChatLieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChatLieuMouseClicked
         int row = tblChatLieu.getSelectedRow();
-        if(row == -1){
+        if (row == -1) {
             return;
         }
 
@@ -2104,9 +2101,9 @@ public class SPCTJPanel extends javax.swing.JPanel {
 
         txtMaTH.setText(MaCL);
         txtTenTH.setText(TenCL);
-        if(TrangThai.equalsIgnoreCase("Đang Hoạt Động")){
+        if (TrangThai.equalsIgnoreCase("Đang Hoạt Động")) {
             this.rdoDangHDCL.setSelected(true);
-        }else{
+        } else {
             this.rdoDungHDCL.setSelected(true);
         }
     }//GEN-LAST:event_tblChatLieuMouseClicked
@@ -2144,7 +2141,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
     private void btnLMCLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLMCLActionPerformed
         LamMoiCL();
     }//GEN-LAST:event_btnLMCLActionPerformed
-    
+
     public void LamMoiSPCT() {
         txtMaSPCT.setText("");
         cbbSP.setSelectedIndex(0);
@@ -2157,32 +2154,32 @@ public class SPCTJPanel extends javax.swing.JPanel {
         rdoConHang.setSelected(true);
         txtDonGia.setText("0");
     }
-    
-    public void LamMoiSP(){
+
+    public void LamMoiSP() {
         txtMaSP.setText("");
         txtTenSP.setText("");
         rdoDangHDSP.setSelected(true);
     }
-    
-    public void LamMoiCL(){
+
+    public void LamMoiCL() {
         txtMaCL.setText("");
         txtTenCL.setText("");
         rdoDangHDCL.setSelected(true);
     }
-    
-    public void LamMoiKC(){
+
+    public void LamMoiKC() {
         txtMaKC.setText("");
         txtTenKC.setText("");
         rdoDangHDKC.setSelected(true);
     }
-    
-    public void LamMoiMS(){
+
+    public void LamMoiMS() {
         txtMaMS.setText("");
         txtTenMS.setText("");
         rdoDangHDMS.setSelected(true);
     }
-    
-    public void LamMoiTH(){
+
+    public void LamMoiTH() {
         txtMaTH.setText("");
         txtTenTH.setText("");
         rdoDangHDTH.setSelected(true);

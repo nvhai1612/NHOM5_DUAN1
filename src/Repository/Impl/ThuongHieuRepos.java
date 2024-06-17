@@ -17,12 +17,13 @@ import java.util.UUID;
  *
  * @author Admin
  */
-public class ThuongHieuRepos implements IThuongHieuRepos{
+public class ThuongHieuRepos implements IThuongHieuRepos {
+
     DBConnection connection;
 
     @Override
     public ArrayList<ThuongHieu> getListFormDB() {
-ArrayList<ThuongHieu> listTH = new ArrayList<>();
+        ArrayList<ThuongHieu> listTH = new ArrayList<>();
 
         try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("SELECT ID,MATH,TENTH,TRANGTHAITH FROM THUONGHIEU")) {
             ResultSet rs = ps.executeQuery();
@@ -84,20 +85,19 @@ ArrayList<ThuongHieu> listTH = new ArrayList<>();
     @Override
     public ArrayList<ThuongHieu> search() {
         ArrayList<ThuongHieu> listTH = new ArrayList<>();
-        try (Connection con = connection.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM THUONGHIEU WHERE MATH = ?");){
+        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("SELECT * FROM THUONGHIEU WHERE MATH = ?");) {
             ps.executeUpdate();
-            
+
             ThuongHieu th = new ThuongHieu();
             ps.setObject(1, th.getMaTH());
-            
+
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 th.setId((UUID) rs.getObject(1));
                 th.setMaTH(rs.getString(2));
                 listTH.add(th);
-            } 
+            }
         } catch (Exception e) {
             e.getMessage();
         }

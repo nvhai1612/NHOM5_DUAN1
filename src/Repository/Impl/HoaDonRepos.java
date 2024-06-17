@@ -21,7 +21,8 @@ import java.util.UUID;
  *
  * @author Admin
  */
-public class HoaDonRepos implements IHoaDonRepos{
+public class HoaDonRepos implements IHoaDonRepos {
+
     DBConnection connection;
 
     @Override
@@ -46,7 +47,7 @@ public class HoaDonRepos implements IHoaDonRepos{
 
         return listHD;
     }
-    
+
     public ArrayList<HoaDon> getListHoaDonFormDB() {
         ArrayList<HoaDon> listHD = new ArrayList<>();
 
@@ -131,7 +132,7 @@ public class HoaDonRepos implements IHoaDonRepos{
 
         return null;
     }
-    
+
     public HoaDonDTO searchbyMaHDCT(String ma) {
         ArrayList<HoaDonDTO> listHDCT = new ArrayList<>();
         try (Connection con = connection.getConnection(); PreparedStatement ps
@@ -240,10 +241,9 @@ public class HoaDonRepos implements IHoaDonRepos{
 
     public void updateTrangThaiHoaDon(String maHDCT, Integer TrangThaiHD, Float TongTien, String mahd) {
         String mahdct = findMaaHDCtBySpct(maHDCT, mahd);
-                UUID idkh = new KhachHangRepos().search(SessionData.sdtKH.getMaKH()).get(0).getId();
+        UUID idkh = new KhachHangRepos().search(SessionData.sdtKH.getMaKH()).get(0).getId();
 
-        try (Connection con = connection.getConnection(); 
-                PreparedStatement ps = con.prepareStatement("UPDATE HOADON SET TRANGTHAIHD = 1, TONGTIEN = ?, idkh = ? WHERE MAHD = ?")) {
+        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("UPDATE HOADON SET TRANGTHAIHD = 1, TONGTIEN = ?, idkh = ? WHERE MAHD = ?")) {
 
             ps.setObject(1, TongTien);
             ps.setObject(3, mahd);
@@ -254,29 +254,28 @@ public class HoaDonRepos implements IHoaDonRepos{
             e.printStackTrace();
         }
     }
-    
-    
-    public void UpdateSPGH(String MaHD, String MaSPCT, Integer SL, Integer SLTon){
+
+    public void UpdateSPGH(String MaHD, String MaSPCT, Integer SL, Integer SLTon) {
         String mahdct = findMaaHDCtBySpct(MaSPCT, MaHD);
         try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("update hoadonct set soluong = ? where mahdct = ?")) {
 
             ps.setObject(1, SL);
             ps.setObject(2, mahdct);
-            
+
             ps.executeUpdate();
-            
+
             UpdateSP(MaSPCT, SLTon - SL);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    public void UpdateSP(String MaSPCT, Integer SL){
+
+    public void UpdateSP(String MaSPCT, Integer SL) {
         try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("update SANPHAMCHITIET set soluongton = ? where maspct = ?")) {
 
             ps.setObject(1, SL);
             ps.setObject(2, MaSPCT);
-            
+
             ps.executeUpdate();
 
         } catch (Exception e) {
@@ -284,12 +283,12 @@ public class HoaDonRepos implements IHoaDonRepos{
         }
     }
 
-    public void DeleteSPGH(String MaHD, String MaSPCT, Integer SL, Integer SLTon){
+    public void DeleteSPGH(String MaHD, String MaSPCT, Integer SL, Integer SLTon) {
         String mahdct = findMaaHDCtBySpct(MaSPCT, MaHD);
         try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("delete from hoadonct where mahdct = ?")) {
 
             ps.setObject(1, mahdct);
-            
+
             ps.executeUpdate();
 
             UpdateSP(MaSPCT, SL, SLTon);
@@ -297,29 +296,29 @@ public class HoaDonRepos implements IHoaDonRepos{
             e.printStackTrace();
         }
     }
-    
-    public void HuyThanhToan(String MaHD, String LyDoHuy, Integer SL, Integer SLTon, String MaSPCT){
+
+    public void HuyThanhToan(String MaHD, String LyDoHuy, Integer SL, Integer SLTon, String MaSPCT) {
         try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("UPDATE HOADON SET TRANGTHAIHD = 2, LYDOHUY = ? WHERE MAHD = ?")) {
 
             ps.setObject(1, LyDoHuy);
             ps.setObject(2, MaHD);
-            
+
             ps.executeUpdate();
 
-            if(MaSPCT != null){
+            if (MaSPCT != null) {
                 UpdateSP(MaSPCT, SL, SLTon);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    public void UpdateSP(String MaSPCT, Integer SL, Integer SLTon){
+
+    public void UpdateSP(String MaSPCT, Integer SL, Integer SLTon) {
         try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("update SANPHAMCHITIET set TrangThaiSPCT = 1, soluongton = ? where maspct = ?")) {
 
             ps.setObject(1, SL + SLTon);
             ps.setObject(2, MaSPCT);
-            
+
             ps.executeUpdate();
 
         } catch (Exception e) {
@@ -331,7 +330,36 @@ public class HoaDonRepos implements IHoaDonRepos{
     public Boolean delete(UUID id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
     
-  
-    
+    public ArrayList<SPCT> search(String keyword) {
+        ArrayList<SPCT> listSPCT = new ArrayList();
+
+        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("SELECT * from SANPHAMCHITIET WHERE MASPCT = ?")) {
+
+            ps.setObject(1, keyword);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                SPCT spct = new SPCT();
+                spct.setMaSPCT(rs.getString(1));
+                spct.setTenSP(rs.getString(2));
+                spct.setSoLuongTon(rs.getInt(3));
+                spct.setNguoiTao(rs.getString(4));
+                spct.setTrangThaiSPCT(rs.getInt(5));
+                spct.setIdCL(rs.getObject(6, UUID.class));
+                spct.setIdKC(rs.getObject(7, UUID.class));
+                spct.setIdMS(rs.getObject(8, UUID.class));
+                spct.setIdTH(rs.getObject(9, UUID.class));
+                spct.setDonGia(rs.getFloat(10));
+                listSPCT.add(spct);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return listSPCT;
+    }
 }

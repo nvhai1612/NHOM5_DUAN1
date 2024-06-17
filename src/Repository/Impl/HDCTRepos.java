@@ -20,7 +20,8 @@ import java.util.UUID;
  *
  * @author Admin
  */
-public class HDCTRepos implements IHDCTRepos{
+public class HDCTRepos implements IHDCTRepos {
+
     private DBConnection connection;
 
     private SPCTRepos SPCTRepos = new SPCTRepos();
@@ -107,18 +108,15 @@ public class HDCTRepos implements IHDCTRepos{
     public Boolean delete(HoaDon hd, Map<String, Integer> ctsps) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     public HoaDon searchbyMaHDCT(String ma) {
         ArrayList<HoaDon> listHDCT = new ArrayList<>();
-        try (Connection con = connection.getConnection();
-                PreparedStatement ps = 
-                        con.prepareStatement
-        ("select hd.mahdct from hoadonct hd join sanphamchitiet sp on hd.idspct = sp.id join hoadon h on h.id = hd.idhd where sp.maspct = ? and h.mahd = ?");) {
+        try (Connection con = connection.getConnection(); PreparedStatement ps
+                = con.prepareStatement("select hd.mahdct from hoadonct hd join sanphamchitiet sp on hd.idspct = sp.id join hoadon h on h.id = hd.idhd where sp.maspct = ? and h.mahd = ?");) {
 
-                       ps.setObject(1, ma);
+            ps.setObject(1, ma);
 
 //            ps.executeUpdate();
-
             HoaDon hdct = new HoaDon();
 
             ResultSet rs = ps.executeQuery();
@@ -134,7 +132,8 @@ public class HDCTRepos implements IHDCTRepos{
     }
 
     @Override
-    public ArrayList<HoaDonDTO> search(String ma) {ArrayList<HoaDonDTO> hoadonseach = new ArrayList<>();
+    public ArrayList<HoaDonDTO> search(String ma) {
+        ArrayList<HoaDonDTO> hoadonseach = new ArrayList<>();
         try {
             Connection coon = connection.getConnection();
             String sql = "select MaHD,TENKH,TENNV,h.TRANGTHAIHD,MASP,TENSP,SOLUONG,hc.DONGIA from hoadonct hc left join hoadon h on h.id = hc.IDHD left join SANPHAMCHITIET sc on sc.id = hc.IDSPCT left join sanpham s on s.id = sc.IDSP left join NHANVIEN on NHANVIEN.ID=h.IDNV left join  KHACHHANG on KHACHHANG.ID=h.IDKH where MAHD like ?";
@@ -156,5 +155,5 @@ public class HDCTRepos implements IHDCTRepos{
         }
         return hoadonseach;
     }
-    
+
 }
