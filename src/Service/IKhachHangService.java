@@ -4,10 +4,18 @@
  */
 package Service;
 
+import DomainModel.KhachHang;
+import ViewModel.KhachHangVM;
+import java.util.ArrayList;
+
 /**
  *
  * @author Admin
  */
 public interface IKhachHangService {
-    
+    ArrayList<KhachHangVM> getAll();
+    ArrayList<KhachHang> getAllDomain();
+    void add(KhachHang kh);
+    void update(KhachHang kh);
+    public ArrayList<KhachHang> search(String ma);
 }

@@ -4,17 +4,26 @@
  */
 package Views;
 
+import DomainModel.NhanVien;
+import Service.Impl.NhanVienService;
+import Utiliti.SessionData;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Admin
  */
 public class DoiMatKhauJPanel extends javax.swing.JPanel {
 
+    private NhanVienService nhanVienService = new NhanVienService();
+    private LoginJFrame loginJFrame = new LoginJFrame();
+
     /**
      * Creates new form DoiMatKhauJPanel
      */
     public DoiMatKhauJPanel() {
         initComponents();
+
     }
 
     /**
@@ -28,10 +37,10 @@ public class DoiMatKhauJPanel extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        txtMKC = new javax.swing.JPasswordField();
+        txtMKCu = new javax.swing.JPasswordField();
         btnShowPass = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        txtMKM = new javax.swing.JPasswordField();
+        txtMKMoi = new javax.swing.JPasswordField();
         btnShowMKM = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         txtMKM2 = new javax.swing.JPasswordField();
@@ -41,6 +50,10 @@ public class DoiMatKhauJPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        hidePWCu = new javax.swing.JLabel();
+        notshowMKMoi = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        notshow = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(222, 231, 227));
 
@@ -51,8 +64,9 @@ public class DoiMatKhauJPanel extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(222, 231, 227));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Thay đổi mật khẩu"));
 
-        txtMKC.setBackground(new java.awt.Color(222, 231, 227));
-        txtMKC.setBorder(null);
+        txtMKCu.setBackground(new java.awt.Color(222, 231, 227));
+        txtMKCu.setBorder(null);
+        txtMKCu.setFocusAccelerator('\u2022');
 
         btnShowPass.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnShowPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/showpass.png"))); // NOI18N
@@ -62,8 +76,9 @@ public class DoiMatKhauJPanel extends javax.swing.JPanel {
             }
         });
 
-        txtMKM.setBackground(new java.awt.Color(222, 231, 227));
-        txtMKM.setBorder(null);
+        txtMKMoi.setBackground(new java.awt.Color(222, 231, 227));
+        txtMKMoi.setBorder(null);
+        txtMKMoi.setFocusAccelerator('\u2022');
 
         btnShowMKM.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnShowMKM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/showpass.png"))); // NOI18N
@@ -75,6 +90,7 @@ public class DoiMatKhauJPanel extends javax.swing.JPanel {
 
         txtMKM2.setBackground(new java.awt.Color(222, 231, 227));
         txtMKM2.setBorder(null);
+        txtMKM2.setFocusAccelerator('\u2022');
         txtMKM2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtMKM2MouseClicked(evt);
@@ -102,6 +118,39 @@ public class DoiMatKhauJPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Nhập lại mật khẩu mới");
 
+        hidePWCu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/notshowpass.png"))); // NOI18N
+        hidePWCu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                hidePWCuMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                hidePWCuMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                hidePWCuMouseReleased(evt);
+            }
+        });
+
+        notshowMKMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/notshowpass.png"))); // NOI18N
+        notshowMKMoi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                notshowMKMoiMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                notshowMKMoiMouseReleased(evt);
+            }
+        });
+
+        notshow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/notshowpass.png"))); // NOI18N
+        notshow.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                notshowMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                notshowMouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -109,7 +158,7 @@ public class DoiMatKhauJPanel extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(410, Short.MAX_VALUE)
                         .addComponent(btnXacNhan))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
@@ -119,56 +168,81 @@ public class DoiMatKhauJPanel extends javax.swing.JPanel {
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(txtMKM2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(0, 0, 0)
-                                    .addComponent(btnShowMKM2)))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(txtMKM, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(0, 0, 0)
-                                    .addComponent(btnShowMKM)))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(txtMKC, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(0, 0, 0)
-                                    .addComponent(btnShowPass))))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(txtMKM2, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(notshow)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnShowMKM2))
+                                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(txtMKCu, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(hidePWCu)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnShowPass))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(txtMKMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(notshowMKMoi)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnShowMKM)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(jLabel5)
+                                        .addGap(44, 44, 44))
+                                    .addComponent(jSeparator3))
+                                .addGap(18, 18, 18)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnShowPass)
+                    .addComponent(hidePWCu)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel1)
-                        .addComponent(txtMKC, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(3, 3, 3)
+                        .addComponent(txtMKCu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnShowMKM)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel2)
-                        .addComponent(txtMKM, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(3, 3, 3)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtMKMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(notshowMKMoi)))
+                        .addGap(5, 5, 5))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnShowMKM)
+                        .addGap(18, 18, 18)))
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnShowMKM2)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel3)
-                        .addComponent(txtMKM2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(txtMKM2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(notshow)
+                            .addComponent(btnShowMKM2))))
                 .addGap(3, 3, 3)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnXacNhan))
         );
+
+        notshowMKMoi.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -187,13 +261,13 @@ public class DoiMatKhauJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(371, Short.MAX_VALUE))
+                .addContainerGap(377, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 275, Short.MAX_VALUE))
+                .addGap(0, 249, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -202,11 +276,11 @@ public class DoiMatKhauJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnShowPassMouseClicked
 
     private void btnShowMKMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnShowMKMMouseClicked
-
+        
     }//GEN-LAST:event_btnShowMKMMouseClicked
 
     private void txtMKM2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtMKM2MouseClicked
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtMKM2MouseClicked
 
     private void btnShowMKM2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnShowMKM2MouseClicked
@@ -214,8 +288,78 @@ public class DoiMatKhauJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnShowMKM2MouseClicked
 
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
+        String mkCu = new String(txtMKCu.getPassword());
+        String mkMoi = new String(txtMKMoi.getPassword());
+        String mkMoi2 = new String(txtMKM2.getPassword());
 
+        // Kiểm tra tính hợp lệ của dữ liệu
+        if (mkCu.isEmpty() || mkMoi.isEmpty() || mkMoi2.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin.", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!mkMoi.equals(mkMoi2)) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu mới và nhập lại mật khẩu mới không khớp.", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        boolean checkMatKhauCu = nhanVienService.checkMK(SessionData.thongTinNV.getMaNV(), mkCu);
+        if (!checkMatKhauCu) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu cũ không chính xác.", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Thực hiện cập nhật mật khẩu
+        boolean updateSuccess = nhanVienService.updateMatKhau(SessionData.thongTinNV.getMaNV(), mkMoi);
+        if (updateSuccess) {
+            JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            txtMKCu.setText("");
+            txtMKMoi.setText("");
+            txtMKM2.setText("");
+        } else {
+            JOptionPane.showMessageDialog(this, "Đổi mật khẩu thất bại. Vui lòng thử lại sau.", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnXacNhanActionPerformed
+
+    private void hidePWCuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hidePWCuMouseClicked
+       
+    }//GEN-LAST:event_hidePWCuMouseClicked
+
+    private void hidePWCuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hidePWCuMousePressed
+        btnShowPass.setVisible(true);
+        hidePWCu.setVisible(false);
+        txtMKCu.setEchoChar((char)0);
+    }//GEN-LAST:event_hidePWCuMousePressed
+
+    private void hidePWCuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hidePWCuMouseReleased
+         btnShowPass.setVisible(false);
+        hidePWCu.setVisible(true);
+        txtMKCu.setEchoChar('*');
+    }//GEN-LAST:event_hidePWCuMouseReleased
+
+    private void notshowMKMoiMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notshowMKMoiMousePressed
+        btnShowMKM.setVisible(true);
+        notshowMKMoi.setVisible(false);
+        txtMKMoi.setEchoChar((char)0);
+    }//GEN-LAST:event_notshowMKMoiMousePressed
+
+    private void notshowMKMoiMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notshowMKMoiMouseReleased
+         btnShowMKM.setVisible(false);
+        notshowMKMoi.setVisible(true);
+        txtMKMoi.setEchoChar('*');
+    }//GEN-LAST:event_notshowMKMoiMouseReleased
+
+    private void notshowMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notshowMousePressed
+        btnShowMKM2.setVisible(true);
+        notshow.setVisible(false);
+        txtMKM2.setEchoChar((char)0);
+    }//GEN-LAST:event_notshowMousePressed
+
+    private void notshowMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notshowMouseReleased
+        btnShowMKM2.setVisible(false);
+        notshow.setVisible(true);
+        txtMKM2.setEchoChar('*');
+    }//GEN-LAST:event_notshowMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -223,16 +367,20 @@ public class DoiMatKhauJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel btnShowMKM2;
     private javax.swing.JLabel btnShowPass;
     private javax.swing.JButton btnXacNhan;
+    private javax.swing.JLabel hidePWCu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JPasswordField txtMKC;
-    private javax.swing.JPasswordField txtMKM;
+    private javax.swing.JLabel notshow;
+    private javax.swing.JLabel notshowMKMoi;
+    private javax.swing.JPasswordField txtMKCu;
     private javax.swing.JPasswordField txtMKM2;
+    private javax.swing.JPasswordField txtMKMoi;
     // End of variables declaration//GEN-END:variables
 }

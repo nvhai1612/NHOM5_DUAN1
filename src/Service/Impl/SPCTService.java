@@ -52,4 +52,17 @@ public class SPCTService implements ISPCTService{
         return SPCTRepos.search();
     }
     
+    public ArrayList<SPCTVM> getAllBanHang() {
+        ArrayList<SPCT> listCTSP = SPCTRepos.getListForm();
+        ArrayList<SPCTVM> listCTSPVM = new ArrayList<>();
+        for (SPCT spct : listCTSP) {
+            SPCTVM spctvm = new SPCTVM(spct.getId(), spct.getMaSPCT(),
+                    SPCTRepos.SelectMSById(spct.getIdMS()),SPCTRepos.SelectCLById(spct.getIdCL()),
+                    SPCTRepos.SelectTHById(spct.getIdTH()),SPCTRepos.SelectKCById(spct.getIdKC()),
+                    spct.getTenSP(), spct.getNguoiTao(), spct.getSoLuongTon(), 
+                    spct.getTrangThaiSPCT(), spct.getDonGia());
+            listCTSPVM.add(spctvm);
+        }
+        return listCTSPVM;
+    }
 }

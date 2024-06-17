@@ -6,6 +6,7 @@ package Views;
 
 import DomainModel.NhanVien;
 import Service.Impl.NhanVienService;
+import Utiliti.SessionData;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,8 @@ public class LoginJFrame extends javax.swing.JFrame {
 
     private NhanVienService service = new NhanVienService();
     List<NhanVien> list = new ArrayList<>();
+
+
 
     /**
      * Creates new form LoginJFrame
@@ -190,19 +193,19 @@ public class LoginJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Mật khẩu không được để trống");
             return;
         }
-      
 
         Optional<NhanVien> nvOptional = service.CheckLogin(Email, matKhau);
         if (nvOptional.isPresent()) {
             NhanVien nv = nvOptional.get();
             if (nv.getTrangThaiNV() == 1) {
                 JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
-                
+
+                SessionData.thongTinNV = nv ;
                 BanHangJFrame banHangForm = new BanHangJFrame();
                 banHangForm.setTenNhanVien(nv.getTenNV());
-                 banHangForm.setVisible(true);         
-            // Ẩn form đăng nhập hiện tại
-            this.setVisible(false);
+                banHangForm.setVisible(true);
+                SessionData.account = Email;
+                this.setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(this, "Nhân viên đã nghỉ việc");
             }

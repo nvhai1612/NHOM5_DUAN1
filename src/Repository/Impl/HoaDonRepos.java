@@ -8,6 +8,7 @@ import DomainModel.HoaDon;
 import DomainModel.SPCT;
 import Repository.IHoaDonRepos;
 import Utiliti.DBConnection;
+import Utiliti.SessionData;
 import ViewModel.HoaDonDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,15 +28,15 @@ public class HoaDonRepos implements IHoaDonRepos{
     public ArrayList<HoaDon> getListFormDB() {
         ArrayList<HoaDon> listHD = new ArrayList<>();
 
-        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("SELECT * from HoaDon left join NHANVIEN NV on HOADON.IDNV = NV.ID WHERE TRANGTHAIHD = 1")) {
+        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("SELECT * from HoaDon left join NHANVIEN NV on HOADON.IDNV = NV.ID WHERE TRANGTHAIHD = 0")) {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 HoaDon hd = new HoaDon();
                 hd.setMaHD(rs.getString(4));
                 hd.setNgayTao(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(5)));
-                hd.setTenNV(rs.getString(11));
-                hd.setTrangThaiHD(rs.getInt(8));
+                hd.setTenNV(rs.getString(13));
+                hd.setTrangThaiHD(rs.getInt(9));
                 listHD.add(hd);
             }
 
@@ -49,15 +50,15 @@ public class HoaDonRepos implements IHoaDonRepos{
     public ArrayList<HoaDon> getListHoaDonFormDB() {
         ArrayList<HoaDon> listHD = new ArrayList<>();
 
-        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("select MAHD,IDNV,NGAYTAO,TRANGTHAIHD from HoaDon where TRANGTHAIHD = 0 order by TRANGTHAIHD asc")) {
+        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("select MAHD,IDNV,NGAYTAO,TRANGTHAIHD from HoaDon where TRANGTHAIHD = 1 order by TRANGTHAIHD asc")) {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 HoaDon hd = new HoaDon();
-                hd.setMaHD(rs.getString(4));
-//                hd.setTenNV(rs.getString(11));
-                hd.setNgayTao(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(5)));
-                hd.setTrangThaiHD(rs.getInt(8));
+                hd.setMaHD(rs.getString(1));
+                hd.setTenNV(rs.getString(2));
+                hd.setNgayTao(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString(3)));
+                hd.setTrangThaiHD(rs.getInt(4));
                 listHD.add(hd);
             }
 
@@ -96,9 +97,9 @@ public class HoaDonRepos implements IHoaDonRepos{
     public Boolean add(HoaDon hd) {
         int check;
 
-        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO HOADON (IDNV, NGAYTAO, TRANGTHAIHD, MAHD) VALUES (?, ?, ?,?)")) {
+        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO HOADON (IDNV, NGAYTAO, TRANGTHAIHD, MAHD) VALUES (?,?,?,?)")) {
 
-            ps.setObject(1, hd.getIdNV());
+            ps.setObject(1, new NhanVienRepos().SelectByname(SessionData.account));
             ps.setObject(2, hd.getNgayTao());
             ps.setObject(3, hd.getTrangThaiHD());
             ps.setObject(4, hd.getMaHD());
@@ -220,8 +221,8 @@ public class HoaDonRepos implements IHoaDonRepos{
     public int findHdctByMaHdct(String maHDCT, String ma) {
         String mahdct = findMaaHDCtBySpct(maHDCT, ma);
         try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("select hd.soluong from hoadonct hd "
-                + "join sanphamchitiet sp on sp.id = hd.idspct"
-                + "join hoadon h on h.id = hd.idhd where sp.maspct = ? and h.mahd = ?")) {
+                + " join sanphamchitiet sp on sp.id = hd.idspct"
+                + " join hoadon h on h.id = hd.idhd where sp.maspct = ? and h.mahd = ?")) {
 
             ps.setObject(1, maHDCT);
             ps.setObject(2, ma);
@@ -239,11 +240,86 @@ public class HoaDonRepos implements IHoaDonRepos{
 
     public void updateTrangThaiHoaDon(String maHDCT, Integer TrangThaiHD, Float TongTien, String mahd) {
         String mahdct = findMaaHDCtBySpct(maHDCT, mahd);
+                UUID idkh = new KhachHangRepos().search(SessionData.sdtKH.getMaKH()).get(0).getId();
+
         try (Connection con = connection.getConnection(); 
-                PreparedStatement ps = con.prepareStatement("UPDATE HOADON SET TRANGTHAIHD = 0, TONGTIEN = ? WHERE MAHD = ?")) {
+                PreparedStatement ps = con.prepareStatement("UPDATE HOADON SET TRANGTHAIHD = 1, TONGTIEN = ?, idkh = ? WHERE MAHD = ?")) {
 
             ps.setObject(1, TongTien);
-            ps.setObject(2, mahd);
+            ps.setObject(3, mahd);
+            ps.setObject(2, idkh);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    public void UpdateSPGH(String MaHD, String MaSPCT, Integer SL, Integer SLTon){
+        String mahdct = findMaaHDCtBySpct(MaSPCT, MaHD);
+        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("update hoadonct set soluong = ? where mahdct = ?")) {
+
+            ps.setObject(1, SL);
+            ps.setObject(2, mahdct);
+            
+            ps.executeUpdate();
+            
+            UpdateSP(MaSPCT, SLTon - SL);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void UpdateSP(String MaSPCT, Integer SL){
+        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("update SANPHAMCHITIET set soluongton = ? where maspct = ?")) {
+
+            ps.setObject(1, SL);
+            ps.setObject(2, MaSPCT);
+            
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void DeleteSPGH(String MaHD, String MaSPCT, Integer SL, Integer SLTon){
+        String mahdct = findMaaHDCtBySpct(MaSPCT, MaHD);
+        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("delete from hoadonct where mahdct = ?")) {
+
+            ps.setObject(1, mahdct);
+            
+            ps.executeUpdate();
+
+            UpdateSP(MaSPCT, SL, SLTon);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void HuyThanhToan(String MaHD, String LyDoHuy, Integer SL, Integer SLTon, String MaSPCT){
+        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("UPDATE HOADON SET TRANGTHAIHD = 2, LYDOHUY = ? WHERE MAHD = ?")) {
+
+            ps.setObject(1, LyDoHuy);
+            ps.setObject(2, MaHD);
+            
+            ps.executeUpdate();
+
+            if(MaSPCT != null){
+                UpdateSP(MaSPCT, SL, SLTon);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void UpdateSP(String MaSPCT, Integer SL, Integer SLTon){
+        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("update SANPHAMCHITIET set TrangThaiSPCT = 1, soluongton = ? where maspct = ?")) {
+
+            ps.setObject(1, SL + SLTon);
+            ps.setObject(2, MaSPCT);
+            
             ps.executeUpdate();
 
         } catch (Exception e) {
@@ -255,4 +331,7 @@ public class HoaDonRepos implements IHoaDonRepos{
     public Boolean delete(UUID id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+  
+    
 }

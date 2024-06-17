@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 public class HoaDon {
     private UUID Id, IdNV, IdKH;
-    private String MaHD,TenNV,TenKH;
+    private String MaHD,TenNV,TenKH,LyDoHuy;
     private Date NgayTao,NgayThanhToan;
     private float TongTien;
     private int TrangThaiHD;
@@ -44,13 +44,14 @@ public class HoaDon {
         this.TrangThaiHD = TrangThaiHD;
     }
 
-    public HoaDon(UUID Id, UUID IdNV, UUID IdKH, String MaHD, String TenNV, String TenKH, Date NgayTao, Date NgayThanhToan, float TongTien, int TrangThaiHD) {
+    public HoaDon(UUID Id, UUID IdNV, UUID IdKH, String MaHD, String TenNV, String TenKH, String LyDoHuy, Date NgayTao, Date NgayThanhToan, float TongTien, int TrangThaiHD) {
         this.Id = Id;
         this.IdNV = IdNV;
         this.IdKH = IdKH;
         this.MaHD = MaHD;
         this.TenNV = TenNV;
         this.TenKH = TenKH;
+        this.LyDoHuy = LyDoHuy;
         this.NgayTao = NgayTao;
         this.NgayThanhToan = NgayThanhToan;
         this.TongTien = TongTien;
@@ -105,6 +106,14 @@ public class HoaDon {
         this.TenKH = TenKH;
     }
 
+    public String getLyDoHuy() {
+        return LyDoHuy;
+    }
+
+    public void setLyDoHuy(String LyDoHuy) {
+        this.LyDoHuy = LyDoHuy;
+    }
+
     public Date getNgayTao() {
         return NgayTao;
     }
@@ -136,6 +145,7 @@ public class HoaDon {
     public void setTrangThaiHD(int TrangThaiHD) {
         this.TrangThaiHD = TrangThaiHD;
     }
+
 
     @Override
     public String toString() {

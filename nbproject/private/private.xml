@@ -3,9 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/Impl/KhachHangRepos.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/INhanVienRepos.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/LoginJFrame.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Service/Impl/ChucVuService.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Utiliti/SessionData.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Service/INhanVienService.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Utiliti/DBConnection.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/Impl/ChucVuRepos.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/DomainModel/NhanVien.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/BanHangJFrame.java</file>
@@ -18,8 +22,8 @@
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Service/Impl/NhanVienService.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/ViewModel/ChucVuVM.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/KhachHangJPanel.java</file>
-            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/Impl/NhanVienRepos.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/QuenMKJFrame.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/Impl/NhanVienRepos.java</file>
             <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/Impl/MauSacRepos.java</file>
         </group>
     </open-files>
