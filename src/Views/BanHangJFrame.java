@@ -1548,7 +1548,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         int row = tblHoaDon.getSelectedRow();
-        
+
         if (row < 0) {
             JOptionPane.showMessageDialog(this, "Chọn hoá đơn bạn muốn thanh toán");
             return;
@@ -1563,7 +1563,6 @@ public class BanHangJFrame extends javax.swing.JFrame {
 //            JOptionPane.showMessageDialog(this, "Hóa đơn chưa có sản phẩm");
 //            return;
 //        }
-
         try {
             if (Double.parseDouble(txtTienKhachDua.getText()) < Double.parseDouble(txtCanThanhToan.getText())) {
                 JOptionPane.showMessageDialog(this, "Tiền khách đưa chưa đủ");
@@ -1654,14 +1653,13 @@ public class BanHangJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChonKH1ActionPerformed
 
     private void cbbChonKH2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbChonKH2ActionPerformed
-        // TODO add your handling code here:
-            SessionData.sdtKH = new KhachHangVM(tblKhachHang.getValueAt(tblKhachHang.getSelectedRow(), 0).toString()
-                , tblKhachHang.getValueAt(tblKhachHang.getSelectedRow(), 1).toString()
-                , tblKhachHang.getValueAt(tblKhachHang.getSelectedRow(), 4).toString());
-            
-            txtTenKH1.setText(SessionData.sdtKH.getTenKH());
-            txtSDTKH1.setText(SessionData.sdtKH.getSdt());
-            KhachHangDialog.setVisible(false);
+        SessionData.sdtKH = new KhachHangVM(tblKhachHang.getValueAt(tblKhachHang.getSelectedRow(), 0).toString(),
+                tblKhachHang.getValueAt(tblKhachHang.getSelectedRow(), 1).toString(),
+                tblKhachHang.getValueAt(tblKhachHang.getSelectedRow(), 4).toString());
+
+        txtTenKH1.setText(SessionData.sdtKH.getTenKH());
+        txtSDTKH1.setText(SessionData.sdtKH.getSdt());
+        KhachHangDialog.setVisible(false);
     }//GEN-LAST:event_cbbChonKH2ActionPerformed
     public Boolean UpdateLaiGioHang(String MaSP, String TenSP, int SoLuong, float DonGia, String mahd) {
         if (tblGioHang.getRowCount() == 0) {

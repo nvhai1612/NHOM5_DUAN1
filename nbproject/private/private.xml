@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/E:/PRO1041.02/NHOM5_DUAN1/src/Repository/Impl/NhanVienRepos.java</file>
             <file>file:/E:/PRO1041.02/NHOM5_DUAN1/src/Service/Impl/HoaDonService.java</file>
             <file>file:/E:/PRO1041.02/NHOM5_DUAN1/src/Views/LoginJFrame.java</file>
@@ -15,6 +16,30 @@
             <file>file:/E:/PRO1041.02/NHOM5_DUAN1/src/Repository/Impl/KhachHangRepos.java</file>
             <file>file:/E:/PRO1041.02/NHOM5_DUAN1/src/Repository/Impl/HDCTRepos.java</file>
             <file>file:/E:/PRO1041.02/NHOM5_DUAN1/src/Utiliti/SessionData.java</file>
+=======
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/Impl/KhachHangRepos.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/INhanVienRepos.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/LoginJFrame.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Service/Impl/ChucVuService.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Utiliti/SessionData.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Service/INhanVienService.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Utiliti/DBConnection.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/Impl/ChucVuRepos.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/DomainModel/NhanVien.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/BanHangJFrame.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/DoiMatKhauJPanel.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/NhanVienJPanel.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/SPCTJPanel.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Service/IChucVuService.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/Impl/SanPhamRepos.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/IChucVuRepos.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Service/Impl/NhanVienService.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/ViewModel/ChucVuVM.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/KhachHangJPanel.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Views/QuenMKJFrame.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/Impl/NhanVienRepos.java</file>
+            <file>file:/D:/GitHub/NHOM5_DUAN1/src/Repository/Impl/MauSacRepos.java</file>
+>>>>>>> b4315370df51dc7ee6765901f641febdd5dba7a4
         </group>
     </open-files>
 </project-private>

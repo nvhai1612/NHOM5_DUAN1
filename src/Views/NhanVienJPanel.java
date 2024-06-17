@@ -103,7 +103,6 @@ public class NhanVienJPanel extends javax.swing.JPanel {
         txtSDT.setText("");
         cbbChucVu.setSelectedIndex(0);
         rdDangLam.setSelected(true);
-        loadTable();
     }
 
     public boolean checkTrong() {
@@ -113,7 +112,7 @@ public class NhanVienJPanel extends javax.swing.JPanel {
             return false;
         }
         if (txtTen.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "tên Nhân Viên không được để trống");
+            JOptionPane.showMessageDialog(this, "Tên Nhân Viên không được để trống");
             txtTen.requestFocus();
             return false;
         }
@@ -126,7 +125,7 @@ public class NhanVienJPanel extends javax.swing.JPanel {
             return false;
         }
         if (txtSDT.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Số Điện Thoại không đụoec để trống");
+            JOptionPane.showMessageDialog(this, "Số Điện Thoại không được để trống");
             txtSDT.requestFocus();
             return false;
         }
@@ -136,7 +135,12 @@ public class NhanVienJPanel extends javax.swing.JPanel {
             return false;
         }
         if (txtEmail.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Email không được để ");
+            JOptionPane.showMessageDialog(this, "Email không được để trống ");
+            txtEmail.requestFocus();
+            return false;
+        }
+        if (txtMatKhau.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mật Khẩu không được để trống");
             txtEmail.requestFocus();
             return false;
         }
@@ -198,7 +202,7 @@ public class NhanVienJPanel extends javax.swing.JPanel {
         rdDangLam = new javax.swing.JRadioButton();
         rdDaNghi = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtMatKhau = new javax.swing.JPasswordField();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblNhanVien = new javax.swing.JTable();
@@ -432,7 +436,7 @@ public class NhanVienJPanel extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPasswordField1))
+                        .addComponent(txtMatKhau))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel43, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
@@ -515,7 +519,7 @@ public class NhanVienJPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -743,6 +747,7 @@ public class NhanVienJPanel extends javax.swing.JPanel {
         String DiaChi = txtDiaChi.getText();
         String SDT = txtSDT.getText();
         String Email = txtEmail.getText();
+        String matKhau = txtMatKhau.getText();
         UUID TenCV = ((ChucVuVM) cbbChucVu.getSelectedItem()).getId();
         int TrangThai = rdDangLam.isSelected() == true ? 1 : 0;
 
@@ -761,14 +766,15 @@ public class NhanVienJPanel extends javax.swing.JPanel {
         nv.setDiaChi(DiaChi);
         nv.setSDT(SDT);
         nv.setEmail(Email);
+        nv.setMatKhau(matKhau);
         nv.setIdCV(TenCV);
         nv.setTrangThaiNV(TrangThai);
 
         System.out.println(nv);
 
         this.nhanVienService.add(nv);
-        LamMoi();
         loadTable();
+        LamMoi();
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
@@ -907,7 +913,6 @@ public class NhanVienJPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JRadioButton rdDaNghi;
@@ -921,6 +926,7 @@ public class NhanVienJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtMa;
     private javax.swing.JTextField txtMaCV;
+    private javax.swing.JPasswordField txtMatKhau;
     private javax.swing.JTextField txtNgaySinh;
     private javax.swing.JTextField txtSDT;
     private javax.swing.JTextField txtSearchByMa;

@@ -239,4 +239,72 @@ public class NhanVienRepos implements INhanVienRepos {
 
         return null;
     }
+
+    @Override
+    public Optional<NhanVien> findByEmail(String email) {
+        String sql = "SELECT * FROM NHANVIEN WHERE EMAIL = ?";
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                NhanVien nv = new NhanVien();
+                nv.setId(UUID.fromString(rs.getString("Id")));
+                nv.setTenNV(rs.getString("TenNV"));
+                nv.setGioiTinh(rs.getInt("GioiTinh"));
+                nv.setNgaySinh(rs.getDate("NgaySinh"));
+                nv.setCCCD(rs.getString("CCCD"));
+                nv.setDiaChi(rs.getString("DiaChi"));
+                nv.setSDT(rs.getString("SDT"));
+                nv.setEmail(rs.getString("Email"));
+                nv.setMatKhau(rs.getString("MatKhau"));
+                nv.setTrangThaiNV(rs.getInt("TrangThaiNV"));
+                nv.setIdCV(UUID.fromString(rs.getString("IdCV")));
+                nv.setMaNV(rs.getString("MaNV"));
+                return Optional.of(nv);
+            } else {
+                return Optional.empty();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Boolean updateMatKhau(String maNV, String newMatKhau) {
+    String sql = "UPDATE NHANVIEN SET MATKHAU = ? WHERE MANV = ?";
+    try (Connection conn = connection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        ps.setString(1, newMatKhau);
+        ps.setString(2, maNV);
+
+        int rowsUpdated = ps.executeUpdate();
+        return rowsUpdated > 0;
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+
+    @Override
+    public Boolean checkMK(String maNV, String matKhauCu) {
+       String sql = "SELECT COUNT(*) FROM NHANVIEN WHERE MANV = ? AND MATKHAU = ?";
+        try (Connection conn = connection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, maNV);
+            stmt.setString(2, matKhauCu);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
