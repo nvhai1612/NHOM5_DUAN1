@@ -57,28 +57,28 @@ public class SPCTJPanel extends javax.swing.JPanel {
     public SPCTJPanel() {
         initComponents();
         dcbbmcl = (DefaultComboBoxModel) cbbCL.getModel();
-        dcbbmcl.addAll(chatLieuService.getAll());
-        for (int i = 0; i < dcbbmcl.getSize(); i++) {
+        for (ChatLieuVM cl : chatLieuService.getAll()) {
+            dcbbmcl.addElement(cl);
         }
 
         dcbbmkc = (DefaultComboBoxModel) cbbKC.getModel();
-        dcbbmkc.addAll(kichCoService.getAll());
-        for (int i = 0; i < dcbbmkc.getSize(); i++) {
+        for (KichCoVM kc : kichCoService.getAll()) {
+            dcbbmkc.addElement(kc);
         }
 
         dcbbmms = (DefaultComboBoxModel) cbbMS.getModel();
-        dcbbmms.addAll(mauSacService.getAll());
-        for (int i = 0; i < dcbbmms.getSize(); i++) {
+        for (MauSacVM ms : mauSacService.getAll()) {
+            dcbbmms.addElement(ms);
         }
 
         dcbbmth = (DefaultComboBoxModel) cbbTH.getModel();
-        dcbbmth.addAll(thuongHieuService.getAll());
-        for (int i = 0; i < dcbbmth.getSize(); i++) {
+        for (ThuongHieuVM th : thuongHieuService.getAll()) {
+            dcbbmth.addElement(th);
         }
 
         dcbbtsp = (DefaultComboBoxModel) cbbSP.getModel();
-        dcbbtsp.addAll(sanPhamService.getAll());
-        for (int i = 0; i < dcbbtsp.getSize(); i++) {
+        for (SanPhamVM sp : sanPhamService.getAll()) {
+            dcbbtsp.addElement(sp);
         }
 
         LoadTableSPCT();
@@ -1834,24 +1834,80 @@ public class SPCTJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCLActionPerformed
 
     private void btnThemSPCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPCTActionPerformed
+
         String MaSPCT = ((SanPhamVM) cbbSP.getSelectedItem()).getMaSP();
-        UUID TenSP = ((SanPhamVM) cbbSP.getSelectedItem()).getId();
-//        UUID TenSP = spctrp.SelectSPByTen(txtTenSP.getText());
+        Object selectedSP = cbbSP.getSelectedItem();
+        if (!(selectedSP instanceof SanPhamVM)) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn Tên Sản Phẩm hợp lệ!");
+            return;
+        }
+        SanPhamVM sanPhamVM = (SanPhamVM) selectedSP;
+        UUID TenSP = sanPhamVM.getId();
         String SoLuongTon = txtSLTon.getText();
+
         if (SoLuongTon.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nhập số lượng tồn!");
             return;
+        } else {
+            try {
+                int soLuong = Integer.parseInt(SoLuongTon);
+                if (soLuong <= 0) {
+                    JOptionPane.showMessageDialog(this, "Số lượng tồn phải lớn hơn 0!");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Số lượng tồn phải là số nguyên!");
+                return;
+            }
         }
+
         String NguoiTao = txtNguoiTao.getText();
-        int TrangThai = rdoConHang.isSelected() == true ? 1 : 0;
-        UUID TenCL = ((ChatLieuVM) cbbCL.getSelectedItem()).getId();
-        UUID TenKC = ((KichCoVM) cbbKC.getSelectedItem()).getId();
-        UUID TenMS = ((MauSacVM) cbbMS.getSelectedItem()).getId();
-        UUID TenTH = ((ThuongHieuVM) cbbTH.getSelectedItem()).getId();
+        int TrangThai = rdoConHang.isSelected() ? 1 : 0;
+        Object selectedCL = cbbCL.getSelectedItem();
+        if (!(selectedCL instanceof ChatLieuVM)) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn Chất Liệu hợp lệ!");
+            return;
+        }
+        ChatLieuVM chatLieuVM = (ChatLieuVM) selectedCL;
+        UUID TenCL = chatLieuVM.getId();
+        Object selectedKC = cbbKC.getSelectedItem();
+        if (!(selectedKC instanceof KichCoVM)) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn Kích Cỡ hợp lệ!");
+            return;
+        }
+        KichCoVM kichCoVM = (KichCoVM) selectedKC;
+        UUID TenKC = kichCoVM.getId();
+        Object selectedMS = cbbMS.getSelectedItem();
+        if (!(selectedMS instanceof MauSacVM)) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn Màu Sắc hợp lệ!");
+            return;
+        }
+        MauSacVM mauSacVM = (MauSacVM) selectedMS;
+        UUID TenMS = mauSacVM.getId();
+
+        Object selectedTH = cbbTH.getSelectedItem();
+        if (!(selectedTH instanceof ThuongHieuVM)) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn Thương Hiệu hợp lệ!");
+            return;
+        }
+        ThuongHieuVM thuongHieuVM = (ThuongHieuVM) selectedTH;
+        UUID TenTH = thuongHieuVM.getId();
         String DonGia = txtDonGia.getText();
+
         if (DonGia.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nhập đơn giá!");
             return;
+        } else {
+            try {
+                float donGia = Float.parseFloat(DonGia);
+                if (donGia <= 0) {
+                    JOptionPane.showMessageDialog(this, "Đơn giá phải lớn hơn 0!");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Đơn giá phải là số!");
+                return;
+            }
         }
 
         SPCT spct = new SPCT();
@@ -1869,6 +1925,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
         this.SPCTService.add(spct);
         LamMoiSPCT();
         this.LoadTableSPCT();
+        JOptionPane.showMessageDialog(this, "Thêm sản phẩm chi tiết thành công!");
     }//GEN-LAST:event_btnThemSPCTActionPerformed
 
     private void btnLamMoiSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiSPActionPerformed
