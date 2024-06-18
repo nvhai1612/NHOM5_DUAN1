@@ -1337,8 +1337,20 @@ public class BanHangJFrame extends javax.swing.JFrame {
 
     private void btnSuaGHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaGHActionPerformed
         int selectedRow = tblGioHang.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm trong giỏ hàng để sửa số lượng.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         int rowSP = tblDanhSachSP.getSelectedRow();
+        if (rowSP == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm trong danh sách sản phẩm.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         int RowMaHD = tblHoaDon.getSelectedRow();
+        if (RowMaHD == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một hóa đơn để cập nhật sản phẩm.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         String NhapSLNew = JOptionPane.showInputDialog(this, "Nhập số lượng mới:");
         String MaHDCanUpdate = tblHoaDon.getValueAt(RowMaHD, 0).toString();
         String LaySLTon = tblDanhSachSP.getValueAt(rowSP, 6).toString();
@@ -1422,6 +1434,10 @@ public class BanHangJFrame extends javax.swing.JFrame {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         int rowSP = tblDanhSachSP.getSelectedRow();
+        if (rowSP == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm trong danh sách sản phẩm.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         int rowHD = tblHoaDon.getSelectedRow();
         if (rowHD < 0) {
             JOptionPane.showMessageDialog(this, "Bạn cần chọn hóa đơn để thêm sản phẩm!");
@@ -1486,7 +1502,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
 
         String TenNV = "hai";
         String TenKH = txtTenKH.getText();
-        int TrangThaiHD = 1;
+        int TrangThaiHD = 0;
 
         HoaDon hd = new HoaDon();
         hd.setMaHD(MaHD);
@@ -1860,7 +1876,6 @@ public class BanHangJFrame extends javax.swing.JFrame {
         txtMaKH.setText(kh.getMaKH());
         txtTenKH.setText(kh.getTenKH());
         txtNgaySinh.setText(kh.getNgaySinh());
-        System.out.println("GioiTinh: " + kh.getGioiTinh());
         if (kh.getGioiTinh().equals(1)) {
             rdoNam.setSelected(true);
         } else {
