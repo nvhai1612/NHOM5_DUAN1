@@ -103,6 +103,7 @@ public class NhanVienJPanel extends javax.swing.JPanel {
         txtSDT.setText("");
         cbbChucVu.setSelectedIndex(0);
         rdDangLam.setSelected(true);
+        txtMatKhau.setText("");
     }
 
     public boolean checkTrong() {
@@ -141,7 +142,7 @@ public class NhanVienJPanel extends javax.swing.JPanel {
         }
         if (txtMatKhau.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Mật Khẩu không được để trống");
-            txtEmail.requestFocus();
+            txtMatKhau.requestFocus();
             return false;
         }
 
@@ -697,7 +698,7 @@ public class NhanVienJPanel extends javax.swing.JPanel {
         cv.setTenCV(TenCV);
 
         this.chucVuService.add(cv);
-        this.loadTableCV();
+        LamMoicv();
     }//GEN-LAST:event_btnThemCVActionPerformed
 
     private void btnSuaCVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaCVActionPerformed
