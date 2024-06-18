@@ -129,7 +129,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
         dtmhd = (DefaultTableModel) tblHoaDon.getModel();
         dtmhd.setRowCount(0);
         hoaDonService.getAll().stream().forEach(System.out::print);
-//.isEmpty() ? hoaDonService.getAllHoaDon() : hoaDonService.getAll()
+.isEmpty() ? hoaDonService.getAllHoaDon() : hoaDonService.getAll()
         ArrayList<HoaDonVM> listHDVM = hoaDonService.getAll();
         for (HoaDonVM hdvm : listHDVM) {
             dtmhd.addRow(new Object[]{
@@ -1258,13 +1258,13 @@ public class BanHangJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBanHangActionPerformed
 
     private void btnLichSuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLichSuActionPerformed
-//        try {
-//            pnlCards.removeAll();
-//            pnlCards.add(new LichSuJPanel());
-//            pnlCards.repaint();
-//            pnlCards.revalidate();
-//        } catch (Exception e) {
-//        }
+        try {
+            pnlCards.removeAll();
+            pnlCards.add(new LichSuJPanel());
+            pnlCards.repaint();
+            pnlCards.revalidate();
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btnLichSuActionPerformed
 
     private void btnSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSanPhamActionPerformed
@@ -1495,8 +1495,8 @@ public class BanHangJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnChonKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonKHActionPerformed
-//        KhachHangDialog.setVisible(true);
-//        KhachHangDialog.setLocationRelativeTo(null);
+        KhachHangDialog.setVisible(true);
+        KhachHangDialog.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnChonKHActionPerformed
 
     private void txtTienKhachDuaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhachDuaCaretUpdate
