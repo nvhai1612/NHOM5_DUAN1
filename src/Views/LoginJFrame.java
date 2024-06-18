@@ -30,6 +30,8 @@ public class LoginJFrame extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         list = service.getAllDoMain();
+        hidepass.setVisible(true);
+        btnShowPW.setVisible(false);
     }
 
     /**
@@ -41,6 +43,7 @@ public class LoginJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -53,6 +56,18 @@ public class LoginJFrame extends javax.swing.JFrame {
         txtUN = new javax.swing.JTextField();
         btnShowPW = new javax.swing.JButton();
         ptxtMatKhau = new javax.swing.JPasswordField();
+        hidepass = new javax.swing.JLabel();
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,9 +111,27 @@ public class LoginJFrame extends javax.swing.JFrame {
         btnShowPW.setBackground(new java.awt.Color(222, 231, 227));
         btnShowPW.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/showpass.png"))); // NOI18N
         btnShowPW.setBorder(null);
+        btnShowPW.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowPWActionPerformed(evt);
+            }
+        });
 
         ptxtMatKhau.setBackground(new java.awt.Color(222, 231, 227));
         ptxtMatKhau.setBorder(null);
+
+        hidepass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/notshowpass.png"))); // NOI18N
+        hidepass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                hidepassMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                hidepassMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                hidepassMouseReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -117,10 +150,12 @@ public class LoginJFrame extends javax.swing.JFrame {
                         .addComponent(txtUN)
                         .addComponent(jLabel8))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(ptxtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ptxtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(hidepass)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnShowPW, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,9 +171,11 @@ public class LoginJFrame extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnShowPW, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(ptxtMatKhau))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(ptxtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnShowPW, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(hidepass)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -219,6 +256,29 @@ public class LoginJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
+    private void hidepassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hidepassMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_hidepassMouseClicked
+
+    private void hidepassMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hidepassMousePressed
+        ptxtMatKhau.setEchoChar((char)0);
+        btnShowPW.setVisible(true);
+        hidepass.setVisible(false);
+    }//GEN-LAST:event_hidepassMousePressed
+
+    private void hidepassMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hidepassMouseReleased
+//        btnShowPW.setVisible(false);
+//        hidepass.setVisible(true);
+//        ptxtMatKhau.setEchoChar('*');
+    }//GEN-LAST:event_hidepassMouseReleased
+
+    private void btnShowPWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowPWActionPerformed
+        // TODO add your handling code here:
+        ptxtMatKhau.setEchoChar('*');
+        btnShowPW.setVisible(false);
+        hidepass.setVisible(true);
+    }//GEN-LAST:event_btnShowPWActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -258,11 +318,13 @@ public class LoginJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDangNhap;
     private javax.swing.JButton btnShowPW;
+    private javax.swing.JLabel hidepass;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JLabel lblQuenMK;

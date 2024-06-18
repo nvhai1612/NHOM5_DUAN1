@@ -1519,8 +1519,8 @@ public class BanHangJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnChonKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonKHActionPerformed
-//        KhachHangDialog.setVisible(true);
-//        KhachHangDialog.setLocationRelativeTo(null);
+        KhachHangDialog.setVisible(true);
+        KhachHangDialog.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnChonKHActionPerformed
 
     private void txtTienKhachDuaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhachDuaCaretUpdate
