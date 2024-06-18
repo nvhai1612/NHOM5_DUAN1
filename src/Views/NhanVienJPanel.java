@@ -834,7 +834,7 @@ public class NhanVienJPanel extends javax.swing.JPanel {
                 txtSDT.setText(nhanVien.getSDT());
                 txtEmail.setText(nhanVien.getEmail());
                 cbbChucVu.setSelectedItem(nhanVien.getTenCV());
-                if (nhanVien.getGioiTinh() == 1) {
+                if (nhanVien.getGioiTinh()== 1) {
                     rdNam.setSelected(true);
                 } else {
                     rdNu.setSelected(true);

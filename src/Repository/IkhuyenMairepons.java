@@ -20,5 +20,6 @@ public interface IkhuyenMairepons {
     public Boolean add(KhuyenMai km);
     public Boolean update(KhuyenMai KM);
     public ArrayList<KhuyenMai> search();
+     public Boolean existsBymakm(String makm);
     
 }

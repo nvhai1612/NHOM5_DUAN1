@@ -17,6 +17,15 @@ public class HoaDon {
     private Date NgayTao,NgayThanhToan;
     private float TongTien;
     private int TrangThaiHD;
+    private float  DonGiaSauGiam;
+
+    public float getDonGiaSauGiam() {
+        return DonGiaSauGiam;
+    }
+
+    public void setDonGiaSauGiam(float DonGiaSauGiam) {
+        this.DonGiaSauGiam = DonGiaSauGiam;
+    }
 
     public HoaDon() {
     }

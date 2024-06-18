@@ -54,49 +54,33 @@ public class KhuyenMaiRepons implements IkhuyenMairepons {
         }
         return khuyenmai;
     }
-//    public List<SanPham>getKMjoinsp(String maSP){
-//        ArrayList<SanPham> lisp=new ArrayList<>();
-//        try (Connection con = Connection.getConnection(); PreparedStatement ps = con.prepareStatement(
-//                "select MASP,TENSP,TENKM,MUCGIAMGIA,TRANGTHAIKM   from KHUYENMAI join SANPHAM on KHUYENMAI.IDSP=SANPHAM.ID	 ")) {
-//            ResultSet rs = ps.executeQuery();
-//            ps.setString(1, maSP);
-//            while (rs.next()) {
-//             SanPham sp=new SanPham();
-//             sp.setMaSP(rs.getString(1));
-//             sp.setTenSP(rs.getString(1));
-//             
-//             
-//            }
-//
-//        } catch (Exception e) {
-//        }
-//        return null;
-//    }
     
-
-//    @Override
-//    public Boolean add(KhuyenMai km) {
-//         Integer row = 0;
-//
-//        String sql = "insert into KHUYENMAI (IDSP,MAKM,TENKM,MUCGIAMGIA,THOIGIANBATDAU,THOIGIANKETTHUC,TRANGTHAIKM,SOLUONG) values \n"
-//                + "(?,?,?,?,?,?,?,?,?)";
-//
-//        try {
-//            row = JDBCHelper.executeUpdate(sql,
-//                    km.getMaKM(),
-//                    km.getTenKM(),
-//                    km.getMucGiamGia(),
-//                    km.getThoiGianBatDau(),
-//                    km.getThoiGianKetThuc(),
-//                    km.getTrangThai(),
-//                    km.getSoLuong()
-//                    
-//            );
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
+public ArrayList<KhuyenMai> getListHieuLuc() {
+        ArrayList<KhuyenMai> khuyenmai = new ArrayList<>();
+        try (Connection con = Connection.getConnection(); PreparedStatement ps = con.prepareStatement(
+                "SELECT ID, IDHD, MAKM, TENKM, MUCGIAMGIA, THOIGIANBATDAU, THOIGIANKETTHUC, TRANGTHAIKM, SOLUONG\n" +
+"FROM KHUYENMAI\n" +
+"WHERE SOLUONG >= 1\n" +
+"  AND TRANGTHAIKM = 1\n" +
+"  AND GETDATE() BETWEEN THOIGIANBATDAU AND THOIGIANKETTHUC")) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                KhuyenMai km = new KhuyenMai();
+                km.setIdKM(rs.getObject(1, UUID.class));
+                km.setIDHD(rs.getObject(2, UUID.class));
+                km.setMaKM(rs.getString(3));
+                km.setTenKM(rs.getString(4));
+                km.setMucGiamGia(rs.getFloat(5));
+                km.setThoiGianBatDau(rs.getDate(6));
+                km.setThoiGianKetThuc(rs.getDate(7));
+                km.setTrangThai(rs.getInt(8));
+                km.setSoLuong(rs.getInt(9));
+                khuyenmai.add(km);
+            }
+        } catch (Exception e) {
+        }
+        return khuyenmai;
+    }
     @Override
     public Boolean add(KhuyenMai km) {
 
@@ -204,6 +188,22 @@ public class KhuyenMaiRepons implements IkhuyenMairepons {
             e.printStackTrace();
         }
         return sp;
+    }
+
+    @Override
+    public Boolean existsBymakm(String makm) {
+        String sql = "SELECT COUNT(*) FROM KHUYENMAI WHERE MAKM = ?";
+        try (Connection conn = Connection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, makm);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }
