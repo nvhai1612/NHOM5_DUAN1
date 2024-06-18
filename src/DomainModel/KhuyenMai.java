@@ -15,7 +15,7 @@ import java.util.UUID;
 public class KhuyenMai {
 
     private UUID idKM;
-    private UUID IDSP;
+    private UUID IDHD;
     private String maKM;
     private String TenKM;
     private float MucGiamGia;
@@ -26,10 +26,11 @@ public class KhuyenMai {
 
     public KhuyenMai() {
     }
+    
 
-    public KhuyenMai(UUID idKM, UUID IDSP, String maKM, String TenKM, float MucGiamGia, Date ThoiGianBatDau, Date ThoiGianKetThuc, int TrangThai, int SoLuong) {
+    public KhuyenMai(UUID idKM, UUID IDHD, String maKM, String TenKM, float MucGiamGia, Date ThoiGianBatDau, Date ThoiGianKetThuc, int TrangThai, int SoLuong) {
         this.idKM = idKM;
-        this.IDSP = IDSP;
+        this.IDHD = IDHD;
         this.maKM = maKM;
         this.TenKM = TenKM;
         this.MucGiamGia = MucGiamGia;
@@ -47,12 +48,12 @@ public class KhuyenMai {
         this.idKM = idKM;
     }
 
-    public UUID getIDSP() {
-        return IDSP;
+    public UUID getIDHD() {
+        return IDHD;
     }
 
-    public void setIDSP(UUID IDSP) {
-        this.IDSP = IDSP;
+    public void setIDHD(UUID IDHD) {
+        this.IDHD = IDHD;
     }
 
     public String getMaKM() {
@@ -110,28 +111,6 @@ public class KhuyenMai {
     public void setSoLuong(int SoLuong) {
         this.SoLuong = SoLuong;
     }
-
-    @Override
-    public String toString() {
-        return "KhuyenMai{" + "idKM=" + idKM + ", IDSP=" + IDSP + ", maKM=" + maKM + ", TenKM=" + TenKM + ", MucGiamGia=" + MucGiamGia + ", ThoiGianBatDau=" + ThoiGianBatDau + ", ThoiGianKetThuc=" + ThoiGianKetThuc + ", TrangThai=" + TrangThai + ", SoLuong=" + SoLuong + '}';
-    }
-    public Object[] toDataRow(){
-        return  new Object[]{
-            maKM,TenKM,MucGiamGia,ThoiGianBatDau,ThoiGianKetThuc,TrangThai,SoLuong
-        };
-    }
-
-   
-    
-
-    
-
-    
-
-  
-
-    
-    
 
     
 }

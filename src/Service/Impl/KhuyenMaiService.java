@@ -27,7 +27,7 @@ public class KhuyenMaiService implements IkhuyenMaiSeviec{
          ArrayList<KhuyenMai> listSP = respon.getListFormDB();
         ArrayList<khuyeMaiVM> listVM = new ArrayList<>();
         for (KhuyenMai sp : listSP) {
-            khuyeMaiVM spvm = new khuyeMaiVM(sp.getIdKM(), sp.getIDSP(), sp.getMaKM(), sp.getTenKM(),sp.getMucGiamGia(),sp.getThoiGianBatDau(),sp.getThoiGianKetThuc(),sp.getTrangThai(),sp.getSoLuong());
+            khuyeMaiVM spvm = new khuyeMaiVM(sp.getIdKM(), sp.getIDHD(), sp.getMaKM(), sp.getTenKM(),sp.getMucGiamGia(),sp.getThoiGianBatDau(),sp.getThoiGianKetThuc(),sp.getTrangThai(),sp.getSoLuong());
             listVM.add(spvm);
         }
         return listVM;

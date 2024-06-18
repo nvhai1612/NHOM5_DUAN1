@@ -2057,6 +2057,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtMaSPCT">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMaSPCTActionPerformed"/>
               </Events>
@@ -2091,6 +2094,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtNguoiTao">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
@@ -2102,6 +2108,7 @@
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="buttonGroup1"/>
                 </Property>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Co&#x300;n ha&#x300;ng"/>
               </Properties>
             </Component>

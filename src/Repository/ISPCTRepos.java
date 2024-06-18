@@ -16,5 +16,5 @@ public interface ISPCTRepos {
     public Boolean add(SPCT spct);
     public Boolean update(SPCT spct);
     public Boolean delete(String id);
-    public ArrayList<SPCT> search();
+    public ArrayList<SPCT> search(String MaSPCT);
 }

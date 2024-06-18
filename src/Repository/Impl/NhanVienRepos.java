@@ -217,7 +217,6 @@ public class NhanVienRepos implements INhanVienRepos {
     }
 
     public UUID SelectByname(String id) {
-
         try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("SELECT ID FROM NHANVIEN WHERE TENNV = ? or email = ?")) {
             if (id.contains("@")) {
                 ps.setObject(2, id);
@@ -240,6 +239,8 @@ public class NhanVienRepos implements INhanVienRepos {
         return null;
     }
 
+    
+    
     @Override
     public Optional<NhanVien> findByEmail(String email) {
         String sql = "SELECT * FROM NHANVIEN WHERE EMAIL = ?";

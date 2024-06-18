@@ -49,7 +49,8 @@ public class SPCTService implements ISPCTService{
 
     @Override
     public ArrayList<SPCT> search(String MaCTSP) {
-        return SPCTRepos.search();
+        ArrayList<SPCT> ListSPCT = SPCTRepos.search(MaCTSP);
+         return ListSPCT;
     }
     
     public ArrayList<SPCTVM> getAllBanHang() {

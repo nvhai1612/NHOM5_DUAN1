@@ -427,17 +427,22 @@ public class KhachHangJPanel extends javax.swing.JPanel {
         String ngaySinh = txtNgaySinh.getText();
         int gioiTinh = rdoNam.isSelected() == true ? 1 : 0;
         String sdt = txtSdt.getText();
+        if (sdt.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không để trống sdt khách hàng");
+            return;
+        }
         String diaChi = taDiaChi.getText();
         KhachHang kh = new KhachHang();
         kh.setMaKH(ma);
         kh.setTenKH(ten);
-        kh.setNgaySinh(ngaySinh);
+          kh.setNgaySinh(ngaySinh.isEmpty() ? null : ngaySinh); 
         kh.setGioiTinh(gioiTinh);
         kh.setSdt(sdt);
         kh.setDiaChi(diaChi);
         service.add(kh);
         loadTableKhachHang();
         xoa();
+        JOptionPane.showMessageDialog(this, "Thêm mới thành công");
     }//GEN-LAST:event_btnThemActionPerformed
     
     void xoa() {
@@ -453,13 +458,18 @@ public class KhachHangJPanel extends javax.swing.JPanel {
         List<HoaDon> list = service.getLichSu(maKH);
         tableModelHoaDon = (DefaultTableModel) tblHoaDonKH.getModel();
         tableModelHoaDon.setRowCount(0);
+        double tongtien = 0;
         for (HoaDon hoaDon : list) {
             tableModelHoaDon.addRow(new Object[]{
                 hoaDon.getMaHD(),
                 hoaDon.getNgayTao(),
                 hoaDon.getTongTien()
             });
+            tongtien += hoaDon.getTongTien();
         }
+        txtTongTien.setText(String.valueOf(tongtien));
+       
+      
 
     }
     
@@ -540,13 +550,13 @@ public class KhachHangJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtTimKiemKeyReleased2
 
-    private void btnTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnTimActionPerformed
-
     private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTimKiemActionPerformed
+
+    private void btnTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTimActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLamMoi;
