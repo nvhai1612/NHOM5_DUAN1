@@ -6,12 +6,14 @@ package Views;
 
 import DomainModel.HoaDon;
 import DomainModel.KhachHang;
+import DomainModel.KhuyenMai;
 import DomainModel.SPCT;
 import Repository.Impl.HoaDonRepos;
 import Repository.Impl.SPCTRepos;
 import Service.Impl.ChatLieuService;
 import Service.Impl.HoaDonService;
 import Service.Impl.KhachHangService;
+import Service.Impl.KhuyenMaiService;
 import Service.Impl.KichCoService;
 import Service.Impl.MauSacService;
 import Service.Impl.SPCTService;
@@ -21,6 +23,7 @@ import Utiliti.SessionData;
 import ViewModel.HoaDonVM;
 import ViewModel.KhachHangVM;
 import ViewModel.SPCTVM;
+import ViewModel.khuyeMaiVM;
 import java.awt.CardLayout;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -31,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -54,6 +58,8 @@ public class BanHangJFrame extends javax.swing.JFrame {
     private SPCTRepos spctrp = new SPCTRepos();
     private KhachHangService khs = new KhachHangService();
     private SPCTJPanel spctjp = new SPCTJPanel();
+    KhuyenMaiService khuyenMaiService = new KhuyenMaiService();
+    
 
     CardLayout card;
 
@@ -68,12 +74,17 @@ public class BanHangJFrame extends javax.swing.JFrame {
     KhachHangService service = new KhachHangService();
     DefaultTableModel tableModelHoaDon;
     int index = -1;
+    private DefaultComboBoxModel cbbKm;
 
     /**
      * Creates new form BanHangJFrame
      */
     public BanHangJFrame() {
         initComponents();
+        cbbKm = (DefaultComboBoxModel) cbbKhuyenMai.getModel();
+        cbbKm.addAll(khuyenMaiService.getAllKMHieuLuc());
+        for (int i = 0; i < cbbKm.getSize(); i++) {
+        }
         setLocationRelativeTo(null);
         LoadTableHoaDon();
         LoadTableSanPham();
@@ -133,7 +144,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
         dtmhd = (DefaultTableModel) tblHoaDon.getModel();
         dtmhd.setRowCount(0);
         hoaDonService.getAll().stream().forEach(System.out::print);
-.isEmpty() ? hoaDonService.getAllHoaDon() : hoaDonService.getAll()
+//.isEmpty() ? hoaDonService.getAllHoaDon() : hoaDonService.getAll()
         ArrayList<HoaDonVM> listHDVM = hoaDonService.getAll();
         for (HoaDonVM hdvm : listHDVM) {
             dtmhd.addRow(new Object[]{
@@ -173,20 +184,31 @@ public class BanHangJFrame extends javax.swing.JFrame {
         dtmgh.setRowCount(0);
     }
 
-    public void TinhTien() {
+   public void TinhTien() {
         float CanThanhToan = 0;
         float ThanhTien = 0;
-        float Khuyenmai = 0;
         int Tienkhachdua = 0;
         float Tienthua = 0;
-        for (int i = 0; i < tblGioHang.getRowCount(); i++) {
-            ThanhTien += Float.valueOf(tblGioHang.getValueAt(i, 4).toString());
-            CanThanhToan = ThanhTien - Khuyenmai;
-            Tienthua = Tienkhachdua - CanThanhToan;
+        Object selectedItem = cbbKhuyenMai.getSelectedItem();
+// Kiểm tra nếu item không null và là đối tượng của lớp khuyeMaiVM
+        if (selectedItem instanceof khuyeMaiVM) {
+            float km = ((khuyeMaiVM) selectedItem).getMucGiamGia();
+            for (int i = 0; i < tblGioHang.getRowCount(); i++) {
+                ThanhTien += Float.valueOf(tblGioHang.getValueAt(i, 4).toString());
+                CanThanhToan = ThanhTien - (ThanhTien * km / 100);
+                Tienthua = Tienkhachdua - CanThanhToan;
+            }
+        } else {
+            for (int i = 0; i < tblGioHang.getRowCount(); i++) {
+                ThanhTien += Float.valueOf(tblGioHang.getValueAt(i, 4).toString());
+                CanThanhToan = ThanhTien;
+                Tienthua = Tienkhachdua - CanThanhToan;
+            }
         }
+        //System.out.println(((khuyeMaiVM) cbbKhuyenMai.getSelectedItem()).getMucGiamGia()); 
 
         txtTongTien.setText(String.valueOf(ThanhTien));
-        cbbKhuyenMai.setSelectedItem(Khuyenmai);
+//        cbbKhuyenMai.setSelectedItem(Khuyenmai);
         txtCanThanhToan.setText(String.valueOf(CanThanhToan));
         txtTienKhachDua.setText(String.valueOf(Tienkhachdua));
         txtTienThua.setText(String.valueOf(Tienthua));
@@ -897,6 +919,11 @@ public class BanHangJFrame extends javax.swing.JFrame {
 
         cbbKhuyenMai.setBackground(new java.awt.Color(222, 231, 227));
         cbbKhuyenMai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn..." }));
+        cbbKhuyenMai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbKhuyenMaiActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -1541,6 +1568,10 @@ public class BanHangJFrame extends javax.swing.JFrame {
         SessionData.maHD = new Random().nextInt(10000) + "";
         hoaDonRes.add(new HoaDon(SessionData.maHD, 0, new Date()));
         LoadTableHoaDon();
+         cbbKm = (DefaultComboBoxModel) cbbKhuyenMai.getModel();
+        cbbKm.addAll(khuyenMaiService.getAllKMHieuLuc());
+        for (int i = 0; i < cbbKm.getSize(); i++) {
+        }
     }//GEN-LAST:event_btnTaoHoaDonActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
@@ -1609,7 +1640,9 @@ public class BanHangJFrame extends javax.swing.JFrame {
         hd.setMaHD(MaHD);
         hd.setTongTien(Float.valueOf(TongTien));
         hd.setTrangThaiHD(TrangThaiHD);
-
+        hd.setDonGiaSauGiam(Float.parseFloat(txtCanThanhToan.getText()));
+        int sl = ((khuyeMaiVM) cbbKhuyenMai.getSelectedItem()).getSoLuong() - 1;
+        String makm = ((khuyeMaiVM) cbbKhuyenMai.getSelectedItem()).getMaKM();
         hoaDonService.updateTrangThaiHoaDon(MaHD, TrangThaiHD, Float.valueOf(TongTien), MaHD);
         LoadTableHoaDon();
         reset();
@@ -1749,6 +1782,10 @@ public class BanHangJFrame extends javax.swing.JFrame {
         txtSDTKH1.setText(SessionData.sdtKH.getSdt());
         KhachHangDialog.setVisible(false);
     }//GEN-LAST:event_cbbChonKH2ActionPerformed
+
+    private void cbbKhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbKhuyenMaiActionPerformed
+       TinhTien();
+    }//GEN-LAST:event_cbbKhuyenMaiActionPerformed
     public Boolean UpdateLaiGioHang(String MaSP, String TenSP, int SoLuong, float DonGia, String mahd) {
         if (tblGioHang.getRowCount() == 0) {
             dtmgh.addRow(new Object[]{

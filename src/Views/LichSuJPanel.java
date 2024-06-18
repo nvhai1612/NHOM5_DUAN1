@@ -49,7 +49,7 @@ public class LichSuJPanel extends javax.swing.JPanel {
                 hdct.getTenNV(),
                 hdct.getTenKH()== null ? "KH vãng lai" : hdct.getTenKH(),
                 //new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(hdvm.getNgayTao()),
-                hdct.getTrangThai() == 0 ? "Đã thanh toán" : "Hủy",});
+                hdct.getTrangThai() == 1 ? "Đã thanh toán" : "Hủy",});
         }
     }
     private void LoadHoaDonCho(String MaHD) {
@@ -64,21 +64,9 @@ public class LichSuJPanel extends javax.swing.JPanel {
                 spct.getDonGia(),
                 new BigDecimal(spct.getDonGia() * spct.getSoLuongTon()),});
         }
-        TinhTien();
+        
     }
-    public void TinhTien() {
-        float CanThanhToan = 0;
-        float ThanhTien = 0;
-        double Khuyenmai = 0;
-        int Tienkhachdua = 0;
-        float Tienthua = 0;
-        for (int i = 0; i < tblTTSP.getRowCount(); i++) {
-            ThanhTien += Float.valueOf(tblTTSP.getValueAt(i, 4).toString());
-            CanThanhToan = (float) (ThanhTien - Khuyenmai);
-            Tienthua = Tienkhachdua - CanThanhToan;
-        }
-        txtTongTien.setText(String.valueOf(CanThanhToan));
-    }
+   
         public void reset() {
         txtTongTien.setText("0");
         txtDiaChi.setText("0");
@@ -97,6 +85,8 @@ public class LichSuJPanel extends javax.swing.JPanel {
         txtTenKH.setText(kh.getTenKH()==null ? "KH vãng Lai":kh.getTenKH());
         txtSDT.setText(kh.getSDT());
         txtDiaChi.setText(kh.getDiachi());
+        String dongiasaugiam=String.valueOf(kh.getDonGia());
+        txtTongTien.setText(dongiasaugiam);
         int trangThai = kh.getTrangThai();
         String trangThaiStr = (trangThai == 1) ? "Đã thanh toán" : "Hủy";
         txtTrangThai.setText(trangThaiStr);
@@ -438,26 +428,15 @@ public class LichSuJPanel extends javax.swing.JPanel {
                 tableModel.addRow(new Object[]{
                     kh.getMaHD(),
                     kh.getTenKH()==null ? "KH vãng lai":kh.getTenKH(),
-                    kh.getTenNV()==null ? "nguyễn văn tùng":kh.getTenNV(),
-                    kh.getTrangThai() == 1 ? "Đã thanh toán" : "Hủy",});
-            }
-        }
-    }//GEN-LAST:event_txtTimKiemKeyReleased
-
-    private void cboTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTrangThaiActionPerformed
-         String keyword = cboTrangThai.getActionCommand().trim();
-        if (keyword != null) {
-            DefaultTableModel tableModel = (DefaultTableModel) tblHoaDon.getModel();
-            tableModel.setRowCount(0);
-            ArrayList<HoaDonDTO> list = hDCTCTRepos.search(keyword);
-            for (HoaDonDTO kh : list) {
-                tableModel.addRow(new Object[]{
-                    kh.getMaHD(),
-                    kh.getTenKH(),
                     kh.getTenNV(),
                     kh.getTrangThai() == 1 ? "Đã thanh toán" : "Hủy",});
             }
         }
+        
+    }//GEN-LAST:event_txtTimKiemKeyReleased
+
+    private void cboTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTrangThaiActionPerformed
+            
     }//GEN-LAST:event_cboTrangThaiActionPerformed
 
 

@@ -11,6 +11,7 @@ import Service.Impl.NhanVienService;
 import ViewModel.ChucVuVM;
 import ViewModel.NhanVienVM;
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +105,7 @@ public class NhanVienJPanel extends javax.swing.JPanel {
         cbbChucVu.setSelectedIndex(0);
         rdDangLam.setSelected(true);
         txtMatKhau.setText("");
+        loadTable();
     }
 
     public boolean checkTrong() {
@@ -140,15 +142,50 @@ public class NhanVienJPanel extends javax.swing.JPanel {
             txtEmail.requestFocus();
             return false;
         }
-        if (txtMatKhau.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mật Khẩu không được để trống");
-            txtMatKhau.requestFocus();
+
+        String SDT = txtSDT.getText().trim();
+        if (!SDT.matches("\\d{10}")) {
+            JOptionPane.showMessageDialog(this, "Số Điện Thoại không quá 10 số ");
+            txtSDT.requestFocus();
+        }
+        String CCCD = txtCCCD.getText().trim();
+        if (!CCCD.matches("\\d+") || Long.parseLong(CCCD) <= 0) {
+            JOptionPane.showMessageDialog(this, "Căn cước công dân phải là số dương");
+            txtCCCD.requestFocus();
+        }
+        String ngaySinh = txtNgaySinh.getText().trim();
+        if (!checkNgaySinh(ngaySinh)) {
+            JOptionPane.showMessageDialog(this, "Ngày sinh không đúng định dạng (yyyy/MM/dd)");
+            txtNgaySinh.requestFocus();
             return false;
         }
 
-        //
-        return true;
+        String email = txtEmail.getText().trim();
+        if (!checkEmail(email)) {
+            JOptionPane.showMessageDialog(this, "Email không đúng định dạng");
+            txtEmail.requestFocus();
+            return false;
+        }
 
+        return true;
+    }
+
+    private boolean checkNgaySinh(String ngaySinh) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(false);
+        try {
+            sdf.parse(ngaySinh);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
+    private boolean checkEmail(String email) {
+        if (!email.contains("@") || !email.contains(".")) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -560,7 +597,7 @@ public class NhanVienJPanel extends javax.swing.JPanel {
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel51)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE))
                 .addContainerGap())
@@ -752,7 +789,11 @@ public class NhanVienJPanel extends javax.swing.JPanel {
             txtMa.requestFocus();
             return;
         }
-
+          if (txtMatKhau.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mật Khẩu không được để trống");
+            txtMatKhau.requestFocus();
+            return ;
+        }
         NhanVien nv = new NhanVien();
         nv.setMaNV(MaNV);
         nv.setTenNV(TenNV);
@@ -769,7 +810,6 @@ public class NhanVienJPanel extends javax.swing.JPanel {
         System.out.println(nv);
 
         this.nhanVienService.add(nv);
-        loadTable();
         LamMoi();
     }//GEN-LAST:event_btnThemActionPerformed
 
@@ -777,6 +817,9 @@ public class NhanVienJPanel extends javax.swing.JPanel {
         int row = tblNhanVien.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một nhân viên để sửa.");
+            return;
+        }
+        if (!checkTrong()) {
             return;
         }
 
@@ -791,6 +834,11 @@ public class NhanVienJPanel extends javax.swing.JPanel {
         UUID TenCV = ((ChucVuVM) cbbChucVu.getSelectedItem()).getId();
         int TrangThai = rdDangLam.isSelected() == true ? 1 : 0;
 
+         if (nhanVienService.existsByMaNV(MaNV)) {
+            JOptionPane.showMessageDialog(this, "Mã Nhân Viên đã tồn tại, vui lòng chọn mã khác.");
+            txtMa.requestFocus();
+            return;
+        }
         NhanVien nv = new NhanVien();
         nv.setMaNV(MaNV);
         nv.setTenNV(TenNV);
@@ -805,7 +853,7 @@ public class NhanVienJPanel extends javax.swing.JPanel {
 
         System.out.println(nv);
         this.nhanVienService.update(nv);
-        this.loadTable();
+        LamMoi();
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
@@ -838,7 +886,6 @@ public class NhanVienJPanel extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_txtTimKiemKeyReleased
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

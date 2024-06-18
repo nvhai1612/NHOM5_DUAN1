@@ -108,6 +108,10 @@ public class khuyeMaiVM {
     public void setSoLuong(int SoLuong) {
         this.SoLuong = SoLuong;
     }
+     @Override
+    public String toString() {
+        return TenKM; // return the name or whatever you want to display in the JComboBox
+    }
 
     
 }
