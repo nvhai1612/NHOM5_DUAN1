@@ -17,7 +17,8 @@ import java.util.UUID;
  *
  * @author Admin
  */
-public class SanPhamRepos implements ISanPhamRepos{
+public class SanPhamRepos implements ISanPhamRepos {
+
     DBConnection connection;
 
     @Override
@@ -63,7 +64,7 @@ public class SanPhamRepos implements ISanPhamRepos{
         }
         return SelectSPByTen(sp.getTenSP());
     }
-    
+
     public UUID SelectSPByTen(String TenSP) {
 
         try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("SELECT ID FROM SANPHAM WHERE TENSP = ?")) {
@@ -84,7 +85,6 @@ public class SanPhamRepos implements ISanPhamRepos{
         int check;
         try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("UPDATE SANPHAM SET TENSP = ?, TRANGTHAISP = ? WHERE MASP = ?")) {
 
-
             ps.setObject(1, sp.getTenSP());
             ps.setObject(2, sp.getTrangThaiSP());
             ps.setObject(3, sp.getMaSP());
@@ -99,20 +99,19 @@ public class SanPhamRepos implements ISanPhamRepos{
     @Override
     public ArrayList<SanPham> search() {
         ArrayList<SanPham> listSP = new ArrayList<>();
-        try (Connection con = connection.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM SANPHAM WHERE MASP = ?");){
+        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("SELECT * FROM SANPHAM WHERE MASP = ?");) {
             ps.executeUpdate();
-            
+
             SanPham sp = new SanPham();
             ps.setObject(1, sp.getMaSP());
-            
+
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 sp.setId((UUID) rs.getObject(1));
                 sp.setMaSP(rs.getString(2));
                 listSP.add(sp);
-            } 
+            }
         } catch (Exception e) {
             e.getMessage();
         }

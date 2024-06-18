@@ -93,6 +93,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
     }
 
     private void LoadTableSanPham() {
+        String keyword = txtTimKiemSPCT.getText().trim();
         dtmsp = (DefaultTableModel) tblDanhSachSP.getModel();
         dtmsp.setRowCount(0);
 
@@ -274,7 +275,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblDanhSachSP = new javax.swing.JTable();
         jLabel27 = new javax.swing.JLabel();
-        txtTimKiem = new javax.swing.JTextField();
+        txtTimKiemSPCT = new javax.swing.JTextField();
         btnTim = new javax.swing.JButton();
         btnThem = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
@@ -776,9 +777,9 @@ public class BanHangJFrame extends javax.swing.JFrame {
 
         jLabel27.setText("Tìm theo mã");
 
-        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtTimKiemSPCT.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtTimKiemKeyReleased(evt);
+                txtTimKiemSPCTKeyReleased(evt);
             }
         });
 
@@ -807,7 +808,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel27)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTimKiemSPCT, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnTim, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -821,7 +822,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
                     .addComponent(btnThem)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel27)
-                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTimKiemSPCT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnTim)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
@@ -1405,12 +1406,30 @@ public class BanHangJFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tblDanhSachSPMouseClicked
 
-    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
-
-    }//GEN-LAST:event_txtTimKiemKeyReleased
+    private void txtTimKiemSPCTKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemSPCTKeyReleased
+        String keyword = txtTimKiemSPCT.getText().trim();
+        if (keyword != null) {
+             model = (DefaultTableModel) tblDanhSachSP.getModel();
+            model.setRowCount(0);
+            ArrayList<SPCT> list = spctrp.serachByMaSpct(keyword);
+            for (SPCT spct : list) {
+                model.addRow(new Object[]{
+                    spct.getMaSPCT(),
+                    spct.getTenSP(),
+                    spct.getTenCL(),
+                    spct.getTenKC(),
+                    spct.getTenMS(),
+                    spct.getTenTH(),
+                    spct.getSoLuongTon(),
+                    spct.getDonGia()
+                });
+            }
+        }
+    }//GEN-LAST:event_txtTimKiemSPCTKeyReleased
 
     private void btnTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimActionPerformed
-
+        String keyword = txtTimKiemSPCT.getText().trim();
+        hoaDonRes.search(keyword);
     }//GEN-LAST:event_btnTimActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -1626,7 +1645,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tblKhachHangMouseClicked2
 
     private void txtTimKiem1KeyReleased2(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiem1KeyReleased2
-        String keyword = txtTimKiem.getText().trim();
+        String keyword = txtTimKiemSPCT.getText().trim();
         if (keyword != null) {
             tableModel = (DefaultTableModel) tblKhachHang.getModel();
             tableModel.setRowCount(0);
@@ -1951,8 +1970,8 @@ public class BanHangJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtTenKH2;
     private javax.swing.JTextField txtTienKhachDua;
     private javax.swing.JLabel txtTienThua;
-    private javax.swing.JTextField txtTimKiem;
     private javax.swing.JTextField txtTimKiem1;
+    private javax.swing.JTextField txtTimKiemSPCT;
     private javax.swing.JLabel txtTongTien;
     private javax.swing.JLabel txtTongTien1;
     // End of variables declaration//GEN-END:variables

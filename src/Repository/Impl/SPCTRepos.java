@@ -19,7 +19,8 @@ import java.util.UUID;
  *
  * @author Admin
  */
-public class SPCTRepos implements ISPCTRepos{
+public class SPCTRepos implements ISPCTRepos {
+
     private DBConnection connection;
     private SanPhamRepos SanPhamRepos = new SanPhamRepos();
     private SanPham sp = new SanPham();
@@ -62,7 +63,7 @@ public class SPCTRepos implements ISPCTRepos{
 
         try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement(
                 "INSERT INTO SANPHAMCHITIET"
-                        + "(MASPCT,IDSP,SOLUONGTON,IDCL,IDKC,IDMS,IDTH,DONGIA,TRANGTHAISPCT,NGUOITAO) Values(?,?,?,?,?,?,?,?,?,?)")) {
+                + "(MASPCT,IDSP,SOLUONGTON,IDCL,IDKC,IDMS,IDTH,DONGIA,TRANGTHAISPCT,NGUOITAO) Values(?,?,?,?,?,?,?,?,?,?)")) {
 
             ps.setObject(1, ("SP0" + new Random().nextInt(10000)));
             ps.setObject(2, spct.getIdSP());
@@ -106,9 +107,9 @@ public class SPCTRepos implements ISPCTRepos{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;    
+        return null;
     }
-    
+
     public Boolean updateSL(String maSp, int sl) {
         int check;
         try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement(
@@ -122,10 +123,10 @@ public class SPCTRepos implements ISPCTRepos{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;    
+        return null;
 
     }
-    
+
     public Boolean updateTrangThaiSP(String maSpct, int TrangThaiSPCT) {
         int check;
         try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement(
@@ -139,7 +140,7 @@ public class SPCTRepos implements ISPCTRepos{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;    
+        return null;
 
     }
 
@@ -176,18 +177,15 @@ public class SPCTRepos implements ISPCTRepos{
         }
         return listCTSP;
     }
-    
+
     public SPCT searchbyMaSp(String ma) {
         ArrayList<SPCT> listCTSP = new ArrayList<>();
-        try (Connection con = connection.getConnection();
-                PreparedStatement ps = 
-                        con.prepareStatement
-        ("SELECT MASPCT,IDSP,SOLUONGTON,IDCL,IDKC,IDMS,IDTH,DONGIA,SANPHAMCHITIET.id FROM SANPHAMCHITIET JOIN SANPHAM ON SANPHAMCHITIET.IDSP = SANPHAM.ID JOIN CHATLIEU ON SANPHAMCHITIET.IDCL = CHATLIEU.ID JOIN KICHCO ON SANPHAMCHITIET.IDKC = KICHCO.ID JOIN THUONGHIEU ON SANPHAMCHITIET.IDTH = THUONGHIEU.ID JOIN MAUSAC ON SANPHAMCHITIET.IDMS = MAUSAC.ID WHERE MASPCT = ?");) {
+        try (Connection con = connection.getConnection(); PreparedStatement ps
+                = con.prepareStatement("SELECT MASPCT,IDSP,SOLUONGTON,IDCL,IDKC,IDMS,IDTH,DONGIA,SANPHAMCHITIET.id FROM SANPHAMCHITIET JOIN SANPHAM ON SANPHAMCHITIET.IDSP = SANPHAM.ID JOIN CHATLIEU ON SANPHAMCHITIET.IDCL = CHATLIEU.ID JOIN KICHCO ON SANPHAMCHITIET.IDKC = KICHCO.ID JOIN THUONGHIEU ON SANPHAMCHITIET.IDTH = THUONGHIEU.ID JOIN MAUSAC ON SANPHAMCHITIET.IDMS = MAUSAC.ID WHERE MASPCT = ?");) {
 
-                       ps.setObject(1, ma);
+            ps.setObject(1, ma);
 
 //            ps.executeUpdate();
-
             SPCT ctsp = new SPCT();
 
             ResultSet rs = ps.executeQuery();
@@ -242,7 +240,7 @@ public class SPCTRepos implements ISPCTRepos{
 
             while (rs.next()) {
                 return rs.getString(1);
-            }  
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -301,7 +299,7 @@ public class SPCTRepos implements ISPCTRepos{
 
         return null;
     }
-    
+
     public ArrayList<SPCT> getListForm() {
         ArrayList<SPCT> listSPCT = new ArrayList<>();
 
@@ -333,5 +331,67 @@ public class SPCTRepos implements ISPCTRepos{
         return listSPCT;
     }
     
+    public ArrayList<SPCT> serachByMaSpct(String maSPCT){
+        ArrayList<SPCT> list = new ArrayList<>();
+        try {
+            Connection con = connection.getConnection();
+            PreparedStatement prsm = con.prepareStatement("select spct.MASPCT, sp.TENSP, cl.TENCL, kc.TENKC,ms.TENMS,th.TENTH,spct.SOLUONGTON,spct.DONGIA  from SANPHAM sp join SANPHAMCHITIET spct on sp.ID = spct.IDSP	\n" +
+"											join THUONGHIEU th on th.ID = spct.IDTH\n" +
+"											join MAUSAC ms on ms.ID = spct.IDMS\n" +
+"											join KICHCO kc on kc.ID = spct.IDKC\n" +
+"											join CHATLIEU cl on cl.ID = spct.IDCL\n" +
+"											where MASPCT like ?");
+             prsm.setString(1, "%" + maSPCT + "%");
+             ResultSet rs = prsm.executeQuery();
+             while (rs.next()) {                
+                SPCT spct = new SPCT();
+                spct.setMaSPCT(rs.getString("MASPCT"));
+                spct.setTenSP(rs.getString("TENSP"));
+                spct.setTenCL(rs.getString("TENCL"));
+                spct.setTenKC(rs.getString("TENKC"));
+                spct.setTenMS(rs.getString("TENMS"));
+                spct.setTenTH(rs.getString("TENTH"));
+                spct.setSoLuongTon(rs.getInt("SOLUONGTON"));
+                spct.setDonGia(rs.getFloat("DONGIA"));
+                list.add(spct);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+        
+    }
     
+    
+    
+    public ArrayList<SPCT> serachByMaSpctSP(String maSPCT){
+        ArrayList<SPCT> list = new ArrayList<>();
+        try {
+            Connection con = connection.getConnection();
+            PreparedStatement prsm = con.prepareStatement("select spct.MASPCT, sp.TENSP,spct.SOLUONGTON,spct.NGUOITAO,spct.TRANGTHAISPCT,kc.TENKC,ms.TENMS, th.TENTH, cl.TENCL,spct.DONGIA  from SANPHAM sp join SANPHAMCHITIET spct on sp.ID = spct.IDSP	\n" +
+"											join THUONGHIEU th on th.ID = spct.IDTH\n" +
+"											join MAUSAC ms on ms.ID = spct.IDMS\n" +
+"											join KICHCO kc on kc.ID = spct.IDKC\n" +
+"											join CHATLIEU cl on cl.ID = spct.IDCL\n" +
+"											where MASPCT like ?");
+             prsm.setString(1, "%" + maSPCT + "%");
+             ResultSet rs = prsm.executeQuery();
+             while (rs.next()) {                
+                SPCT spct = new SPCT();
+                spct.setMaSPCT(rs.getString("MASPCT"));
+                spct.setTenSP(rs.getString("TENSP"));
+                spct.setSoLuongTon(rs.getInt("SOLUONGTON"));
+                spct.setNguoiTao(rs.getString("NGUOITAO"));
+                spct.setTrangThaiSPCT(rs.getInt("TRANGTHAISPCT"));
+                spct.setTenKC(rs.getString("TENKC"));
+                spct.setTenMS(rs.getString("TENMS"));
+                spct.setTenTH(rs.getString("TENTH"));
+                spct.setTenCL(rs.getString("TENCL"));             
+                spct.setDonGia(rs.getFloat("DONGIA"));
+                list.add(spct);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+
+}
 }

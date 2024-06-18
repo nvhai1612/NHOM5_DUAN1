@@ -1008,7 +1008,7 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="txtTimKiem" min="-2" pref="162" max="-2" attributes="0"/>
+                                          <Component id="txtTimKiemSPCT" min="-2" pref="162" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Component id="btnTim" min="-2" pref="50" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
@@ -1026,7 +1026,7 @@
                                       <Component id="btnThem" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                                           <Component id="jLabel27" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtTimKiem" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtTimKiemSPCT" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="btnTim" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -1077,9 +1077,9 @@
                             <Property name="text" type="java.lang.String" value="T&#xec;m theo m&#xe3;"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtTimKiem">
+                        <Component class="javax.swing.JTextField" name="txtTimKiemSPCT">
                           <Events>
-                            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimKiemKeyReleased"/>
+                            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimKiemSPCTKeyReleased"/>
                           </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="btnTim">
