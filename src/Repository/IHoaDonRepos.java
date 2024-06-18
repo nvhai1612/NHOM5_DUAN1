@@ -16,5 +16,4 @@ public interface IHoaDonRepos {
     public ArrayList<HoaDon> getListFormDB();
     public Boolean add(HoaDon hd);
     public Boolean update(HoaDon hd);
-    public Boolean delete(UUID id);
 }

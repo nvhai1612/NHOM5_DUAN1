@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 public class khuyeMaiVM {
   private UUID idKM;
-    private UUID IDSP;
+    private UUID IDHD;
     private String maKM;
     private String TenKM;
     private float MucGiamGia;
@@ -25,9 +25,9 @@ public class khuyeMaiVM {
     public khuyeMaiVM() {
     }
 
-    public khuyeMaiVM(UUID idKM, UUID IDSP, String maKM, String TenKM, float MucGiamGia, Date ThoiGianBatDau, Date ThoiGianKetThuc, int TrangThai, int SoLuong) {
+    public khuyeMaiVM(UUID idKM, UUID IDHD, String maKM, String TenKM, float MucGiamGia, Date ThoiGianBatDau, Date ThoiGianKetThuc, int TrangThai, int SoLuong) {
         this.idKM = idKM;
-        this.IDSP = IDSP;
+        this.IDHD = IDHD;
         this.maKM = maKM;
         this.TenKM = TenKM;
         this.MucGiamGia = MucGiamGia;
@@ -45,12 +45,12 @@ public class khuyeMaiVM {
         this.idKM = idKM;
     }
 
-    public UUID getIDSP() {
-        return IDSP;
+    public UUID getIDHD() {
+        return IDHD;
     }
 
-    public void setIDSP(UUID IDSP) {
-        this.IDSP = IDSP;
+    public void setIDHD(UUID IDHD) {
+        this.IDHD = IDHD;
     }
 
     public String getMaKM() {
@@ -109,20 +109,5 @@ public class khuyeMaiVM {
         this.SoLuong = SoLuong;
     }
 
-    @Override
-    public String toString() {
-        return "khuyeMaiVM{" + "idKM=" + idKM + ", IDSP=" + IDSP + ", maKM=" + maKM + ", TenKM=" + TenKM + ", MucGiamGia=" + MucGiamGia + ", ThoiGianBatDau=" + ThoiGianBatDau + ", ThoiGianKetThuc=" + ThoiGianKetThuc + ", TrangThai=" + TrangThai + ", SoLuong=" + SoLuong + '}';
-    }
-
-    public boolean matches(SPCTVM spctvm) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-  
-
-   
-
-    
-    
     
 }

@@ -431,13 +431,14 @@ public class KhachHangJPanel extends javax.swing.JPanel {
         KhachHang kh = new KhachHang();
         kh.setMaKH(ma);
         kh.setTenKH(ten);
-        kh.setNgaySinh(ngaySinh);
+          kh.setNgaySinh(ngaySinh.isEmpty() ? null : ngaySinh); 
         kh.setGioiTinh(gioiTinh);
         kh.setSdt(sdt);
         kh.setDiaChi(diaChi);
         service.add(kh);
         loadTableKhachHang();
         xoa();
+        JOptionPane.showMessageDialog(this, "Thêm mới thành công");
     }//GEN-LAST:event_btnThemActionPerformed
     
     void xoa() {

@@ -117,12 +117,11 @@ public class HoaDonRepos implements IHoaDonRepos {
     public Boolean update(HoaDon hd) {
         int check;
 
-        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("UPDATE hoadon SET TRANGTHAIHD = ?, IDNV = ?, IDKH = ? where MAHD = ?")) {
+        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("UPDATE hoadon SET TRANGTHAIHD = ?, IDKH = ? where MAHD = ?")) {
 
-            ps.setObject(2, hd.getIdNV());
-            ps.setObject(3, hd.getIdKH());
+            ps.setObject(2, hd.getIdKH());
             ps.setObject(1, hd.getTrangThaiHD());
-            ps.setObject(4, hd.getMaHD());
+            ps.setObject(3, hd.getMaHD());
 
             check = ps.executeUpdate();
             return check > 0;
@@ -241,7 +240,10 @@ public class HoaDonRepos implements IHoaDonRepos {
 
     public void updateTrangThaiHoaDon(String maHDCT, Integer TrangThaiHD, Float TongTien, String mahd) {
         String mahdct = findMaaHDCtBySpct(maHDCT, mahd);
-        UUID idkh = new KhachHangRepos().search(SessionData.sdtKH.getMaKH()).get(0).getId();
+        UUID idkh = null;
+        if(SessionData.sdtKH != null){
+            idkh = new KhachHangRepos().search(SessionData.sdtKH.getMaKH()).get(0).getId();
+        }
 
         try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("UPDATE HOADON SET TRANGTHAIHD = 1, TONGTIEN = ?, idkh = ? WHERE MAHD = ?")) {
 
@@ -249,6 +251,7 @@ public class HoaDonRepos implements IHoaDonRepos {
             ps.setObject(3, mahd);
             ps.setObject(2, idkh);
             ps.executeUpdate();
+            
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -324,42 +327,5 @@ public class HoaDonRepos implements IHoaDonRepos {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public Boolean delete(UUID id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    
-    public ArrayList<SPCT> search(String keyword) {
-        ArrayList<SPCT> listSPCT = new ArrayList();
-
-        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("SELECT * from SANPHAMCHITIET WHERE MASPCT = ?")) {
-
-            ps.setObject(1, keyword);
-
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                SPCT spct = new SPCT();
-                spct.setMaSPCT(rs.getString(1));
-                spct.setTenSP(rs.getString(2));
-                spct.setSoLuongTon(rs.getInt(3));
-                spct.setNguoiTao(rs.getString(4));
-                spct.setTrangThaiSPCT(rs.getInt(5));
-                spct.setIdCL(rs.getObject(6, UUID.class));
-                spct.setIdKC(rs.getObject(7, UUID.class));
-                spct.setIdMS(rs.getObject(8, UUID.class));
-                spct.setIdTH(rs.getObject(9, UUID.class));
-                spct.setDonGia(rs.getFloat(10));
-                listSPCT.add(spct);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return listSPCT;
     }
 }
