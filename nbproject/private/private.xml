@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/E:/PRO1041.02/NHOM5_DUAN1/src/Service/Impl/HoaDonService.java</file>
             <file>file:/E:/PRO1041.02/NHOM5_DUAN1/src/Views/NhanVienJPanel.java</file>
             <file>file:/E:/PRO1041.02/NHOM5_DUAN1/src/Views/BanHangJFrame.java</file>
@@ -20,6 +21,13 @@
             <file>file:/E:/PRO1041.02/NHOM5_DUAN1/src/Application/Application.java</file>
             <file>file:/E:/PRO1041.02/NHOM5_DUAN1/src/Views/KhachHangJPanel.java</file>
             <file>file:/E:/PRO1041.02/NHOM5_DUAN1/src/Repository/Impl/HDCTRepos.java</file>
+=======
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/NHOM5_DUAN1/src/Views/LoginJFrame.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/NHOM5_DUAN1/src/Views/KhuyenMaiJPanel.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/NHOM5_DUAN1/src/Views/NhanVienJPanel.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/NHOM5_DUAN1/src/Views/KhachHangJPanel.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/NHOM5_DUAN1/src/Views/BanHangJFrame.java</file>
+>>>>>>> 0b2b0e2a1d312a7dec95a9ddca0b0345d6fbc9c3
         </group>
     </open-files>
 </project-private>

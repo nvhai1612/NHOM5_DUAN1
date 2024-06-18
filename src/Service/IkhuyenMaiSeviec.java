@@ -23,5 +23,6 @@ public interface IkhuyenMaiSeviec {
     void add(KhuyenMai km);
     void update(KhuyenMai km);
     ArrayList<KhuyenMai> search (String tenkm);
+    public Boolean existsBymakm(String makm);
 }
 
