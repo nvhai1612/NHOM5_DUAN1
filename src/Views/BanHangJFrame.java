@@ -6,6 +6,7 @@ package Views;
 
 import DomainModel.HoaDon;
 import DomainModel.KhachHang;
+import DomainModel.KhuyenMai;
 import DomainModel.SPCT;
 import Repository.Impl.HoaDonRepos;
 import Repository.Impl.SPCTRepos;
@@ -1551,6 +1552,10 @@ public class BanHangJFrame extends javax.swing.JFrame {
         SessionData.maHD = new Random().nextInt(10000) + "";
         hoaDonRes.add(new HoaDon(SessionData.maHD, 0, new Date()));
         LoadTableHoaDon();
+         cbbKm = (DefaultComboBoxModel) cbbKhuyenMai.getModel();
+        cbbKm.addAll(khuyenMaiService.getAllKMHieuLuc());
+        for (int i = 0; i < cbbKm.getSize(); i++) {
+        }
     }//GEN-LAST:event_btnTaoHoaDonActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
