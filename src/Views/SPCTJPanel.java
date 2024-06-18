@@ -1766,7 +1766,26 @@ public class SPCTJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tblSPCTMouseClicked
 
     private void txtSearchMaSPCTKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchMaSPCTKeyReleased
-        // TODO add your handling code here:
+        String keyword = txtSearchMaSPCT.getText().trim();
+        if (keyword != null) {
+            DefaultTableModel tableModel = (DefaultTableModel) tblSPCT.getModel();
+            tableModel.setRowCount(0);
+            ArrayList<SPCT> list = spctrp.serachByMaSpctSP(keyword);
+            for (SPCT spct : list) {
+                tableModel.addRow(new Object[]{
+                    spct.getMaSPCT(),
+                    spct.getTenSP(),
+                    spct.getSoLuongTon(),
+                    spct.getNguoiTao(),
+                    spct.getTrangThaiSPCT(),
+                    spct.getTenKC(),
+                    spct.getTenMS(),
+                    spct.getTenTH(),
+                    spct.getTenCL(),
+                    spct.getDonGia()
+                });
+            }
+        }
     }//GEN-LAST:event_txtSearchMaSPCTKeyReleased
 
     private void txtTenSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenSPActionPerformed
@@ -1857,6 +1876,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLamMoiSPActionPerformed
 
     private void btnSuaSPCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaSPCTActionPerformed
+
         int selectedRow = tblSPCT.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm chi tiết để sửa!");
@@ -1994,6 +2014,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThemKCActionPerformed
 
     private void btnSuaKCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaKCActionPerformed
+
         int selectedRow = tblKichCo.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một kích cỡ để sửa!");
@@ -2201,8 +2222,9 @@ public class SPCTJPanel extends javax.swing.JPanel {
         String TenCL = tblChatLieu.getValueAt(row, 2).toString();
         String TrangThai = tblChatLieu.getValueAt(row, 3).toString();
 
-        txtMaTH.setText(MaCL);
-        txtTenTH.setText(TenCL);
+        txtMaCL.setText(MaCL);
+        txtTenCL.setText(TenCL);
+
         if (TrangThai.equalsIgnoreCase("Đang Hoạt Động")) {
             this.rdoDangHDCL.setSelected(true);
         } else {

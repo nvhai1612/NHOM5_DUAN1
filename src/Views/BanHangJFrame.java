@@ -279,7 +279,6 @@ public class BanHangJFrame extends javax.swing.JFrame {
         tblDanhSachSP = new javax.swing.JTable();
         jLabel27 = new javax.swing.JLabel();
         txtTimKiemSPCT = new javax.swing.JTextField();
-        btnTim = new javax.swing.JButton();
         btnThem = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel57 = new javax.swing.JLabel();
@@ -788,13 +787,6 @@ public class BanHangJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnTim.setText("Tìm");
-        btnTim.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTimActionPerformed(evt);
-            }
-        });
-
         btnThem.setText("+");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -814,8 +806,6 @@ public class BanHangJFrame extends javax.swing.JFrame {
                         .addComponent(jLabel27)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtTimKiemSPCT, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnTim, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnThem)))
                 .addContainerGap())
@@ -827,8 +817,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
                     .addComponent(btnThem)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel27)
-                        .addComponent(txtTimKiemSPCT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnTim)))
+                        .addComponent(txtTimKiemSPCT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
                 .addContainerGap())
@@ -1363,7 +1352,6 @@ public class BanHangJFrame extends javax.swing.JFrame {
         if (selectedRow != -1) {
             hoaDonService.UpdateSPGH(MaHDCanUpdate, MaSPCanUpdate, Integer.parseInt(NhapSLNew), SLTon);
         } else {
-            // Hiển thị thông báo nếu không có sản phẩm nào được chọn
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm trong giỏ hàng để sửa số lượng.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         }
         LoadTableSanPham();
@@ -1414,48 +1402,23 @@ public class BanHangJFrame extends javax.swing.JFrame {
     private void txtTimKiemSPCTKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemSPCTKeyReleased
         String keyword = txtTimKiemSPCT.getText().trim();
         if (keyword != null) {
-            dtmsp = (DefaultTableModel) tblDanhSachSP.getModel();
-            dtmsp.setRowCount(0);
-
-            ArrayList<SPCT> listCTSP = SPCTService.search(keyword);
-            for (SPCT ctsp : listCTSP) {
-                dtmsp.addRow(new Object[]{
-                    ctsp.getMaSPCT(),
-                    ctsp.getTenSP(),
-                    ctsp.getTenCL(),
-                    ctsp.getTenKC(),
-                    ctsp.getTenMS(),
-                    ctsp.getTenTH(),
-                    ctsp.getSoLuongTon(),
-                    new BigDecimal(ctsp.getDonGia()),});
+             model = (DefaultTableModel) tblDanhSachSP.getModel();
+            model.setRowCount(0);
+            ArrayList<SPCT> list = spctrp.serachByMaSpct(keyword);
+            for (SPCT spct : list) {
+                model.addRow(new Object[]{
+                    spct.getMaSPCT(),
+                    spct.getTenSP(),
+                    spct.getTenCL(),
+                    spct.getTenKC(),
+                    spct.getTenMS(),
+                    spct.getTenTH(),
+                    spct.getSoLuongTon(),
+                    spct.getDonGia()
+                });
             }
         }
     }//GEN-LAST:event_txtTimKiemSPCTKeyReleased
-
-    private void btnTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimActionPerformed
-//        int rowSPCT = tblDanhSachSP.getSelectedRow();
-//        String MaSPCT = tblDanhSachSP.getValueAt(rowSPCT, 0).toString();
-        String Nhap = txtTimKiemSPCT.getText();
-        if (Nhap.trim().length() != 0) {
-            if (tblDanhSachSP.getRowCount() != 0) {
-                for (int i = 0; i < tblDanhSachSP.getRowCount(); i++) {
-                    String MaSPCT = tblDanhSachSP.getValueAt(i, 0).toString();
-
-                    if (Nhap.equalsIgnoreCase(MaSPCT)) {
-                        
-                        for (int j = 0;j < tblDanhSachSP.getRowCount(); j++) {
-                            if (i != j) {
-                                tblDanhSachSP.remove(j);
-                                j--;
-                                System.out.println(tblDanhSachSP.getRowCount());
-                            }
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-    }//GEN-LAST:event_btnTimActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         int rowSP = tblDanhSachSP.getSelectedRow();
@@ -1991,7 +1954,6 @@ public class BanHangJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnThemKH;
     private javax.swing.JButton btnThongKe;
-    private javax.swing.JButton btnTim;
     private javax.swing.JButton btnTimKH;
     private javax.swing.JButton btnXoaSanPham;
     private javax.swing.ButtonGroup buttonGroup1;
