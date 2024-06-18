@@ -154,32 +154,35 @@ public class SPCTRepos implements ISPCTRepos{
         ArrayList<SPCT> ListSPCT = new ArrayList<>();
         try {
             Connection con = connection.getConnection();
-            PreparedStatement pr = con.prepareStatement("SELECT IDSP,SOLUONGTON,NGUOITAO,TRANGTHAISPCT,IDCL,IDKC,IDMS,IDTH,DONGIA FROM SANPHAMCHITIET WHERE MASPCT LIKE ? AND TENSP LIKE ?");
+            PreparedStatement pr = con.prepareStatement("SELECT MASPCT,TENSP,SOLUONGTON,NGUOITAO,TRANGTHAISPCT,IDCL,IDKC,IDMS,IDTH,DONGIA FROM SANPHAMCHITIET"
+                + " JOIN SANPHAM ON SANPHAMCHITIET.IDSP = SANPHAM.ID JOIN CHATLIEU ON SANPHAMCHITIET.IDCL = CHATLIEU.ID JOIN"
+                + " KICHCO ON SANPHAMCHITIET.IDKC = KICHCO.ID JOIN THUONGHIEU ON SANPHAMCHITIET.IDTH = THUONGHIEU.ID"
+                + " JOIN MAUSAC ON SANPHAMCHITIET.IDMS = MAUSAC.ID WHERE MASPCT LIKE ?");
             pr.setString(1, "%" + MaSPCT + "%");
 
             ResultSet rs = pr.executeQuery();
             while (rs.next()) {
                 SPCT spct = new SPCT();
-                spct.setIdSP(rs.getObject(1, UUID.class));
-                spct.setSoLuongTon(rs.getInt(2));
-                spct.setNguoiTao(rs.getString(3));
-                spct.setTrangThaiSPCT(rs.getInt(4));
-                spct.setIdCL(rs.getObject(5, UUID.class));
-                spct.setIdKC(rs.getObject(6, UUID.class));
-                spct.setIdMS(rs.getObject(7, UUID.class));
-                spct.setIdTH(rs.getObject(8, UUID.class));
-                spct.setDonGia(rs.getFloat(9));
-                spct.setMaSPCT(rs.getString(10));
-//                spct.setMaSPCT(rs.getString("MASPCT"));
-//                spct.setTenSP(rs.getString("TenSP"));
-//                spct.setSoLuongTon(rs.getInt("SoLuongTon"));
-//                spct.setNguoiTao(rs.getString("NguoiTao"));
-//                spct.setTrangThaiSPCT(rs.getInt("TrangThaiSPCT"));
-//                spct.setTenCL(rs.getString("TENCL"));
-//                spct.setTenKC(rs.getString("TENKC"));
-//                spct.setTenMS(rs.getString("TENMS"));
-//                spct.setTenTH(rs.getString("TENTH"));
-//                spct.setDonGia(rs.getFloat("DonGia"));
+//                spct.setIdSP(rs.getObject(1, UUID.class));
+//                spct.setSoLuongTon(rs.getInt(2));
+//                spct.setNguoiTao(rs.getString(3));
+//                spct.setTrangThaiSPCT(rs.getInt(4));
+//                spct.setIdCL(rs.getObject(5, UUID.class));
+//                spct.setIdKC(rs.getObject(6, UUID.class));
+//                spct.setIdMS(rs.getObject(7, UUID.class));
+//                spct.setIdTH(rs.getObject(8, UUID.class));
+//                spct.setDonGia(rs.getFloat(9));
+//                spct.setMaSPCT(rs.getString(10));
+                spct.setMaSPCT(rs.getString("MASPCT"));
+                spct.setTenSP(rs.getString("TenSP"));
+                spct.setSoLuongTon(rs.getInt("SoLuongTon"));
+                spct.setNguoiTao(rs.getString("NguoiTao"));
+                spct.setTrangThaiSPCT(rs.getInt("TrangThaiSPCT"));
+                spct.setTenCL(rs.getString("TENCL"));
+                spct.setTenKC(rs.getString("TENKC"));
+                spct.setTenMS(rs.getString("TENMS"));
+                spct.setTenTH(rs.getString("TENTH"));
+                spct.setDonGia(rs.getFloat("DonGia"));
                 ListSPCT.add(spct);
             }
         } catch (Exception e) {

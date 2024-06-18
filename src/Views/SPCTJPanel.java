@@ -1405,6 +1405,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
 
         jLabel1.setText("Mã SPCT :");
 
+        txtMaSPCT.setEditable(false);
         txtMaSPCT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMaSPCTActionPerformed(evt);
@@ -1419,9 +1420,12 @@ public class SPCTJPanel extends javax.swing.JPanel {
 
         jLabel4.setText("Người Tạo :");
 
+        txtNguoiTao.setEditable(false);
+
         jLabel5.setText("Trạng thái :");
 
         buttonGroup1.add(rdoConHang);
+        rdoConHang.setSelected(true);
         rdoConHang.setText("Còn hàng");
 
         buttonGroup1.add(rdoHetHang);
