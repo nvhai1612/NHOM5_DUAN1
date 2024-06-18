@@ -205,7 +205,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
                 kh.getMaKH(),
                 kh.getTenKH(),
                 kh.getNgaySinh(),
-                kh.getGioiTinh() == 1 ? "Nam" : "Nữ" ,
+                kh.getGioiTinh() == 1 ? "Nam" : "Nữ",
                 kh.getSdt(),
                 kh.getDiaChi()
             });
@@ -857,7 +857,8 @@ public class BanHangJFrame extends javax.swing.JFrame {
         jLabel62.setText("Hình thức");
 
         cbbPTTT.setBackground(new java.awt.Color(222, 231, 227));
-        cbbPTTT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "chọn...", "Tiền mặt", "Quét mã" }));
+        cbbPTTT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "chọn...", "Tiền mặt", "Quét mã" }));
+        cbbPTTT.setToolTipText("");
 
         jLabel63.setText("Tiền khách đưa:");
 
@@ -1337,8 +1338,20 @@ public class BanHangJFrame extends javax.swing.JFrame {
 
     private void btnSuaGHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaGHActionPerformed
         int selectedRow = tblGioHang.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm trong giỏ hàng để sửa số lượng.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         int rowSP = tblDanhSachSP.getSelectedRow();
+        if (rowSP == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm trong danh sách sản phẩm.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         int RowMaHD = tblHoaDon.getSelectedRow();
+        if (RowMaHD == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một hóa đơn để cập nhật sản phẩm.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         String NhapSLNew = JOptionPane.showInputDialog(this, "Nhập số lượng mới:");
         String MaHDCanUpdate = tblHoaDon.getValueAt(RowMaHD, 0).toString();
         String LaySLTon = tblDanhSachSP.getValueAt(rowSP, 6).toString();
@@ -1402,7 +1415,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
     private void txtTimKiemSPCTKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemSPCTKeyReleased
         String keyword = txtTimKiemSPCT.getText().trim();
         if (keyword != null) {
-             model = (DefaultTableModel) tblDanhSachSP.getModel();
+            model = (DefaultTableModel) tblDanhSachSP.getModel();
             model.setRowCount(0);
             ArrayList<SPCT> list = spctrp.serachByMaSpct(keyword);
             for (SPCT spct : list) {
@@ -1567,10 +1580,6 @@ public class BanHangJFrame extends javax.swing.JFrame {
             return;
         }
 
-//        if (tblGioHang.getSelectedRow() == -1) {
-//            JOptionPane.showMessageDialog(this, "Hóa đơn chưa có sản phẩm");
-//            return;
-//        }
         try {
             if (Double.parseDouble(txtTienKhachDua.getText()) < Double.parseDouble(txtCanThanhToan.getText())) {
                 JOptionPane.showMessageDialog(this, "Tiền khách đưa chưa đủ");
@@ -1578,6 +1587,10 @@ public class BanHangJFrame extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Tiền khách đưa không hợp lệ");
+            return;
+        }
+        if (cbbPTTT.getSelectedIndex() == 1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn phương thức thanh toán!");
             return;
         }
 
@@ -1628,7 +1641,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
         KhachHang kh = new KhachHang();
         kh.setMaKH(ma);
         kh.setTenKH(ten);
-          kh.setNgaySinh(ngaySinh.isEmpty() ? null : ngaySinh); 
+        kh.setNgaySinh(ngaySinh.isEmpty() ? null : ngaySinh);
         kh.setGioiTinh(gioiTinh);
         kh.setSdt(sdt);
         kh.setDiaChi(diaChi);
@@ -1639,7 +1652,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThemKHActionPerformed
 
     private void btnSuaKHActionPerformed2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaKHActionPerformed2
-         int selectedRow = tblKhachHang.getSelectedRow();
+        int selectedRow = tblKhachHang.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một khách hàng để sửa!");
             return; // Thoát ra khỏi phương thức nếu chưa có dòng nào được chọn
@@ -1647,7 +1660,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
         int check = JOptionPane.showConfirmDialog(this, "Xác nhận sửa!");
         if (check == JOptionPane.YES_OPTION) {
             KhachHang kh = new KhachHang();
-        // Lấy thông tin từ giao diện và thiết lập các giá trị cho đối tượng KhachHang
+            // Lấy thông tin từ giao diện và thiết lập các giá trị cho đối tượng KhachHang
             kh.setMaKH(txtMaKH.getText());
             kh.setTenKH(txtTenKH.getText());
 
@@ -1660,7 +1673,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
             loadTableKhachHang();
             xoa();
             JOptionPane.showMessageDialog(this, "Sửa thành công!");
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Sửa thất bại!");
         }
     }//GEN-LAST:event_btnSuaKHActionPerformed2
@@ -1685,14 +1698,14 @@ public class BanHangJFrame extends javax.swing.JFrame {
         txtMaKH.setText(MaKH);
         txtTenKH2.setText(TenKH);
         txtNgaySinh.setText(NgaySinh);
-        if(GioiTinh.equalsIgnoreCase("Nam")){
+        if (GioiTinh.equalsIgnoreCase("Nam")) {
             rdoNam.setSelected(true);
         } else {
             rdoNu.setSelected(true);
         }
         txtSdt.setText(SDT);
         taDiaChi.setText(DiaChi);
-        
+
         showHoaDonHistory(MaKH);
     }//GEN-LAST:event_tblKhachHangMouseClicked2
 
@@ -1884,8 +1897,6 @@ public class BanHangJFrame extends javax.swing.JFrame {
             tongtien += hoaDon.getTongTien();
         }
         txtTongTien.setText(String.valueOf(tongtien));
-       
-      
 
     }
 

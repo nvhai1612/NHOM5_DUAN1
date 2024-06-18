@@ -57,28 +57,28 @@ public class SPCTJPanel extends javax.swing.JPanel {
     public SPCTJPanel() {
         initComponents();
         dcbbmcl = (DefaultComboBoxModel) cbbCL.getModel();
-        for (ChatLieuVM cl : chatLieuService.getAll()) {
-            dcbbmcl.addElement(cl);
+        dcbbmcl.addAll(chatLieuService.getAll());
+        for (int i = 0; i < dcbbmcl.getSize(); i++) {
         }
 
         dcbbmkc = (DefaultComboBoxModel) cbbKC.getModel();
-        for (KichCoVM kc : kichCoService.getAll()) {
-            dcbbmkc.addElement(kc);
+        dcbbmkc.addAll(kichCoService.getAll());
+        for (int i = 0; i < dcbbmkc.getSize(); i++) {
         }
 
         dcbbmms = (DefaultComboBoxModel) cbbMS.getModel();
-        for (MauSacVM ms : mauSacService.getAll()) {
-            dcbbmms.addElement(ms);
+        dcbbmms.addAll(mauSacService.getAll());
+        for (int i = 0; i < dcbbmms.getSize(); i++) {
         }
 
         dcbbmth = (DefaultComboBoxModel) cbbTH.getModel();
-        for (ThuongHieuVM th : thuongHieuService.getAll()) {
-            dcbbmth.addElement(th);
+        dcbbmth.addAll(thuongHieuService.getAll());
+        for (int i = 0; i < dcbbmth.getSize(); i++) {
         }
 
         dcbbtsp = (DefaultComboBoxModel) cbbSP.getModel();
-        for (SanPhamVM sp : sanPhamService.getAll()) {
-            dcbbtsp.addElement(sp);
+        dcbbtsp.addAll(sanPhamService.getAll());
+        for (int i = 0; i < dcbbtsp.getSize(); i++) {
         }
 
         LoadTableSPCT();
@@ -1834,15 +1834,13 @@ public class SPCTJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCLActionPerformed
 
     private void btnThemSPCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPCTActionPerformed
-
+        if (cbbSP.getSelectedItem() == null) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn Tên Sản Phẩm!");
+        return;
+    }
         String MaSPCT = ((SanPhamVM) cbbSP.getSelectedItem()).getMaSP();
-        Object selectedSP = cbbSP.getSelectedItem();
-        if (!(selectedSP instanceof SanPhamVM)) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn Tên Sản Phẩm hợp lệ!");
-            return;
-        }
-        SanPhamVM sanPhamVM = (SanPhamVM) selectedSP;
-        UUID TenSP = sanPhamVM.getId();
+        UUID TenSP = ((SanPhamVM) cbbSP.getSelectedItem()).getId();
+        
         String SoLuongTon = txtSLTon.getText();
 
         if (SoLuongTon.isEmpty()) {
@@ -1863,35 +1861,11 @@ public class SPCTJPanel extends javax.swing.JPanel {
 
         String NguoiTao = txtNguoiTao.getText();
         int TrangThai = rdoConHang.isSelected() ? 1 : 0;
-        Object selectedCL = cbbCL.getSelectedItem();
-        if (!(selectedCL instanceof ChatLieuVM)) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn Chất Liệu hợp lệ!");
-            return;
-        }
-        ChatLieuVM chatLieuVM = (ChatLieuVM) selectedCL;
-        UUID TenCL = chatLieuVM.getId();
-        Object selectedKC = cbbKC.getSelectedItem();
-        if (!(selectedKC instanceof KichCoVM)) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn Kích Cỡ hợp lệ!");
-            return;
-        }
-        KichCoVM kichCoVM = (KichCoVM) selectedKC;
-        UUID TenKC = kichCoVM.getId();
-        Object selectedMS = cbbMS.getSelectedItem();
-        if (!(selectedMS instanceof MauSacVM)) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn Màu Sắc hợp lệ!");
-            return;
-        }
-        MauSacVM mauSacVM = (MauSacVM) selectedMS;
-        UUID TenMS = mauSacVM.getId();
-
-        Object selectedTH = cbbTH.getSelectedItem();
-        if (!(selectedTH instanceof ThuongHieuVM)) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn Thương Hiệu hợp lệ!");
-            return;
-        }
-        ThuongHieuVM thuongHieuVM = (ThuongHieuVM) selectedTH;
-        UUID TenTH = thuongHieuVM.getId();
+        
+        UUID TenCL = ((ChatLieuVM) cbbCL.getSelectedItem()).getId();
+        UUID TenKC = ((KichCoVM) cbbKC.getSelectedItem()).getId();
+        UUID TenMS = ((MauSacVM) cbbMS.getSelectedItem()).getId();
+        UUID TenTH = ((ThuongHieuVM) cbbTH.getSelectedItem()).getId();
         String DonGia = txtDonGia.getText();
 
         if (DonGia.isEmpty()) {

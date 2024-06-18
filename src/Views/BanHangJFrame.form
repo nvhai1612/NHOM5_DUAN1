@@ -1351,11 +1351,12 @@
                             </Property>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                               <StringArray count="3">
-                                <StringItem index="0" value="cho&#x323;n..."/>
+                                <StringItem index="0" value="ch&#x1ecd;n..."/>
                                 <StringItem index="1" value="Ti&#xea;&#x300;n m&#x103;&#x323;t"/>
                                 <StringItem index="2" value="Que&#x301;t ma&#x303;"/>
                               </StringArray>
                             </Property>
+                            <Property name="toolTipText" type="java.lang.String" value=""/>
                           </Properties>
                           <AuxValues>
                             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
