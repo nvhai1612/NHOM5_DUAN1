@@ -9,7 +9,7 @@ import DomainModel.SPCT;
 import Service.Impl.KhuyenMaiService;
 import Service.Impl.NhanVienService;
 import Service.Impl.SPCTService;
-import ViewModel.khuyeMaiVM;
+import ViewModel.KhuyenMaiVM;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,9 +41,9 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
     private void LoadTable() {
         DefaultTableModel dtm = (DefaultTableModel) btnbangkm.getModel();
         dtm.setRowCount(0);
-        ArrayList<khuyeMaiVM> listSPVM = seviec.getAll();
+        ArrayList<KhuyenMaiVM> listSPVM = seviec.getAll();
 
-        for (khuyeMaiVM x : listSPVM) {
+        for (KhuyenMaiVM x : listSPVM) {
             dtm.addRow(new Object[]{
                 x.getMaKM(),
                 x.getTenKM(),
@@ -484,10 +484,10 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ArrayList<khuyeMaiVM> km = seviec.getAll();
+        ArrayList<KhuyenMaiVM> km = seviec.getAll();
         String TimKiem = this.txtseach.getText();
         int index = -1;
-        for (khuyeMaiVM listkm : km) {
+        for (KhuyenMaiVM listkm : km) {
             if (TimKiem.equalsIgnoreCase(listkm.getMaKM())) {
                 index = km.indexOf(listkm);
             }

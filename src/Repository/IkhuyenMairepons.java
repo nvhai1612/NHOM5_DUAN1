@@ -6,7 +6,7 @@ package Repository;
 
 import DomainModel.KhuyenMai;
 import DomainModel.ThuongHieu;
-import ViewModel.khuyeMaiVM;
+import ViewModel.KhuyenMaiVM;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

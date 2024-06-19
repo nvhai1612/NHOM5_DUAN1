@@ -157,4 +157,30 @@ public class HDCTRepos implements IHDCTRepos {
         return hoadonseach;
     }
 
+    
+    public HoaDonDTO getHoaDonByMa(String MaHD) {
+        HoaDonDTO hoaDon = null;
+        try (Connection con = connection.getConnection();
+             PreparedStatement ps = con.prepareStatement("SELECT MAHD, TENNV, TENKH, kh.SDT, kh.DIACHI, TRANGTHAIHD, hd.NGAYTAO, TONGTIEN FROM HOADON hd LEFT JOIN KHACHHANG kh ON kh.ID = hd.IDKH LEFT JOIN NHANVIEN nv ON nv.ID = hd.IDNV WHERE MAHD = ?")) {
+
+            ps.setString(1, MaHD);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                hoaDon = new HoaDonDTO();
+                hoaDon.setMaHD(rs.getString("MAHD"));
+                hoaDon.setTenNV(rs.getString("TENNV"));
+                hoaDon.setTenKH(rs.getString("TENKH"));
+                hoaDon.setSDT(rs.getString("SDT"));
+                hoaDon.setDiachi(rs.getString("DIACHI"));
+                hoaDon.setTrangThai(rs.getInt("TRANGTHAIHD"));
+                hoaDon.setNgayTao(rs.getString("NGAYTAO"));
+                hoaDon.setDonGia(rs.getInt("TONGTIEN"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hoaDon;
+    }
+    
 }
