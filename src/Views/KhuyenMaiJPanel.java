@@ -121,22 +121,6 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
             });
         }
     }
-//      private void showTable(int index) {
-//        khuyenMaiVM kh = seviec.getAll().get(index);
-//        txtma.setText(kh.getMaKM());
-//        txttenchuongtrinh.setText(kh.getTenKM());
-//        txtmuckm.setText(Float.valueOf(kh.getMucGiamGia()));
-//        System.out.println("GioiTinh: " + kh.getTrangThai());
-//        int trangthai=
-//        if (kh.getTrangThai().equals("")) {
-//            rdohoatdong.setSelected(true);
-//        } else {
-//            rdoNu.setSelected(true);
-//        }
-//        txtSdt.setText(kh.getSdt());
-//        taDiaChi.setText(kh.getDiaChi());
-//    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -153,7 +137,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         btngiosp = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbbSP = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -202,7 +186,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         jPanel6.setBackground(new java.awt.Color(222, 231, 227));
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lọc", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbSP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton3.setText("Tìm");
 
@@ -212,7 +196,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbbSP, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -220,7 +204,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbbSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(jButton3))
         );
 
@@ -634,9 +618,9 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnlammoi;
     private javax.swing.JButton btnupdate;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> cbbSP;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -80,7 +80,6 @@ public class BanHangJFrame extends javax.swing.JFrame {
     private PDFGenerator pdf = new PDFGenerator();
     HDCTRepos hDCTRepos = new HDCTRepos();
 
-
     CardLayout card;
 
     DefaultTableModel dtmsp = new DefaultTableModel();
@@ -114,6 +113,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
 //        
     }
 //validate soluong tung``
+
     public List<KhuyenMai> filterValidKMs(List<KhuyenMai> khuyenMais) {
         List<KhuyenMai> validKMs = new ArrayList<>();
         for (KhuyenMai km : khuyenMais) {
@@ -1611,18 +1611,12 @@ public class BanHangJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTienKhachDuaCaretUpdate
 
     private void btnTaoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonActionPerformed
-        cbbKm = (DefaultComboBoxModel) cbbKhuyenMai.getModel();
-        cbbKm.addAll(khuyenMaiService.getAllKMHieuLuc());
-        for (int i = 0; i < cbbKm.getSize(); i++) {
-        }
+
 //      0: trang thai cho, 1: trang thai thanh cong, 2: trang thai huy
         SessionData.maHD = new Random().nextInt(10000) + "";
         hoaDonRes.add(new HoaDon(SessionData.maHD, 0, new Date()));
         LoadTableHoaDon();
-//         cbbKm = (DefaultComboBoxModel) cbbKhuyenMai.getModel();
-//        cbbKm.addAll(khuyenMaiService.getAllKMHieuLuc());
-//        for (int i = 0; i < cbbKm.getSize(); i++) {
-//        }
+
     }//GEN-LAST:event_btnTaoHoaDonActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
@@ -1692,19 +1686,21 @@ public class BanHangJFrame extends javax.swing.JFrame {
         hd.setTongTien(Float.valueOf(TongTien));
         hd.setTrangThaiHD(TrangThaiHD);
         hd.setDonGiaSauGiam(Float.parseFloat(txtCanThanhToan.getText()));
-        int sl = ((KhuyenMaiVM) cbbKhuyenMai.getSelectedItem()).getSoLuong() - 1;
-        String makm = ((KhuyenMaiVM) cbbKhuyenMai.getSelectedItem()).getMaKM();
-
-        khuyenMaiService.soluong(makm, sl);
-
-
+        if (cbbKhuyenMai.getSelectedIndex() > 0) {
+            String makm = ((KhuyenMaiVM) cbbKhuyenMai.getSelectedItem()).getMaKM();
+            int sl = ((KhuyenMaiVM) cbbKhuyenMai.getSelectedItem()).getSoLuong() - 1;
+            khuyenMaiService.soluong(makm, sl);
+            if (sl <= 1) {
+                // Cập nhật trạng thái thành 0 (ngưng hoạt động)
+                khuyenMaiService.trangthai(makm, 0);
+            }
+        }
         hoaDonService.updateTrangThaiHoaDon(MaHD, TrangThaiHD, Float.valueOf(TongTien), MaHD);
         LoadTableHoaDon();
         reset();
         JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
 
         loadKM();
-
 
         HoaDonDTO hoaDon = hDCTRepos.getHoaDonByMa(MaHD);
         ArrayList<SPCT> products = hoaDonService.HoaDonCho(MaHD);
@@ -1868,7 +1864,6 @@ public class BanHangJFrame extends javax.swing.JFrame {
 
         cbbKhuyenMai.revalidate();
         cbbKhuyenMai.repaint();
-
 
         TinhTien();
     }//GEN-LAST:event_cbbKhuyenMaiActionPerformed

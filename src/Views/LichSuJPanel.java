@@ -21,6 +21,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -76,20 +78,6 @@ public class LichSuJPanel extends javax.swing.JPanel {
         }
 
     }
-
-    
-//     public Boolean seachTrangThai(int trangThai) {
-//    String sql = "SELECT count(*) From HOADON WHERE TRANGTHAIHD=1";
-//    try (Connection conn = connection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-//        stmt.setInt(1, trangThai);
-//        ResultSet rs = stmt.executeQuery();
-//        return rs.next(); // Nếu có ít nhất một hàng kết quả, trả về true
-//    } catch (Exception e) {
-//        e.printStackTrace();
-//    }
-//    return false;
-//}
-
     public void reset() {
         txtTongTien.setText("0");
         txtDiaChi.setText("0");
@@ -262,6 +250,12 @@ public class LichSuJPanel extends javax.swing.JPanel {
         jPanel4.setBackground(new java.awt.Color(222, 231, 227));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm theo mã"));
 
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -417,8 +411,6 @@ public class LichSuJPanel extends javax.swing.JPanel {
                 .addGap(32, 32, 32))
         );
 
-        jPanel5.getAccessibleContext().setAccessibleName("Lọc");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -436,22 +428,17 @@ public class LichSuJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
-
         listSPCT.clear();
-
         int row = tblHoaDon.getSelectedRow();
         if (row == -1) {
             return;
         }
 
         String MaHD = tblHoaDon.getValueAt(row, 0).toString();
-
         hoaDonService.HoaDonCho(MaHD);
         LoadHoaDonCho(MaHD);
         showTable(row);
-
         LoadTable();
-
     }//GEN-LAST:event_tblHoaDonMouseClicked
 
 
@@ -474,22 +461,39 @@ public class LichSuJPanel extends javax.swing.JPanel {
 
 
     private void cboTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTrangThaiActionPerformed
-//             int selectedIndex = cboTrangThai.getSelectedIndex(); 
-//             if (selectedIndex=="đã huỷ") {
-//                 
-//            
-//        }
-//        LoadTable();
+//
     }//GEN-LAST:event_cboTrangThaiActionPerformed
 
     private void cboTrangThaiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTrangThaiItemStateChanged
-      String tt = cboTrangThai.getSelectedItem().toString();
-      if (tt.equalsIgnoreCase("Đã hoàn thành")) {
-            reponshoadon.countHDThanhToan();
-      }
-      if (tt.equalsIgnoreCase("Đã huỷ")) {
-            reponshoadon.counthuyThanhToan();
-      }
+        DefaultTableModel dtm = (DefaultTableModel) tblHoaDon.getModel();
+        String tt = cboTrangThai.getSelectedItem().toString();
+        if (tt.equalsIgnoreCase("Đã hoàn thành")) {
+            ArrayList<HoaDonDTO> list = reponshoadon.loadDonHangThanhToan();
+            dtm.setRowCount(0);  // Clear existing rows
+            for (HoaDonDTO x : list) {
+                dtm.addRow(new Object[]{
+                    x.getMaHD(),
+                    x.getTenNV(),
+                    x.getTenKH(),
+                    x.getTrangThai() == 1 ? "Đã thanh toán" : "Huỷ"
+                });
+            }
+        } else if (tt.equalsIgnoreCase("Đã huỷ")) {
+            ArrayList<HoaDonDTO> list = reponshoadon.loadDonHangHuyThanhToan();
+            dtm.setRowCount(0);  // Clear existing rows
+            for (HoaDonDTO x : list) {
+                dtm.addRow(new Object[]{
+                    x.getMaHD(),
+                    x.getTenNV(),
+                    x.getTenKH() == null ? "KH vãng lai" : x.getTenKH(),
+                    x.getTrangThai() == 1 ? "Đã thanh toán" : "Huỷ"
+                });
+            }
+        }
+        if (tt.equalsIgnoreCase("Đã huỷ")) {
+            reponshoadon.loadDonHangHuyThanhToan();
+
+        }
     }//GEN-LAST:event_cboTrangThaiItemStateChanged
 
 

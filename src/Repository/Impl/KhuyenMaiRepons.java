@@ -56,15 +56,15 @@ public class KhuyenMaiRepons implements IkhuyenMairepons {
         }
         return khuyenmai;
     }
-    
-public ArrayList<KhuyenMai> getListHieuLuc() {
+
+    public ArrayList<KhuyenMai> getListHieuLuc() {
         ArrayList<KhuyenMai> khuyenmai = new ArrayList<>();
         try (Connection con = Connection.getConnection(); PreparedStatement ps = con.prepareStatement(
-                "SELECT ID, IDHD, MAKM, TENKM, MUCGIAMGIA, THOIGIANBATDAU, THOIGIANKETTHUC, TRANGTHAIKM, SOLUONG\n" +
-"FROM KHUYENMAI\n" +
-"WHERE SOLUONG >= 1\n" +
-"  AND TRANGTHAIKM = 1\n" +
-"  AND GETDATE() BETWEEN THOIGIANBATDAU AND THOIGIANKETTHUC")) {
+                "SELECT ID, IDHD, MAKM, TENKM, MUCGIAMGIA, THOIGIANBATDAU, THOIGIANKETTHUC, TRANGTHAIKM, SOLUONG\n"
+                + "FROM KHUYENMAI\n"
+                + "WHERE SOLUONG >= 1\n"
+                + "  AND TRANGTHAIKM = 1\n"
+                + "  AND GETDATE() BETWEEN THOIGIANBATDAU AND THOIGIANKETTHUC")) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 KhuyenMai km = new KhuyenMai();
@@ -83,15 +83,14 @@ public ArrayList<KhuyenMai> getListHieuLuc() {
         }
         return khuyenmai;
     }
+
     @Override
     public Boolean add(KhuyenMai km) {
 
         try (
                 Connection con = Connection.getConnection(); PreparedStatement ps = con.prepareStatement("insert into KHUYENMAI "
                 + "(MAKM,TENKM,MUCGIAMGIA,THOIGIANBATDAU,THOIGIANKETTHUC,TRANGTHAIKM,SOLUONG) values (?,?,?,?,?,?,?)")) {
-//                ps.setString(1, km.setIDSP(IDSP));
-//            String UUIDSP=UUID.fromString(km.getIDSP());
-            
+
             ps.setString(1, km.getMaKM());
             ps.setString(2, km.getTenKM());
             ps.setFloat(3, km.getMucGiamGia());
@@ -126,7 +125,6 @@ public ArrayList<KhuyenMai> getListHieuLuc() {
         return true;
     }
 
-
     @Override
     public ArrayList<KhuyenMai> search() {
         ArrayList<KhuyenMai> listkm = new ArrayList<>();
@@ -155,24 +153,24 @@ public ArrayList<KhuyenMai> getListHieuLuc() {
         }
         return listkm;
     }
-     public List<SPCT> getTransactionHistoryByCustomer(String maSPCT) {
+
+    public List<SPCT> getTransactionHistoryByCustomer(String maSPCT) {
         List<SPCT> sp = new ArrayList<>();
 //        List<KhuyenMai>list = new ArrayList<>();
         try {
             Connection con = Connection.getConnection();
-            String sql = "select MASPCT,TENSP,TENKC,TENMS,TENCL,t.TENTH,DONGIA,TENKM,IDTH,IDKM,DONGIA from KHUYENMAICHITIET kmct join KHUYENMAI km on kmct.IDKM=km.ID join SANPHAMCHITIET spct on spct.ID = kmct.IDSPCT \n" +
-"									join THUONGHIEU th on th.ID = spct.IDTH\n" +
-"									join CHATLIEU cl on cl.ID = spct.IDCL \n" +
-"									join THUONGHIEU t on t.ID = spct.IDTH\n" +
-"									join MAUSAC ms on ms.ID=spct.IDMS\n" +
-"									join SANPHAM sp on sp.ID=spct.IDSP\n" +
-"									join KICHCO kc on kc.ID=spct.IDKC where MAKM = ?";
+            String sql = "select MASPCT,TENSP,TENKC,TENMS,TENCL,t.TENTH,DONGIA,TENKM,IDTH,IDKM,DONGIA from KHUYENMAICHITIET kmct join KHUYENMAI km on kmct.IDKM=km.ID join SANPHAMCHITIET spct on spct.ID = kmct.IDSPCT \n"
+                    + "									join THUONGHIEU th on th.ID = spct.IDTH\n"
+                    + "									join CHATLIEU cl on cl.ID = spct.IDCL \n"
+                    + "									join THUONGHIEU t on t.ID = spct.IDTH\n"
+                    + "									join MAUSAC ms on ms.ID=spct.IDMS\n"
+                    + "									join SANPHAM sp on sp.ID=spct.IDSP\n"
+                    + "									join KICHCO kc on kc.ID=spct.IDKC where MAKM = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, maSPCT);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                SPCT spct = new SPCT();
-//                KhuyenMai km=new KhuyenMai();
+                SPCT spct = new SPCT();      
                 spct.setMaSPCT(rs.getString("MASPCT"));
                 spct.setTenSP(rs.getString("TENSP"));
                 spct.setTenKC(rs.getString("TENKC"));
@@ -188,7 +186,6 @@ public ArrayList<KhuyenMai> getListHieuLuc() {
         }
         return sp;
     }
-
     @Override
     public Boolean existsBymakm(String makm) {
         String sql = "SELECT COUNT(*) FROM KHUYENMAI WHERE MAKM = ?";
@@ -204,13 +201,22 @@ public ArrayList<KhuyenMai> getListHieuLuc() {
         }
         return false;
     }
-   
-       public void updateSL(String MaKM, int sl) {
+    public void updateSL(String MaKM, int sl) {
         try (
-                Connection con = Connection.getConnection(); PreparedStatement ps = con.prepareStatement("UPDATE KHUYENMAI SET SOLUONG= ?  WHERE MAKM= ?")) {       
+                Connection con = Connection.getConnection(); PreparedStatement ps = con.prepareStatement("UPDATE KHUYENMAI SET SOLUONG= ?  WHERE MAKM= ?")) {
             ps.setString(2, MaKM);
-            ps.setInt(1,sl);
+            ps.setInt(1, sl);
             ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+       public void updatetrangThai(String MaKM,int trangthai) {
+        try (
+                Connection con = Connection.getConnection(); PreparedStatement ps = con.prepareStatement("UPDATE KHUYENMAI SET TRANGTHAIKM= ? from KHUYENMAI where MAKM =?")) {
+            ps.setInt(1, trangthai);
+            ps.setString(2, MaKM);
+            ps.executeUpdate();         
         } catch (Exception e) {
             e.printStackTrace();
         }

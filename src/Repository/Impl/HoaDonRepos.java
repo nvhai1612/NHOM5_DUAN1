@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.UUID;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -329,30 +330,53 @@ public class HoaDonRepos implements IHoaDonRepos {
         }
     }
     
-    public void countHDThanhToan() {
-       
-        int trangthai = 1;
-        String sql = "SELECT count(*) From HOADON WHERE TRANGTHAIHD=1";
-        try (Connection conn = connection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, trangthai);
-            ResultSet rs = stmt.executeQuery();
-            rs.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public ArrayList<HoaDonDTO> loadDonHangThanhToan() {
+    ArrayList<HoaDonDTO> list = new ArrayList<>();
+    String sql = "SELECT MAHD, TENNV, TENKH, TRANGTHAIHD FROM HOADON " +
+                 "LEFT JOIN KHACHHANG ON HOADON.IDKH = KHACHHANG.ID " +
+                 "LEFT JOIN NHANVIEN ON NHANVIEN.ID = HOADON.IDKH " +
+                 "WHERE TRANGTHAIHD = 1";
+    try (Connection conn = connection.getConnection(); 
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+        
+        while (rs.next()) {
+            HoaDonDTO hoadon = new HoaDonDTO();
+            hoadon.setMaHD(rs.getString("MAHD"));
+            hoadon.setTenNV(rs.getString("TENNV"));
+            hoadon.setTenKH(rs.getString("TENKH"));
+            hoadon.setTrangThai(rs.getInt("TRANGTHAIHD"));
+            list.add(hoadon);
         }
+    } catch (Exception e) {
+        e.printStackTrace();
     }
-    public void counthuyThanhToan() {
-        int trangthai = 0;
-        String sql = "SELECT count(*) From HOADON WHERE TRANGTHAIHD=0";
-        try (Connection conn = connection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, trangthai);
-            ResultSet rs = stmt.executeQuery();
-            rs.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    return list;
+}
+
+     public ArrayList<HoaDonDTO> loadDonHangHuyThanhToan() {
+    ArrayList<HoaDonDTO> list = new ArrayList<>();
+    String sql = "SELECT MAHD, TENNV, TENKH, TRANGTHAIHD FROM HOADON " +
+                 "LEFT JOIN KHACHHANG ON HOADON.IDKH = KHACHHANG.ID " +
+                 "LEFT JOIN NHANVIEN ON NHANVIEN.ID = HOADON.IDKH " +
+                 "WHERE TRANGTHAIHD = 0";
+    try (Connection conn = connection.getConnection(); 
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+        
+        while (rs.next()) {
+            HoaDonDTO hoadon = new HoaDonDTO();
+            hoadon.setMaHD(rs.getString("MAHD"));
+            hoadon.setTenNV(rs.getString("TENNV"));
+            hoadon.setTenKH(rs.getString("TENKH"));
+            hoadon.setTrangThai(rs.getInt("TRANGTHAIHD"));
+            list.add(hoadon);
         }
+    } catch (Exception e) {
+        e.printStackTrace();
     }
-    
+    return list;
+}
     
  public Boolean seachTrangThai(int trangThai) {
     String sql = "SELECT MAHD, TENNV, TENKH, TRANGTHAIHD FROM HoaDon "

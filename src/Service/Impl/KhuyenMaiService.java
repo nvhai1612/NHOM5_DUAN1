@@ -78,5 +78,8 @@ public class KhuyenMaiService implements IkhuyenMaiSeviec{
      public void tThuy(String MA, int sl) {
         respon.updateSL(MA, sl);
     }
+     public void trangthai(String makm,int trangthai){
+         respon.updatetrangThai(makm, trangthai);
+     }
       
 }
