@@ -5,10 +5,12 @@
 package Repository.Impl;
 
 import DomainModel.KhuyenMai;
+import DomainModel.NhanVien;
 import DomainModel.SPCT;
 import DomainModel.SanPham;
 import Repository.IkhuyenMairepons;
 import Utiliti.DBConnection;
+import ViewModel.HoaDonDTO;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -109,18 +111,15 @@ public ArrayList<KhuyenMai> getListHieuLuc() {
     @Override
     public Boolean update(KhuyenMai KM) {
         try (
-                Connection con = Connection.getConnection(); PreparedStatement ps = con.prepareStatement("UPDATE KHUYENMAI SET TENKM= ? ,MUCGIAMGIA= ? ,THOIGIANBATDAU= ? ,THOIGIANKETTHUC= ? ,TRANGTHAIKM= ?  WHERE MAKM= ?")) {
-            ps.setString(6, KM.getMaKM());
+                Connection con = Connection.getConnection(); PreparedStatement ps = con.prepareStatement("UPDATE KHUYENMAI SET TENKM= ? ,MUCGIAMGIA= ? ,THOIGIANBATDAU= ? ,THOIGIANKETTHUC= ? ,TRANGTHAIKM= ?,SOLUONG= ? WHERE MAKM= ?")) {
+            ps.setString(7, KM.getMaKM());
             ps.setString(1, KM.getTenKM());
             ps.setFloat(2, KM.getMucGiamGia());
             ps.setDate(3, new Date(KM.getThoiGianBatDau().getTime()));
             ps.setDate(4, new Date(KM.getThoiGianKetThuc().getTime()));
             ps.setObject(5, KM.getTrangThai());
-//            ps.setObject(7, KM.getSoLuong());
-
+            ps.setInt(6, KM.getSoLuong());
             ps.executeUpdate();
-//            System.out.println(SelectSPByTen(km.getTenKM()));
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -205,20 +204,7 @@ public ArrayList<KhuyenMai> getListHieuLuc() {
         }
         return false;
     }
-    public Boolean seachTrangThai(int trangThai){
-         String sql = "SELECT MAHD,TENNV,TENKH,TRANGTHAIHD from HoaDon left join NHANVIEN NV on HOADON.IDNV = NV.ID left join KHACHHANG on KHACHHANG.ID=HOADON.IDKH where TRANGTHAIHD=?";
-        try (Connection conn = Connection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, trangThai);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1) > 0;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
+   
        public void updateSL(String MaKM, int sl) {
         try (
                 Connection con = Connection.getConnection(); PreparedStatement ps = con.prepareStatement("UPDATE KHUYENMAI SET SOLUONG= ?  WHERE MAKM= ?")) {       

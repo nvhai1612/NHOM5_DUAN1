@@ -328,4 +328,25 @@ public class HoaDonRepos implements IHoaDonRepos {
             e.printStackTrace();
         }
     }
+ public Boolean seachTrangThai(int trangThai) {
+    String sql = "SELECT MAHD, TENNV, TENKH, TRANGTHAIHD FROM HoaDon "
+               + "LEFT JOIN NHANVIEN NV ON HOADON.IDNV = NV.ID "
+               + "LEFT JOIN KHACHHANG ON KHACHHANG.ID = HOADON.IDKH "
+               + "WHERE TRANGTHAIHD = ?";
+    try (Connection conn = connection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, trangThai);
+        ResultSet rs = stmt.executeQuery();
+        return rs.next(); // Nếu có ít nhất một hàng kết quả, trả về true
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return false;
+}
+ public Boolean seachTrangThaithanhcong() {
+    return seachTrangThai(1); // Trạng thái thành công
+}
+
+public Boolean seachTrangThaihuy() {
+    return seachTrangThai(0); // Trạng thái hủy
+}
 }

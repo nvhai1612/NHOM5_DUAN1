@@ -23,7 +23,7 @@ import Utiliti.SessionData;
 import ViewModel.HoaDonVM;
 import ViewModel.KhachHangVM;
 import ViewModel.SPCTVM;
-import ViewModel.khuyeMaiVM;
+import ViewModel.KhuyenMaiVM;
 import java.awt.CardLayout;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -94,37 +94,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
         spctjp.LoadTableSPCT();
 //        
     }
-
-//    public void loadKM() {       
-//        cbbKm = (DefaultComboBoxModel) cbbKhuyenMai.getModel();
-//        cbbKm.addAll(khuyenMaiService.getAllKMHieuLuc());
-//        for (int i = 0; i < cbbKm.getSize(); i++) {
-//        }
-//        cbbKhuyenMai.revalidate();
-//        cbbKhuyenMai.repaint();
-//        
-//    }
-//    private boolean isKMLoaded = false;
-//
-//    public void loadKM() {
-//    if (!isKMLoaded) {
-//        // Tiến hành load dữ liệu
-//        cbbKm = (DefaultComboBoxModel) cbbKhuyenMai.getModel();
-//        cbbKm.addAll(khuyenMaiService.getAllKMHieuLuc());
-//        
-//        // Nếu cần, thực hiện các thao tác khác sau khi load dữ liệu
-//        // Ví dụ:
-//         for (int i = 0; i < cbbKm.getSize(); i++) {
-//         }
-//        
-//        // Làm mới combobox
-//        cbbKhuyenMai.revalidate();
-//        cbbKhuyenMai.repaint();
-//        
-//        // Đánh dấu là đã load
-//        isKMLoaded = true;
-//        
-//    }
+//validate soluong tung``
     public List<KhuyenMai> filterValidKMs(List<KhuyenMai> khuyenMais) {
         List<KhuyenMai> validKMs = new ArrayList<>();
         for (KhuyenMai km : khuyenMais) {
@@ -245,8 +215,8 @@ public class BanHangJFrame extends javax.swing.JFrame {
         float Tienthua = 0;
         Object selectedItem = cbbKhuyenMai.getSelectedItem();
 // Kiểm tra nếu item không null và là đối tượng của lớp khuyeMaiVM
-        if (selectedItem instanceof khuyeMaiVM) {
-            float km = ((khuyeMaiVM) selectedItem).getMucGiamGia();
+        if (selectedItem instanceof KhuyenMaiVM) {
+            float km = ((KhuyenMaiVM) selectedItem).getMucGiamGia();
             for (int i = 0; i < tblGioHang.getRowCount(); i++) {
                 ThanhTien += Float.valueOf(tblGioHang.getValueAt(i, 4).toString());
                 CanThanhToan = ThanhTien - (ThanhTien * km / 100);
@@ -1682,8 +1652,8 @@ public class BanHangJFrame extends javax.swing.JFrame {
         hd.setTongTien(Float.valueOf(TongTien));
         hd.setTrangThaiHD(TrangThaiHD);
         hd.setDonGiaSauGiam(Float.parseFloat(txtCanThanhToan.getText()));
-        int sl = ((khuyeMaiVM) cbbKhuyenMai.getSelectedItem()).getSoLuong() - 1;
-        String makm = ((khuyeMaiVM) cbbKhuyenMai.getSelectedItem()).getMaKM();
+        int sl = ((KhuyenMaiVM) cbbKhuyenMai.getSelectedItem()).getSoLuong() - 1;
+        String makm = ((KhuyenMaiVM) cbbKhuyenMai.getSelectedItem()).getMaKM();
         khuyenMaiService.soluong(makm, sl);
         hoaDonService.updateTrangThaiHoaDon(MaHD, TrangThaiHD, Float.valueOf(TongTien), MaHD);
         LoadTableHoaDon();

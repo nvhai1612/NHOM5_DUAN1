@@ -11,7 +11,7 @@ import java.util.UUID;
  *
  * @author Admin
  */
-public class khuyeMaiVM {
+public class KhuyenMaiVM {
   private UUID idKM;
     private UUID IDHD;
     private String maKM;
@@ -22,10 +22,10 @@ public class khuyeMaiVM {
     private int TrangThai;
     private int SoLuong;
 
-    public khuyeMaiVM() {
+    public KhuyenMaiVM() {
     }
 
-    public khuyeMaiVM(UUID idKM, UUID IDHD, String maKM, String TenKM, float MucGiamGia, Date ThoiGianBatDau, Date ThoiGianKetThuc, int TrangThai, int SoLuong) {
+    public KhuyenMaiVM(UUID idKM, UUID IDHD, String maKM, String TenKM, float MucGiamGia, Date ThoiGianBatDau, Date ThoiGianKetThuc, int TrangThai, int SoLuong) {
         this.idKM = idKM;
         this.IDHD = IDHD;
         this.maKM = maKM;
