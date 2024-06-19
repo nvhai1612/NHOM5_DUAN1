@@ -12,7 +12,6 @@ import java.util.UUID;
  * @author Admin
  */
 public class KhuyenMaiVM {
-    
     private UUID idKM;
     private UUID IDHD;
     private String maKM;
@@ -37,7 +36,6 @@ public class KhuyenMaiVM {
         this.TrangThai = TrangThai;
         this.SoLuong = SoLuong;
     }
-    
 
     public UUID getIdKM() {
         return idKM;
@@ -110,9 +108,11 @@ public class KhuyenMaiVM {
     public void setSoLuong(int SoLuong) {
         this.SoLuong = SoLuong;
     }
-        @Override
+      @Override
     public String toString() {
         return TenKM; // return the name or whatever you want to display in the JComboBox
     }
-    
+
+  
+
 }

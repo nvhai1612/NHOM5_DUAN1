@@ -12,6 +12,7 @@ import ViewModel.KhachHangVM;
  * @author Admin
  */
 public class SessionData {
+
     public static String account;
     public static KhachHangVM sdtKH;
     public static String maHD;

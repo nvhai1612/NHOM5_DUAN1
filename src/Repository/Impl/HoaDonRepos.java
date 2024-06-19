@@ -29,7 +29,7 @@ public class HoaDonRepos implements IHoaDonRepos {
     public ArrayList<HoaDon> getListFormDB() {
         ArrayList<HoaDon> listHD = new ArrayList<>();
 
-        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("SELECT * from HoaDon left join NHANVIEN NV on HOADON.IDNV = NV.ID WHERE TRANGTHAIHD = 0")) {
+        try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("SELECT * from HoaDon left join NHANVIEN NV on HOADON.IDNV = NV.ID WHERE TRANGTHAIHD = 0 ORDER BY NGAYTAO DESC")) {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {

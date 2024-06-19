@@ -122,8 +122,6 @@ public class SPCTJPanel extends javax.swing.JPanel {
                 spctvm.getTenTH(),
                 spctvm.getTenCL(),
                 spctvm.getDonGia(),});
-
-            System.out.println(spctvm);
         }
     }
 
@@ -1834,24 +1832,54 @@ public class SPCTJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCLActionPerformed
 
     private void btnThemSPCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPCTActionPerformed
+        if (cbbSP.getSelectedItem() == null) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn Tên Sản Phẩm!");
+        return;
+    }
         String MaSPCT = ((SanPhamVM) cbbSP.getSelectedItem()).getMaSP();
         UUID TenSP = ((SanPhamVM) cbbSP.getSelectedItem()).getId();
-//        UUID TenSP = spctrp.SelectSPByTen(txtTenSP.getText());
+        
         String SoLuongTon = txtSLTon.getText();
+
         if (SoLuongTon.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nhập số lượng tồn!");
             return;
+        } else {
+            try {
+                int soLuong = Integer.parseInt(SoLuongTon);
+                if (soLuong <= 0) {
+                    JOptionPane.showMessageDialog(this, "Số lượng tồn phải lớn hơn 0!");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Số lượng tồn phải là số nguyên!");
+                return;
+            }
         }
+
         String NguoiTao = txtNguoiTao.getText();
-        int TrangThai = rdoConHang.isSelected() == true ? 1 : 0;
+        int TrangThai = rdoConHang.isSelected() ? 1 : 0;
+        
         UUID TenCL = ((ChatLieuVM) cbbCL.getSelectedItem()).getId();
         UUID TenKC = ((KichCoVM) cbbKC.getSelectedItem()).getId();
         UUID TenMS = ((MauSacVM) cbbMS.getSelectedItem()).getId();
         UUID TenTH = ((ThuongHieuVM) cbbTH.getSelectedItem()).getId();
         String DonGia = txtDonGia.getText();
+
         if (DonGia.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nhập đơn giá!");
             return;
+        } else {
+            try {
+                float donGia = Float.parseFloat(DonGia);
+                if (donGia <= 0) {
+                    JOptionPane.showMessageDialog(this, "Đơn giá phải lớn hơn 0!");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Đơn giá phải là số!");
+                return;
+            }
         }
 
         SPCT spct = new SPCT();
@@ -1869,6 +1897,7 @@ public class SPCTJPanel extends javax.swing.JPanel {
         this.SPCTService.add(spct);
         LamMoiSPCT();
         this.LoadTableSPCT();
+        JOptionPane.showMessageDialog(this, "Thêm sản phẩm chi tiết thành công!");
     }//GEN-LAST:event_btnThemSPCTActionPerformed
 
     private void btnLamMoiSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiSPActionPerformed

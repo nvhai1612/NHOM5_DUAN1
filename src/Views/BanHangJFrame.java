@@ -8,6 +8,7 @@ import DomainModel.HoaDon;
 import DomainModel.KhachHang;
 import DomainModel.KhuyenMai;
 import DomainModel.SPCT;
+import Repository.Impl.HDCTRepos;
 import Repository.Impl.HoaDonRepos;
 import Repository.Impl.SPCTRepos;
 import Service.Impl.ChatLieuService;
@@ -20,11 +21,20 @@ import Service.Impl.SPCTService;
 import Service.Impl.SanPhamService;
 import Service.Impl.ThuongHieuService;
 import Utiliti.SessionData;
+import ViewModel.HoaDonDTO;
 import ViewModel.HoaDonVM;
 import ViewModel.KhachHangVM;
 import ViewModel.KhuyenMaiVM;
 import ViewModel.SPCTVM;
+
+import ViewModel.KhuyenMaiVM;
+import Views.PDF.PDFGenerator;
+import com.itextpdf.text.DocumentException;
+
 import java.awt.CardLayout;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -35,7 +45,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
 import java.util.Set;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -61,6 +76,10 @@ public class BanHangJFrame extends javax.swing.JFrame {
     private KhachHangService khs = new KhachHangService();
     private SPCTJPanel spctjp = new SPCTJPanel();
     KhuyenMaiService khuyenMaiService = new KhuyenMaiService();
+
+    private PDFGenerator pdf = new PDFGenerator();
+    HDCTRepos hDCTRepos = new HDCTRepos();
+
 
     CardLayout card;
 
@@ -904,7 +923,8 @@ public class BanHangJFrame extends javax.swing.JFrame {
         jLabel62.setText("Hình thức");
 
         cbbPTTT.setBackground(new java.awt.Color(222, 231, 227));
-        cbbPTTT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "chọn...", "Tiền mặt", "Quét mã" }));
+        cbbPTTT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "chọn...", "Tiền mặt", "Quét mã" }));
+        cbbPTTT.setToolTipText("");
 
         jLabel63.setText("Tiền khách đưa:");
 
@@ -1390,8 +1410,20 @@ public class BanHangJFrame extends javax.swing.JFrame {
 
     private void btnSuaGHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaGHActionPerformed
         int selectedRow = tblGioHang.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm trong giỏ hàng để sửa số lượng.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         int rowSP = tblDanhSachSP.getSelectedRow();
+        if (rowSP == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm trong danh sách sản phẩm.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         int RowMaHD = tblHoaDon.getSelectedRow();
+        if (RowMaHD == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một hóa đơn để cập nhật sản phẩm.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         String NhapSLNew = JOptionPane.showInputDialog(this, "Nhập số lượng mới:");
         String MaHDCanUpdate = tblHoaDon.getValueAt(RowMaHD, 0).toString();
         String LaySLTon = tblDanhSachSP.getValueAt(rowSP, 6).toString();
@@ -1476,6 +1508,10 @@ public class BanHangJFrame extends javax.swing.JFrame {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         int rowSP = tblDanhSachSP.getSelectedRow();
+        if (rowSP == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm trong danh sách sản phẩm.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         int rowHD = tblHoaDon.getSelectedRow();
         if (rowHD < 0) {
             JOptionPane.showMessageDialog(this, "Bạn cần chọn hóa đơn để thêm sản phẩm!");
@@ -1540,7 +1576,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
 
         String TenNV = "hai";
         String TenKH = txtTenKH.getText();
-        int TrangThaiHD = 1;
+        int TrangThaiHD = 0;
 
         HoaDon hd = new HoaDon();
         hd.setMaHD(MaHD);
@@ -1557,8 +1593,8 @@ public class BanHangJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnChonKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonKHActionPerformed
-//        KhachHangDialog.setVisible(true);
-//        KhachHangDialog.setLocationRelativeTo(null);
+        KhachHangDialog.setVisible(true);
+        KhachHangDialog.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnChonKHActionPerformed
 
     private void txtTienKhachDuaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhachDuaCaretUpdate
@@ -1575,7 +1611,11 @@ public class BanHangJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTienKhachDuaCaretUpdate
 
     private void btnTaoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonActionPerformed
-        //      0: trang thai cho, 1: trang thai thanh cong, 2: trang thai huy
+        cbbKm = (DefaultComboBoxModel) cbbKhuyenMai.getModel();
+        cbbKm.addAll(khuyenMaiService.getAllKMHieuLuc());
+        for (int i = 0; i < cbbKm.getSize(); i++) {
+        }
+//      0: trang thai cho, 1: trang thai thanh cong, 2: trang thai huy
         SessionData.maHD = new Random().nextInt(10000) + "";
         hoaDonRes.add(new HoaDon(SessionData.maHD, 0, new Date()));
         LoadTableHoaDon();
@@ -1625,10 +1665,6 @@ public class BanHangJFrame extends javax.swing.JFrame {
             return;
         }
 
-//        if (tblGioHang.getSelectedRow() == -1) {
-//            JOptionPane.showMessageDialog(this, "Hóa đơn chưa có sản phẩm");
-//            return;
-//        }
         try {
             if (Double.parseDouble(txtTienKhachDua.getText()) < Double.parseDouble(txtCanThanhToan.getText())) {
                 JOptionPane.showMessageDialog(this, "Tiền khách đưa chưa đủ");
@@ -1636,6 +1672,10 @@ public class BanHangJFrame extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Tiền khách đưa không hợp lệ");
+            return;
+        }
+        if (cbbPTTT.getSelectedIndex() == 1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn phương thức thanh toán!");
             return;
         }
 
@@ -1654,12 +1694,40 @@ public class BanHangJFrame extends javax.swing.JFrame {
         hd.setDonGiaSauGiam(Float.parseFloat(txtCanThanhToan.getText()));
         int sl = ((KhuyenMaiVM) cbbKhuyenMai.getSelectedItem()).getSoLuong() - 1;
         String makm = ((KhuyenMaiVM) cbbKhuyenMai.getSelectedItem()).getMaKM();
+
         khuyenMaiService.soluong(makm, sl);
+
+
         hoaDonService.updateTrangThaiHoaDon(MaHD, TrangThaiHD, Float.valueOf(TongTien), MaHD);
         LoadTableHoaDon();
         reset();
         JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
+
         loadKM();
+
+
+        HoaDonDTO hoaDon = hDCTRepos.getHoaDonByMa(MaHD);
+        ArrayList<SPCT> products = hoaDonService.HoaDonCho(MaHD);
+
+        PDFGenerator pdfGenerator = new PDFGenerator();
+        String filePath = "HoaDon_" + MaHD + ".pdf";
+        try {
+            pdfGenerator.exportInvoiceToPDF(filePath, hoaDon, products);
+            // Open the generated PDF
+            File pdfFile = new File(filePath);
+            if (pdfFile.exists() && Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().open(pdfFile);
+            } else {
+                JOptionPane.showMessageDialog(this, "Không thể mở file PDF.");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LichSuJPanel.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Có lỗi xảy ra khi xuất hóa đơn.");
+        } catch (DocumentException ex) {
+            Logger.getLogger(BanHangJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void btnThemKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKHActionPerformed
@@ -1797,8 +1865,10 @@ public class BanHangJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_cbbChonKH2ActionPerformed
 
     private void cbbKhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbKhuyenMaiActionPerformed
+
         cbbKhuyenMai.revalidate();
         cbbKhuyenMai.repaint();
+
 
         TinhTien();
     }//GEN-LAST:event_cbbKhuyenMaiActionPerformed
@@ -1929,7 +1999,6 @@ public class BanHangJFrame extends javax.swing.JFrame {
         txtMaKH.setText(kh.getMaKH());
         txtTenKH.setText(kh.getTenKH());
         txtNgaySinh.setText(kh.getNgaySinh());
-        System.out.println("GioiTinh: " + kh.getGioiTinh());
         if (kh.getGioiTinh().equals(1)) {
             rdoNam.setSelected(true);
         } else {

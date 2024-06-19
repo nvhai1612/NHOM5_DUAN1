@@ -123,11 +123,11 @@ public class NhanVienRepos implements INhanVienRepos {
                 + "CHUCVU.TenCV "
                 + "FROM NHANVIEN "
                 + "JOIN CHUCVU ON NHANVIEN.IDCV = CHUCVU.ID "
-                + "WHERE NHANVIEN.MANV LIKE ? OR NHANVIEN.TENNV LIKE ?"; // Thay đổi điều kiện tìm kiếm
+                + "WHERE NHANVIEN.MANV LIKE ?"; // Thay đổi điều kiện tìm kiếm
         try (Connection conn = connection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, "%" + MaNV + "%");
-            ps.setString(2, "%" + MaNV + "%"); // Thêm điều kiện tìm kiếm cho tên nhân viên
+//            ps.setString(2, "%" + MaNV + "%"); // Thêm điều kiện tìm kiếm cho tên nhân viên
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
