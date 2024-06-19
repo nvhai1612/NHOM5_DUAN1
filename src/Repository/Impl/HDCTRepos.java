@@ -32,7 +32,7 @@ public class HDCTRepos implements IHDCTRepos {
         ArrayList<HoaDonDTO> ListHDDTO = new ArrayList<>();
 
         try (Connection con = connection.getConnection();
-                PreparedStatement ps = con.prepareStatement("SELECT MAHD, TENNV, TENKH, kh.SDT, kh.DIACHI, TRANGTHAIHD,hd.NGAYTAO FROM HOADON hd  LEFT JOIN KHACHHANG kh ON kh.ID = hd.IDKH LEFT JOIN NHANVIEN nv ON nv.ID = hd.IDNV ")) {
+                PreparedStatement ps = con.prepareStatement("SELECT MAHD, TENNV, TENKH, kh.SDT, kh.DIACHI, TRANGTHAIHD,hd.NGAYTAO,TONGTIEN FROM HOADON hd  LEFT JOIN KHACHHANG kh ON kh.ID = hd.IDKH LEFT JOIN NHANVIEN nv ON nv.ID = hd.IDNV ")) {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -43,7 +43,8 @@ public class HDCTRepos implements IHDCTRepos {
                 hddto.setSDT(rs.getString(4));
                 hddto.setDiachi(rs.getString(5));
                 hddto.setTrangThai(rs.getInt(6));
-                hddto.setNgayTao(rs.getString(7));            
+                hddto.setNgayTao(rs.getString(7));  
+                hddto.setDonGia(rs.getInt(8));
                 ListHDDTO.add(hddto);
             }
 
@@ -156,4 +157,30 @@ public class HDCTRepos implements IHDCTRepos {
         return hoadonseach;
     }
 
+    
+    public HoaDonDTO getHoaDonByMa(String MaHD) {
+        HoaDonDTO hoaDon = null;
+        try (Connection con = connection.getConnection();
+             PreparedStatement ps = con.prepareStatement("SELECT MAHD, TENNV, TENKH, kh.SDT, kh.DIACHI, TRANGTHAIHD, hd.NGAYTAO, TONGTIEN FROM HOADON hd LEFT JOIN KHACHHANG kh ON kh.ID = hd.IDKH LEFT JOIN NHANVIEN nv ON nv.ID = hd.IDNV WHERE MAHD = ?")) {
+
+            ps.setString(1, MaHD);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                hoaDon = new HoaDonDTO();
+                hoaDon.setMaHD(rs.getString("MAHD"));
+                hoaDon.setTenNV(rs.getString("TENNV"));
+                hoaDon.setTenKH(rs.getString("TENKH"));
+                hoaDon.setSDT(rs.getString("SDT"));
+                hoaDon.setDiachi(rs.getString("DIACHI"));
+                hoaDon.setTrangThai(rs.getInt("TRANGTHAIHD"));
+                hoaDon.setNgayTao(rs.getString("NGAYTAO"));
+                hoaDon.setDonGia(rs.getInt("TONGTIEN"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hoaDon;
+    }
+    
 }

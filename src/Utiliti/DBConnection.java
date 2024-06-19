@@ -9,7 +9,9 @@ public class DBConnection {
     public static final String DBNAME = "DUAN1_NHOM5";
     public static final String USERNAME = "sa";
 
+
     public static final String PASSWORD = "12345678";
+
 
 
     /**

@@ -37,6 +37,15 @@ public class KhuyenMaiService implements IkhuyenMaiSeviec{
     public ArrayList<KhuyenMai> getAllDomain() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    public ArrayList<khuyeMaiVM> getAllKMHieuLuc() {
+         ArrayList<KhuyenMai> listSP = respon.getListHieuLuc();
+        ArrayList<khuyeMaiVM> listVM = new ArrayList<>();
+        for (KhuyenMai sp : listSP) {
+            khuyeMaiVM spvm = new khuyeMaiVM(sp.getIdKM(), sp.getIDHD(), sp.getMaKM(), sp.getTenKM(),sp.getMucGiamGia(),sp.getThoiGianBatDau(),sp.getThoiGianKetThuc(),sp.getTrangThai(),sp.getSoLuong());
+            listVM.add(spvm);
+        }
+        return listVM;
+    }
 
   
     @Override
@@ -44,27 +53,12 @@ public class KhuyenMaiService implements IkhuyenMaiSeviec{
         respon.update(km);
     }
 
-//    @Override
-//    public Integer add(khuyeMaiVM km) {
-//        KhuyenMai newkm=new KhuyenMai(
-//                km.getIdKM(),
-//                km.getIDSP()
-//                
-//        );
-//        
-//        return km.add(d);
-//    }
-
     @Override
     public void add(KhuyenMai km) {
         respon.add(km);
     }
 
-   
 
-    public Object add(boolean km) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     @Override
     public ArrayList<KhuyenMai> search(String makm) {
@@ -72,14 +66,15 @@ public class KhuyenMaiService implements IkhuyenMaiSeviec{
        return null;
     }
 
-    public Object update(boolean km) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-//       public List<SanPham> getSP(String maSP) {
-//         return respon.getTransactionHistoryByCustomer(maSP);
+    
 //     }
     public List<SPCT>getSPCT(String maSPCT){
         return respon.getTransactionHistoryByCustomer(maSPCT);
+    }
+
+    @Override
+    public Boolean existsBymakm(String makm) {
+        return respon.existsBymakm(makm);
     }
             
    
