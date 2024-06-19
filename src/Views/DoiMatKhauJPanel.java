@@ -4,6 +4,7 @@
  */
 package Views;
 
+import DomainModel.NhanVien;
 import Service.Impl.NhanVienService;
 import Utiliti.SessionData;
 import javax.swing.JOptionPane;
