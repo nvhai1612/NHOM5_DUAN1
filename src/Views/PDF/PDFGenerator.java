@@ -36,7 +36,7 @@ public class PDFGenerator {
             document.open();
 
             // Đường dẫn đến font 'Roboto'
-            String fontPath = "C:\\Users\\admin\\NetBeansProjects\\NHOM5_DUAN1\\Roboto\\Roboto-Regular.ttf";
+            String fontPath = "E:\\PRO1041.02\\NHOM5_DUAN1\\Roboto\\Roboto-Regular.ttf";
 
             // Tạo BaseFont và Font
             BaseFont baseFont = BaseFont.createFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);

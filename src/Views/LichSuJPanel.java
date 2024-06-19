@@ -437,11 +437,17 @@ public class LichSuJPanel extends javax.swing.JPanel {
         listSPCT.clear();
         int index = -1;
         index = tblHoaDon.getSelectedRow();
-
+        showTable(index);
         if (index != -1) {
             String maKH = tblHoaDon.getValueAt(index, 0).toString(); // Lấy mã khách hàng từ bảng
-
+         
+            
+           
         }
+       
+        
+        
+        
 
         String MaHD = tblHoaDon.getValueAt(index, 0).toString();
 
@@ -487,7 +493,7 @@ public class LichSuJPanel extends javax.swing.JPanel {
 
         PDFGenerator pdfGenerator = new PDFGenerator();
         String filePath = "HoaDon_" + MaHD + ".pdf";
-
+        
         try {
             pdfGenerator.exportInvoiceToPDF(filePath, hoaDon, products);
         } catch (IOException ex) {

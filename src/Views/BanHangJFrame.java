@@ -25,7 +25,7 @@ import ViewModel.HoaDonDTO;
 import ViewModel.HoaDonVM;
 import ViewModel.KhachHangVM;
 import ViewModel.SPCTVM;
-import ViewModel.khuyeMaiVM;
+import ViewModel.KhuyenMaiVM;
 import Views.PDF.PDFGenerator;
 import com.itextpdf.text.DocumentException;
 import java.awt.CardLayout;
@@ -202,8 +202,8 @@ public class BanHangJFrame extends javax.swing.JFrame {
         float Tienthua = 0;
         Object selectedItem = cbbKhuyenMai.getSelectedItem();
 // Kiểm tra nếu item không null và là đối tượng của lớp khuyeMaiVM
-        if (selectedItem instanceof khuyeMaiVM) {
-            float km = ((khuyeMaiVM) selectedItem).getMucGiamGia();
+        if (selectedItem instanceof KhuyenMaiVM) {
+            float km = ((KhuyenMaiVM) selectedItem).getMucGiamGia();
             for (int i = 0; i < tblGioHang.getRowCount(); i++) {
                 ThanhTien += Float.valueOf(tblGioHang.getValueAt(i, 4).toString());
                 CanThanhToan = ThanhTien - (ThanhTien * km / 100);
@@ -1662,8 +1662,8 @@ public class BanHangJFrame extends javax.swing.JFrame {
         hd.setTongTien(Float.valueOf(TongTien));
         hd.setTrangThaiHD(TrangThaiHD);
         hd.setDonGiaSauGiam(Float.parseFloat(txtCanThanhToan.getText()));
-        int sl = ((khuyeMaiVM) cbbKhuyenMai.getSelectedItem()).getSoLuong() - 1;
-        String makm = ((khuyeMaiVM) cbbKhuyenMai.getSelectedItem()).getMaKM();
+        int sl = ((KhuyenMaiVM) cbbKhuyenMai.getSelectedItem()).getSoLuong() - 1;
+        String makm = ((KhuyenMaiVM) cbbKhuyenMai.getSelectedItem()).getMaKM();
         hoaDonService.updateTrangThaiHoaDon(MaHD, TrangThaiHD, Float.valueOf(TongTien), MaHD);
         LoadTableHoaDon();
         reset();

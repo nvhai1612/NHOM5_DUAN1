@@ -9,7 +9,7 @@ import DomainModel.KhuyenMai;
 import DomainModel.SanPham;
 
 import ViewModel.SanPhamVM;
-import ViewModel.khuyeMaiVM;
+import ViewModel.KhuyenMaiVM;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +18,7 @@ import java.util.List;
  * @author Admin
  */
 public interface IkhuyenMaiSeviec {
-     ArrayList<khuyeMaiVM> getAll();
+     ArrayList<KhuyenMaiVM> getAll();
     ArrayList<KhuyenMai> getAllDomain();
     void add(KhuyenMai km);
     void update(KhuyenMai km);
