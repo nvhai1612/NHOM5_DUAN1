@@ -56,7 +56,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
                 x.getThoiGianBatDau(),
                 x.getThoiGianKetThuc(),
                 x.getSoLuong(),
-                x.getTrangThai() == 1 ? "Hoạt động" : "Dừng Hoạt động",}
+                x.getTrangThai() == 1 ? "Đang hoạt động" : "Dừng hoạt động",}
             );
         }
     }
@@ -332,7 +332,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         rdohoatdong.setText("Đang hoạt động");
 
         buttonGroup1.add(rdongunghoatdong);
-        rdongunghoatdong.setText("Ngưng hoạt động");
+        rdongunghoatdong.setText("Dừng hoạt động");
 
         btnadd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnadd.setText("Lưu");
@@ -547,7 +547,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         txtngaykt.setText(btnbangkm.getValueAt(row, 4).toString());
         txtsoluong.setText(btnbangkm.getValueAt(row, 5).toString());
         String t = btnbangkm.getValueAt(row, 6).toString();
-        if (t.equals("Hoat dong")) {
+        if (t.equals("Đang hoạt động")) {
             rdohoatdong.setSelected(true);
         } else {
             rdongunghoatdong.setSelected(true);
