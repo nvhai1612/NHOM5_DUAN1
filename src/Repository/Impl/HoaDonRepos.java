@@ -328,6 +328,32 @@ public class HoaDonRepos implements IHoaDonRepos {
             e.printStackTrace();
         }
     }
+    
+    public void countHDThanhToan() {
+       
+        int trangthai = 1;
+        String sql = "SELECT count(*) From HOADON WHERE TRANGTHAIHD=1";
+        try (Connection conn = connection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, trangthai);
+            ResultSet rs = stmt.executeQuery();
+            rs.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void counthuyThanhToan() {
+        int trangthai = 0;
+        String sql = "SELECT count(*) From HOADON WHERE TRANGTHAIHD=0";
+        try (Connection conn = connection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, trangthai);
+            ResultSet rs = stmt.executeQuery();
+            rs.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
  public Boolean seachTrangThai(int trangThai) {
     String sql = "SELECT MAHD, TENNV, TENKH, TRANGTHAIHD FROM HoaDon "
                + "LEFT JOIN NHANVIEN NV ON HOADON.IDNV = NV.ID "

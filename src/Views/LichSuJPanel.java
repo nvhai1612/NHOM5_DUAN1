@@ -9,6 +9,7 @@ import DomainModel.SPCT;
 import Repository.Impl.HDCTRepos;
 import Repository.Impl.HoaDonRepos;
 import Service.Impl.HoaDonService;
+import Utiliti.DBConnection;
 import ViewModel.HoaDonDTO;
 import ViewModel.HoaDonVM;
 import ViewModel.KhachHangVM;
@@ -45,18 +46,6 @@ public class LichSuJPanel extends javax.swing.JPanel {
     public LichSuJPanel() {
         initComponents();
         LoadTable();
-//          public void loadKM() {
-//        cbbKm = (DefaultComboBoxModel) cbbKhuyenMai.getModel();
-//        cbbKm.removeAllElements();
-//        cbbKm.addElement("Chọn");
-//        cbbKm.addAll(khuyenMaiService.getAllKMHieuLuc());
-//        for (int i = 0; i < cbbKm.getSize(); i++) {
-//        }
-//    }
-    }
-
-    public void timkiem() {
-
     }
 
     private void LoadTable() {
@@ -87,6 +76,8 @@ public class LichSuJPanel extends javax.swing.JPanel {
         }
 
     }
+
+    
 //     public Boolean seachTrangThai(int trangThai) {
 //    String sql = "SELECT count(*) From HOADON WHERE TRANGTHAIHD=1";
 //    try (Connection conn = connection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -300,6 +291,11 @@ public class LichSuJPanel extends javax.swing.JPanel {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm theo mã"));
 
         cboTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "- Trạng thái -", "Đã huỷ", "Đã hoàn thành" }));
+        cboTrangThai.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboTrangThaiItemStateChanged(evt);
+            }
+        });
         cboTrangThai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboTrangThaiActionPerformed(evt);
@@ -476,6 +472,16 @@ public class LichSuJPanel extends javax.swing.JPanel {
 //        }
 //        LoadTable();
     }//GEN-LAST:event_cboTrangThaiActionPerformed
+
+    private void cboTrangThaiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTrangThaiItemStateChanged
+      String tt = cboTrangThai.getSelectedItem().toString();
+      if (tt.equalsIgnoreCase("Đã hoàn thành")) {
+            reponshoadon.countHDThanhToan();
+      }
+      if (tt.equalsIgnoreCase("Đã huỷ")) {
+            reponshoadon.counthuyThanhToan();
+      }
+    }//GEN-LAST:event_cboTrangThaiItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

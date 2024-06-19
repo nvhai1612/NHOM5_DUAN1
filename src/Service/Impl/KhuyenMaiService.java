@@ -11,7 +11,7 @@ import DomainModel.SanPham;
 import Repository.Impl.KhuyenMaiRepons;
 import Repository.Impl.SanPhamRepos;
 import Service.IkhuyenMaiSeviec;
-import ViewModel.KhuyenMaiVM;
+import ViewModel.khuyeMaiVM;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +23,11 @@ public class KhuyenMaiService implements IkhuyenMaiSeviec{
     KhuyenMaiRepons respon = new KhuyenMaiRepons();
 
     @Override
-    public ArrayList<KhuyenMaiVM> getAll() {
+    public ArrayList<khuyeMaiVM> getAll() {
          ArrayList<KhuyenMai> listSP = respon.getListFormDB();
-        ArrayList<KhuyenMaiVM> listVM = new ArrayList<>();
+        ArrayList<khuyeMaiVM> listVM = new ArrayList<>();
         for (KhuyenMai sp : listSP) {
-            KhuyenMaiVM spvm = new KhuyenMaiVM(sp.getIdKM(), sp.getIDHD(), sp.getMaKM(), sp.getTenKM(),sp.getMucGiamGia(),sp.getThoiGianBatDau(),sp.getThoiGianKetThuc(),sp.getTrangThai(),sp.getSoLuong());
+            khuyeMaiVM spvm = new khuyeMaiVM(sp.getIdKM(), sp.getIDHD(), sp.getMaKM(), sp.getTenKM(),sp.getMucGiamGia(),sp.getThoiGianBatDau(),sp.getThoiGianKetThuc(),sp.getTrangThai(),sp.getSoLuong());
             listVM.add(spvm);
         }
         return listVM;
@@ -37,11 +37,11 @@ public class KhuyenMaiService implements IkhuyenMaiSeviec{
     public ArrayList<KhuyenMai> getAllDomain() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    public ArrayList<KhuyenMaiVM> getAllKMHieuLuc() {
+    public ArrayList<khuyeMaiVM> getAllKMHieuLuc() {
          ArrayList<KhuyenMai> listSP = respon.getListHieuLuc();
-        ArrayList<KhuyenMaiVM> listVM = new ArrayList<>();
+        ArrayList<khuyeMaiVM> listVM = new ArrayList<>();
         for (KhuyenMai sp : listSP) {
-            KhuyenMaiVM spvm = new KhuyenMaiVM(sp.getIdKM(), sp.getIDHD(), sp.getMaKM(), sp.getTenKM(),sp.getMucGiamGia(),sp.getThoiGianBatDau(),sp.getThoiGianKetThuc(),sp.getTrangThai(),sp.getSoLuong());
+            khuyeMaiVM spvm = new khuyeMaiVM(sp.getIdKM(), sp.getIDHD(), sp.getMaKM(), sp.getTenKM(),sp.getMucGiamGia(),sp.getThoiGianBatDau(),sp.getThoiGianKetThuc(),sp.getTrangThai(),sp.getSoLuong());
             listVM.add(spvm);
         }
         return listVM;
