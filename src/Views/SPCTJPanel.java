@@ -122,8 +122,6 @@ public class SPCTJPanel extends javax.swing.JPanel {
                 spctvm.getTenTH(),
                 spctvm.getTenCL(),
                 spctvm.getDonGia(),});
-
-            System.out.println(spctvm);
         }
     }
 

@@ -27,7 +27,6 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
     SPCTService seviec2 = new SPCTService();
     KhuyenMaiService seviec = new KhuyenMaiService();
     NhanVienService nvseviec = new NhanVienService();
-    
 
     DefaultTableModel dtm;
 
@@ -92,8 +91,6 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         }
         return true;
     }
-
-    
 
     public void lammoi() {
         txtma.setText("");
@@ -499,7 +496,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Không tìm thấy !");
             return;
         }
-        KhuyenMai km1=new KhuyenMai();
+        KhuyenMai km1 = new KhuyenMai();
         txtma.setText(km.get(index).getMaKM());
         txttenchuongtrinh.setText(km.get(index).getTenKM());
         txtmuckm.setText(String.valueOf(km.get(index).getMucGiamGia()));
@@ -508,11 +505,11 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd");
         txtngaykt.setText(sdt.format(km.get(index).getThoiGianKetThuc()));
         txtsoluong.setText(String.valueOf(km.get(index).getSoLuong()));
-         if (km1.getTrangThai()== 1) {
-                    rdohoatdong.setSelected(true);
-                } else {
-                    rdongunghoatdong.setSelected(false);
-                }
+        if (km1.getTrangThai() == 1) {
+            rdohoatdong.setSelected(true);
+        } else {
+            rdongunghoatdong.setSelected(false);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnaddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnaddMouseClicked
@@ -542,7 +539,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
 
         String t = btnbangkm.getValueAt(row, 6).toString();
 
-        if (t.equals("Yes")) {
+        if (t.equals("Hoat dong")) {
             rdohoatdong.setSelected(true);
         } else {
             rdongunghoatdong.setSelected(true);
@@ -589,6 +586,9 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một Khuyen mai để sửa.");
             return;
         }
+        if (!checkvailidate()) {
+            return;
+        }
         String makm = txtma.getText();
         String tensp = txttenchuongtrinh.getText();
         String mucgiangia = txtmuckm.getText();
@@ -596,6 +596,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         Date ngaybatdau = Date.valueOf(txtngaybd.getText());
         Date ngayketthuc = Date.valueOf(txtngaykt.getText());
         String soluong = txtsoluong.getText();
+
         KhuyenMai km = new KhuyenMai();
         km.setMaKM(makm);
         km.setTenKM(tensp);

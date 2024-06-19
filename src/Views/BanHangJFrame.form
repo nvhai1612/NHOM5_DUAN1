@@ -629,6 +629,9 @@
               <Dimension value="[1000, 600]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="componentMoved" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="jPanel2ComponentMoved"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="[825,520]"/>
           </AuxValues>

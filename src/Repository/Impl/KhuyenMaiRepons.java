@@ -205,5 +205,19 @@ public ArrayList<KhuyenMai> getListHieuLuc() {
         }
         return false;
     }
+    public Boolean seachTrangThai(int trangThai){
+         String sql = "SELECT MAHD,TENNV,TENKH,TRANGTHAIHD from HoaDon left join NHANVIEN NV on HOADON.IDNV = NV.ID left join KHACHHANG on KHACHHANG.ID=HOADON.IDKH where TRANGTHAIHD=?";
+        try (Connection conn = Connection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, trangThai);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }

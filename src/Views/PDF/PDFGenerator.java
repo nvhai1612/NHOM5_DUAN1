@@ -47,14 +47,14 @@ public class PDFGenerator {
             Paragraph title = new Paragraph("Hóa Đơn Bán Hàng", titleFont);
             title.setAlignment(Element.ALIGN_CENTER);
             Paragraph footer = new Paragraph("Cảm ơn quý khách!", titleFont);
-            
+
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
             document.add(new Paragraph(" "));
 
             // Add invoice details
-            document.add(new Paragraph("Danh sách sản phẩm!", font));
-          if (hoaDon.getMaHD() != null) {
+            
+            if (hoaDon.getMaHD() != null) {
                 document.add(new Paragraph("Mã HĐ: " + hoaDon.getMaHD(), font));
             }
 

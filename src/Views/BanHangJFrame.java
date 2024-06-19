@@ -6,6 +6,7 @@ package Views;
 
 import DomainModel.HoaDon;
 import DomainModel.KhachHang;
+import DomainModel.KhuyenMai;
 import DomainModel.SPCT;
 import Repository.Impl.HDCTRepos;
 import Repository.Impl.HoaDonRepos;
@@ -93,6 +94,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
         cbbKm = (DefaultComboBoxModel) cbbKhuyenMai.getModel();
         cbbKm.addAll(khuyenMaiService.getAllKMHieuLuc());
         for (int i = 0; i < cbbKm.getSize(); i++) {
+            
         }
         setLocationRelativeTo(null);
         LoadTableHoaDon();
@@ -686,6 +688,11 @@ public class BanHangJFrame extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(153, 194, 211));
         jPanel2.setMaximumSize(new java.awt.Dimension(1000, 600));
         jPanel2.setMinimumSize(new java.awt.Dimension(1000, 600));
+        jPanel2.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentMoved(java.awt.event.ComponentEvent evt) {
+                jPanel2ComponentMoved(evt);
+            }
+        });
 
         pnlCards.setBackground(new java.awt.Color(222, 231, 227));
         pnlCards.setMaximumSize(new java.awt.Dimension(825, 520));
@@ -1471,6 +1478,10 @@ public class BanHangJFrame extends javax.swing.JFrame {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         int rowSP = tblDanhSachSP.getSelectedRow();
+        if (rowSP == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm trong danh sách sản phẩm.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         int rowHD = tblHoaDon.getSelectedRow();
         if (rowHD < 0) {
             JOptionPane.showMessageDialog(this, "Bạn cần chọn hóa đơn để thêm sản phẩm!");
@@ -1535,7 +1546,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
 
         String TenNV = "hai";
         String TenKH = txtTenKH.getText();
-        int TrangThaiHD = 1;
+        int TrangThaiHD = 0;
 
         HoaDon hd = new HoaDon();
         hd.setMaHD(MaHD);
@@ -1552,8 +1563,8 @@ public class BanHangJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnChonKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonKHActionPerformed
-//        KhachHangDialog.setVisible(true);
-//        KhachHangDialog.setLocationRelativeTo(null);
+        KhachHangDialog.setVisible(true);
+        KhachHangDialog.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnChonKHActionPerformed
 
     private void txtTienKhachDuaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhachDuaCaretUpdate
@@ -1578,6 +1589,10 @@ public class BanHangJFrame extends javax.swing.JFrame {
         SessionData.maHD = new Random().nextInt(10000) + "";
         hoaDonRes.add(new HoaDon(SessionData.maHD, 0, new Date()));
         LoadTableHoaDon();
+         cbbKm = (DefaultComboBoxModel) cbbKhuyenMai.getModel();
+        cbbKm.addAll(khuyenMaiService.getAllKMHieuLuc());
+        for (int i = 0; i < cbbKm.getSize(); i++) {
+        }
     }//GEN-LAST:event_btnTaoHoaDonActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
@@ -1814,6 +1829,10 @@ public class BanHangJFrame extends javax.swing.JFrame {
     private void cbbKhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbKhuyenMaiActionPerformed
         TinhTien();
     }//GEN-LAST:event_cbbKhuyenMaiActionPerformed
+
+    private void jPanel2ComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel2ComponentMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel2ComponentMoved
     public Boolean UpdateLaiGioHang(String MaSP, String TenSP, int SoLuong, float DonGia, String mahd) {
         if (tblGioHang.getRowCount() == 0) {
             dtmgh.addRow(new Object[]{
@@ -1941,7 +1960,6 @@ public class BanHangJFrame extends javax.swing.JFrame {
         txtMaKH.setText(kh.getMaKH());
         txtTenKH.setText(kh.getTenKH());
         txtNgaySinh.setText(kh.getNgaySinh());
-        System.out.println("GioiTinh: " + kh.getGioiTinh());
         if (kh.getGioiTinh().equals(1)) {
             rdoNam.setSelected(true);
         } else {
