@@ -6,16 +6,27 @@ package Views;
 
 import DomainModel.SPCT;
 import Repository.Impl.HDCTRepos;
+import Repository.Impl.HoaDonRepos;
 import Service.Impl.HoaDonService;
+import Utiliti.DBConnection;
 import ViewModel.HoaDonDTO;
 import ViewModel.SPCTVM;
 import Views.PDF.PDFGenerator;
 import com.itextpdf.text.DocumentException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,12 +36,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class LichSuJPanel extends javax.swing.JPanel {
 
-   private HDCTRepos hDCTCTRepos = new HDCTRepos();
+    private HDCTRepos hDCTCTRepos = new HDCTRepos();
     DefaultTableModel dtmsp = new DefaultTableModel();
     DefaultTableModel dtmgh = new DefaultTableModel();
     DefaultTableModel dtmhd = new DefaultTableModel();
     private HoaDonService hoaDonService = new HoaDonService();
     private ArrayList<SPCTVM> listSPCT = new ArrayList<>();
+    private HoaDonRepos reponshoadon = new HoaDonRepos();
 
     /**
      * Creates new form HoaDonJPanel
@@ -48,11 +60,12 @@ public class LichSuJPanel extends javax.swing.JPanel {
             dtm.addRow(new Object[]{
                 hdct.getMaHD(),
                 hdct.getTenNV(),
-                hdct.getTenKH()== null ? "KH vãng lai" : hdct.getTenKH(),
+                hdct.getTenKH() == null ? "KH vãng lai" : hdct.getTenKH(),
                 //new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(hdvm.getNgayTao()),
                 hdct.getTrangThai() == 1 ? "Đã thanh toán" : "Hủy",});
         }
     }
+
     private void LoadHoaDonCho(String MaHD) {
         dtmgh = (DefaultTableModel) tblTTSP.getModel();
         dtmgh.setRowCount(0);
@@ -65,10 +78,9 @@ public class LichSuJPanel extends javax.swing.JPanel {
                 spct.getDonGia(),
                 new BigDecimal(spct.getDonGia() * spct.getSoLuongTon()),});
         }
-        
+
     }
-   
-        public void reset() {
+    public void reset() {
         txtTongTien.setText("0");
         txtDiaChi.setText("0");
         txtTenKH.setText("KH Vãng Lai");
@@ -79,14 +91,15 @@ public class LichSuJPanel extends javax.swing.JPanel {
         dtmgh = (DefaultTableModel) tblHoaDon.getModel();
         dtmgh.setRowCount(0);
     }
+
     private void showTable(int row) {
         HoaDonDTO kh = hDCTCTRepos.getListFormDB().get(row);
         txtMa.setText(kh.getMaHD());
         txtTenNV.setText(kh.getTenNV());
-        txtTenKH.setText(kh.getTenKH()==null ? "KH vãng Lai":kh.getTenKH());
+        txtTenKH.setText(kh.getTenKH() == null ? "KH vãng Lai" : kh.getTenKH());
         txtSDT.setText(kh.getSDT());
         txtDiaChi.setText(kh.getDiachi());
-        String dongiasaugiam=String.valueOf(kh.getDonGia());
+        String dongiasaugiam = String.valueOf(kh.getDonGia());
         txtTongTien.setText(dongiasaugiam);
         int trangThai = kh.getTrangThai();
         String trangThaiStr = (trangThai == 1) ? "Đã thanh toán" : "Hủy";
@@ -241,6 +254,12 @@ public class LichSuJPanel extends javax.swing.JPanel {
         jPanel4.setBackground(new java.awt.Color(222, 231, 227));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm theo mã"));
 
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -262,6 +281,11 @@ public class LichSuJPanel extends javax.swing.JPanel {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Lọc"));
 
         cboTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "- Trạng thái -", "Đã huỷ", "Đã hoàn thành" }));
+        cboTrangThai.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboTrangThaiItemStateChanged(evt);
+            }
+        });
         cboTrangThai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboTrangThaiActionPerformed(evt);
@@ -403,8 +427,6 @@ public class LichSuJPanel extends javax.swing.JPanel {
                 .addGap(32, 32, 32))
         );
 
-        jPanel5.getAccessibleContext().setAccessibleName("Lọc");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -422,27 +444,42 @@ public class LichSuJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
-
         listSPCT.clear();
-
         int row = tblHoaDon.getSelectedRow();
         if (row == -1) {
             return;
         }
 
         String MaHD = tblHoaDon.getValueAt(row, 0).toString();
-
         hoaDonService.HoaDonCho(MaHD);
         LoadHoaDonCho(MaHD);
         showTable(row);
-
         LoadTable();
-
     }//GEN-LAST:event_tblHoaDonMouseClicked
 
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        String keyword = txtTimKiem.getText().trim();
+        if (keyword != null) {
+            DefaultTableModel tableModel = (DefaultTableModel) tblHoaDon.getModel();
+            tableModel.setRowCount(0);
+            ArrayList<HoaDonDTO> list = hDCTCTRepos.search(keyword);
+            for (HoaDonDTO kh : list) {
+                tableModel.addRow(new Object[]{
+                    kh.getMaHD(),
+                    kh.getTenKH() == null ? "KH vãng lai" : kh.getTenKH(),
+                    kh.getTenNV(),
+                    kh.getTrangThai() == 1 ? "Đã thanh toán" : "Hủy",});
+            }
+        }
+
+    }//GEN-LAST:event_txtTimKiemKeyReleased
+
+
     private void cboTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTrangThaiActionPerformed
-            
+//
     }//GEN-LAST:event_cboTrangThaiActionPerformed
+
 
     private void btnXuatHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatHDActionPerformed
         int row = tblHoaDon.getSelectedRow();
@@ -459,17 +496,52 @@ public class LichSuJPanel extends javax.swing.JPanel {
         String filePath = "HoaDon_" + MaHD + ".pdf";
         
         
-       try {
-           pdfGenerator.exportInvoiceToPDF(filePath, hoaDon, products);
-       } catch (IOException ex) {
-           Logger.getLogger(LichSuJPanel.class.getName()).log(Level.SEVERE, null, ex);
-       } catch (DocumentException ex) {
-           Logger.getLogger(LichSuJPanel.class.getName()).log(Level.SEVERE, null, ex);
-       }
+        
+        try {
+            pdfGenerator.exportInvoiceToPDF(filePath, hoaDon, products);
+        } catch (IOException ex) {
+            Logger.getLogger(LichSuJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(LichSuJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
         
         JOptionPane.showMessageDialog(this, "Hóa đơn đã được xuất ra file: " + filePath);
 
     }//GEN-LAST:event_btnXuatHDActionPerformed
+
+    private void cboTrangThaiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTrangThaiItemStateChanged
+        DefaultTableModel dtm = (DefaultTableModel) tblHoaDon.getModel();
+        String tt = cboTrangThai.getSelectedItem().toString();
+        if (tt.equalsIgnoreCase("Đã hoàn thành")) {
+            ArrayList<HoaDonDTO> list = reponshoadon.loadDonHangThanhToan();
+            dtm.setRowCount(0);  // Clear existing rows
+            for (HoaDonDTO x : list) {
+                dtm.addRow(new Object[]{
+                    x.getMaHD(),
+                    x.getTenNV(),
+                    x.getTenKH(),
+                    x.getTrangThai() == 1 ? "Đã thanh toán" : "Huỷ"
+                });
+            }
+        } else if (tt.equalsIgnoreCase("Đã huỷ")) {
+            ArrayList<HoaDonDTO> list = reponshoadon.loadDonHangHuyThanhToan();
+            dtm.setRowCount(0);  // Clear existing rows
+            for (HoaDonDTO x : list) {
+                dtm.addRow(new Object[]{
+                    x.getMaHD(),
+                    x.getTenNV(),
+                    x.getTenKH() == null ? "KH vãng lai" : x.getTenKH(),
+                    x.getTrangThai() == 1 ? "Đã thanh toán" : "Huỷ"
+                });
+            }
+        }
+        if (tt.equalsIgnoreCase("Đã huỷ")) {
+            reponshoadon.loadDonHangHuyThanhToan();
+
+        }
+    }//GEN-LAST:event_cboTrangThaiItemStateChanged
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

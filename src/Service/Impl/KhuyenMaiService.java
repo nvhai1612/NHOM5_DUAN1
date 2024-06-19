@@ -4,6 +4,7 @@
  */
 package Service.Impl;
 
+import DomainModel.KhachHang;
 import DomainModel.KhuyenMai;
 import DomainModel.SPCT;
 import DomainModel.SanPham;
@@ -52,22 +53,16 @@ public class KhuyenMaiService implements IkhuyenMaiSeviec{
     public void update(KhuyenMai km) {
         respon.update(km);
     }
-
     @Override
     public void add(KhuyenMai km) {
         respon.add(km);
     }
-
-
-
     @Override
     public ArrayList<KhuyenMai> search(String makm) {
-       respon.search();
-       return null;
+          ArrayList<KhuyenMai> listKH = respon.search(makm);
+         return listKH;
     }
 
-    
-//     }
     public List<SPCT>getSPCT(String maSPCT){
         return respon.getTransactionHistoryByCustomer(maSPCT);
     }
@@ -76,5 +71,16 @@ public class KhuyenMaiService implements IkhuyenMaiSeviec{
     public Boolean existsBymakm(String makm) {
         return respon.existsBymakm(makm);
     }
+     
+    public void soluong(String MA, int sl) {
+        respon.updateSL(MA, sl);
+    }
+    
+     public void tThuy(String MA, int sl) {
+        respon.updateSL(MA, sl);
+    }
+     public void trangthai(String makm,int trangthai){
+         respon.updatetrangThai(makm, trangthai);
+     }
       
 }

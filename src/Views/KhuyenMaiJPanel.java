@@ -4,11 +4,16 @@
  */
 package Views;
 
+import DomainModel.KhachHang;
 import DomainModel.KhuyenMai;
+import DomainModel.NhanVien;
 import DomainModel.SPCT;
 import Service.Impl.KhuyenMaiService;
 import Service.Impl.NhanVienService;
 import Service.Impl.SPCTService;
+
+import ViewModel.KhachHangVM;
+
 import ViewModel.KhuyenMaiVM;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -51,7 +56,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
                 x.getThoiGianBatDau(),
                 x.getThoiGianKetThuc(),
                 x.getSoLuong(),
-                x.getTrangThai() == 1 ? "Hoạt động" : "Dừng Hoạt động",}
+                x.getTrangThai() == 1 ? "Đang hoạt động" : "Dừng hoạt động",}
             );
         }
     }
@@ -118,7 +123,6 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
             });
         }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -135,7 +139,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         btngiosp = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbbSP = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -184,7 +188,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         jPanel6.setBackground(new java.awt.Color(222, 231, 227));
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lọc", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbSP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton3.setText("Tìm");
 
@@ -194,7 +198,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbbSP, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -202,7 +206,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbbSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(jButton3))
         );
 
@@ -233,6 +237,12 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
 
         jPanel5.setBackground(new java.awt.Color(222, 231, 227));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm khuyến mại", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+
+        txtseach.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtseachKeyReleased(evt);
+            }
+        });
 
         jButton1.setText("Tìm kiếm");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -322,7 +332,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         rdohoatdong.setText("Đang hoạt động");
 
         buttonGroup1.add(rdongunghoatdong);
-        rdongunghoatdong.setText("Ngưng hoạt động");
+        rdongunghoatdong.setText("Dừng hoạt động");
 
         btnadd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnadd.setText("Lưu");
@@ -518,7 +528,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnaddMouseClicked
 
     private void btnupdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnupdateMouseClicked
-
+        
     }//GEN-LAST:event_btnupdateMouseClicked
 
     private void btnlammoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnlammoiMouseClicked
@@ -536,10 +546,8 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         txtngaybd.setText(btnbangkm.getValueAt(row, 3).toString());
         txtngaykt.setText(btnbangkm.getValueAt(row, 4).toString());
         txtsoluong.setText(btnbangkm.getValueAt(row, 5).toString());
-
         String t = btnbangkm.getValueAt(row, 6).toString();
-
-        if (t.equals("Hoat dong")) {
+        if (t.equals("Đang hoạt động")) {
             rdohoatdong.setSelected(true);
         } else {
             rdongunghoatdong.setSelected(true);
@@ -578,6 +586,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
 
         this.LoadTable();
         lammoi();
+        
     }//GEN-LAST:event_btnaddActionPerformed
 
     private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
@@ -596,7 +605,6 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         Date ngaybatdau = Date.valueOf(txtngaybd.getText());
         Date ngayketthuc = Date.valueOf(txtngaykt.getText());
         String soluong = txtsoluong.getText();
-
         KhuyenMai km = new KhuyenMai();
         km.setMaKM(makm);
         km.setTenKM(tensp);
@@ -604,11 +612,32 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         km.setThoiGianBatDau(ngaybatdau);
         km.setThoiGianKetThuc(ngayketthuc);
         km.setTrangThai(TrangThai);
-        km.setSoLuong(Integer.valueOf(soluong));
+        km.setSoLuong(Integer.parseInt(soluong));
         this.seviec.update(km);
         this.LoadTable();
         lammoi();
     }//GEN-LAST:event_btnupdateActionPerformed
+
+    private void txtseachKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtseachKeyReleased
+//        String keyword = txtseach.getText().trim();
+//        if (keyword != null) {
+//            DefaultTableModel tableModel = (DefaultTableModel) btnbangkm.getModel();
+//            tableModel.setRowCount(0);
+//            ArrayList<KhuyenMai> list = seviec.search(keyword);
+//            for (KhuyenMai kh : list) {
+//                tableModel.addRow(new Object[]{
+//                    kh.getMaKM(),
+//                    kh.getTenKM(),
+//                    kh.getMucGiamGia(),
+//                    kh.getThoiGianBatDau(),
+//                    kh.getThoiGianKetThuc(),
+//                    kh.getTrangThai(),
+//                    kh.getSoLuong()
+//                });
+//            }
+//        }
+//        
+    }//GEN-LAST:event_txtseachKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -618,9 +647,9 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnlammoi;
     private javax.swing.JButton btnupdate;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> cbbSP;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

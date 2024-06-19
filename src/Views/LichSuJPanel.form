@@ -425,6 +425,9 @@
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JTextField" name="txtTimKiem">
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimKiemKeyReleased"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -472,6 +475,7 @@
                 </Property>
               </Properties>
               <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cboTrangThaiItemStateChanged"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboTrangThaiActionPerformed"/>
               </Events>
               <AuxValues>

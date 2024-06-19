@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.UUID;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -328,4 +329,74 @@ public class HoaDonRepos implements IHoaDonRepos {
             e.printStackTrace();
         }
     }
+    
+    public ArrayList<HoaDonDTO> loadDonHangThanhToan() {
+    ArrayList<HoaDonDTO> list = new ArrayList<>();
+    String sql = "SELECT MAHD, TENNV, TENKH, TRANGTHAIHD FROM HOADON " +
+                 "LEFT JOIN KHACHHANG ON HOADON.IDKH = KHACHHANG.ID " +
+                 "LEFT JOIN NHANVIEN ON NHANVIEN.ID = HOADON.IDKH " +
+                 "WHERE TRANGTHAIHD = 1";
+    try (Connection conn = connection.getConnection(); 
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+        
+        while (rs.next()) {
+            HoaDonDTO hoadon = new HoaDonDTO();
+            hoadon.setMaHD(rs.getString("MAHD"));
+            hoadon.setTenNV(rs.getString("TENNV"));
+            hoadon.setTenKH(rs.getString("TENKH"));
+            hoadon.setTrangThai(rs.getInt("TRANGTHAIHD"));
+            list.add(hoadon);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return list;
+}
+
+     public ArrayList<HoaDonDTO> loadDonHangHuyThanhToan() {
+    ArrayList<HoaDonDTO> list = new ArrayList<>();
+    String sql = "SELECT MAHD, TENNV, TENKH, TRANGTHAIHD FROM HOADON " +
+                 "LEFT JOIN KHACHHANG ON HOADON.IDKH = KHACHHANG.ID " +
+                 "LEFT JOIN NHANVIEN ON NHANVIEN.ID = HOADON.IDKH " +
+                 "WHERE TRANGTHAIHD = 0";
+    try (Connection conn = connection.getConnection(); 
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+        
+        while (rs.next()) {
+            HoaDonDTO hoadon = new HoaDonDTO();
+            hoadon.setMaHD(rs.getString("MAHD"));
+            hoadon.setTenNV(rs.getString("TENNV"));
+            hoadon.setTenKH(rs.getString("TENKH"));
+            hoadon.setTrangThai(rs.getInt("TRANGTHAIHD"));
+            list.add(hoadon);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return list;
+}
+    
+ public Boolean seachTrangThai(int trangThai) {
+    String sql = "SELECT MAHD, TENNV, TENKH, TRANGTHAIHD FROM HoaDon "
+               + "LEFT JOIN NHANVIEN NV ON HOADON.IDNV = NV.ID "
+               + "LEFT JOIN KHACHHANG ON KHACHHANG.ID = HOADON.IDKH "
+               + "WHERE TRANGTHAIHD = ?";
+    try (Connection conn = connection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, trangThai);
+        ResultSet rs = stmt.executeQuery();
+        return rs.next(); // Nếu có ít nhất một hàng kết quả, trả về true
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return false;
+}
+ public Boolean seachTrangThaithanhcong() {
+    return seachTrangThai(1); // Trạng thái thành công
+}
+
+public Boolean seachTrangThaihuy() {
+    return seachTrangThai(0); // Trạng thái hủy
+}
 }
