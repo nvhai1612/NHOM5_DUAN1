@@ -4,6 +4,7 @@
  */
 package Service.Impl;
 
+import DomainModel.KhachHang;
 import DomainModel.KhuyenMai;
 import DomainModel.SPCT;
 import DomainModel.SanPham;
@@ -58,8 +59,8 @@ public class KhuyenMaiService implements IkhuyenMaiSeviec{
     }
     @Override
     public ArrayList<KhuyenMai> search(String makm) {
-       respon.search();
-       return null;
+          ArrayList<KhuyenMai> listKH = respon.search(makm);
+         return listKH;
     }
 
     public List<SPCT>getSPCT(String maSPCT){

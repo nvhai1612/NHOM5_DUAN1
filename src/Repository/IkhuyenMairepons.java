@@ -19,7 +19,7 @@ public interface IkhuyenMairepons {
  public ArrayList<KhuyenMai> getListFormDB();
     public Boolean add(KhuyenMai km);
     public Boolean update(KhuyenMai KM);
-    public ArrayList<KhuyenMai> search();
+    public ArrayList<KhuyenMai> search(String makm);
      public Boolean existsBymakm(String makm);
     
 }

@@ -4,7 +4,9 @@
  */
 package Views;
 
+import DomainModel.KhachHang;
 import DomainModel.KhuyenMai;
+import DomainModel.NhanVien;
 import DomainModel.SPCT;
 import Service.Impl.KhuyenMaiService;
 import Service.Impl.NhanVienService;
@@ -235,6 +237,12 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
 
         jPanel5.setBackground(new java.awt.Color(222, 231, 227));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tìm kiếm khuyến mại", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+
+        txtseach.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtseachKeyReleased(evt);
+            }
+        });
 
         jButton1.setText("Tìm kiếm");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -609,6 +617,27 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
         this.LoadTable();
         lammoi();
     }//GEN-LAST:event_btnupdateActionPerformed
+
+    private void txtseachKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtseachKeyReleased
+//        String keyword = txtseach.getText().trim();
+//        if (keyword != null) {
+//            DefaultTableModel tableModel = (DefaultTableModel) btnbangkm.getModel();
+//            tableModel.setRowCount(0);
+//            ArrayList<KhuyenMai> list = seviec.search(keyword);
+//            for (KhuyenMai kh : list) {
+//                tableModel.addRow(new Object[]{
+//                    kh.getMaKM(),
+//                    kh.getTenKM(),
+//                    kh.getMucGiamGia(),
+//                    kh.getThoiGianBatDau(),
+//                    kh.getThoiGianKetThuc(),
+//                    kh.getTrangThai(),
+//                    kh.getSoLuong()
+//                });
+//            }
+//        }
+//        
+    }//GEN-LAST:event_txtseachKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

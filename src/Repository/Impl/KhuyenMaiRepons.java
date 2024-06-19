@@ -4,6 +4,7 @@
  */
 package Repository.Impl;
 
+import DomainModel.KhachHang;
 import DomainModel.KhuyenMai;
 import DomainModel.NhanVien;
 import DomainModel.SPCT;
@@ -126,7 +127,7 @@ public class KhuyenMaiRepons implements IkhuyenMairepons {
     }
 
     @Override
-    public ArrayList<KhuyenMai> search() {
+    public ArrayList<KhuyenMai> search(String makm ) {
         ArrayList<KhuyenMai> listkm = new ArrayList<>();
 
         try (Connection con = Connection.getConnection(); PreparedStatement ps = con.prepareStatement("select TENKM ,MUCGIAMGIA ,THOIGIANBATDAU ,THOIGIANKETTHUC ,TRANGTHAIKM, SOLUONG WHERE MAKM= ?");) {
@@ -153,7 +154,6 @@ public class KhuyenMaiRepons implements IkhuyenMairepons {
         }
         return listkm;
     }
-
     public List<SPCT> getTransactionHistoryByCustomer(String maSPCT) {
         List<SPCT> sp = new ArrayList<>();
 //        List<KhuyenMai>list = new ArrayList<>();
@@ -170,7 +170,7 @@ public class KhuyenMaiRepons implements IkhuyenMairepons {
             ps.setString(1, maSPCT);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                SPCT spct = new SPCT();      
+                SPCT spct = new SPCT();
                 spct.setMaSPCT(rs.getString("MASPCT"));
                 spct.setTenSP(rs.getString("TENSP"));
                 spct.setTenKC(rs.getString("TENKC"));
@@ -186,6 +186,7 @@ public class KhuyenMaiRepons implements IkhuyenMairepons {
         }
         return sp;
     }
+
     @Override
     public Boolean existsBymakm(String makm) {
         String sql = "SELECT COUNT(*) FROM KHUYENMAI WHERE MAKM = ?";
@@ -201,6 +202,7 @@ public class KhuyenMaiRepons implements IkhuyenMairepons {
         }
         return false;
     }
+
     public void updateSL(String MaKM, int sl) {
         try (
                 Connection con = Connection.getConnection(); PreparedStatement ps = con.prepareStatement("UPDATE KHUYENMAI SET SOLUONG= ?  WHERE MAKM= ?")) {
@@ -211,15 +213,15 @@ public class KhuyenMaiRepons implements IkhuyenMairepons {
             e.printStackTrace();
         }
     }
-       public void updatetrangThai(String MaKM,int trangthai) {
+
+    public void updatetrangThai(String MaKM, int trangthai) {
         try (
                 Connection con = Connection.getConnection(); PreparedStatement ps = con.prepareStatement("UPDATE KHUYENMAI SET TRANGTHAIKM= ? from KHUYENMAI where MAKM =?")) {
             ps.setInt(1, trangthai);
             ps.setString(2, MaKM);
-            ps.executeUpdate();         
+            ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-}
+    }
