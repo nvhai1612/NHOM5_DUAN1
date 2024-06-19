@@ -1369,19 +1369,13 @@ public class BanHangJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm trong giỏ hàng để sửa số lượng.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-//        int rowSP = tblDanhSachSP.getSelectedRow();
-//        if (rowSP == -1) {
-//            JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm trong danh sách sản phẩm.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-//            return;
-//        }
         int RowMaHD = tblHoaDon.getSelectedRow();
         if (RowMaHD == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một hóa đơn để cập nhật sản phẩm.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         String MaHDCanUpdate = tblHoaDon.getValueAt(RowMaHD, 0).toString();
-        try {
-//            if(){
+//        try {
             String NhapSLNew = JOptionPane.showInputDialog(this, "Nhập số lượng mới:");
 
             if (NhapSLNew != null) {
@@ -1420,11 +1414,10 @@ public class BanHangJFrame extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng cần sửa.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     }
             }
-//            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập số.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(this, "Vui lòng nhập số.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+//            return;
+//        }
 
         LoadTableSanPham();
         LoadHoaDonCho(MaHDCanUpdate);
@@ -1740,7 +1733,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
         KhachHang kh = new KhachHang();
         kh.setMaKH(ma);
         kh.setTenKH(ten);
-        kh.setNgaySinh(ngaySinh.isEmpty() ? null : ngaySinh); 
+          kh.setNgaySinh(ngaySinh.isEmpty() ? null : ngaySinh); 
         kh.setGioiTinh(gioiTinh);
         kh.setSdt(sdt);
         kh.setDiaChi(diaChi);
@@ -1751,44 +1744,34 @@ public class BanHangJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThemKHActionPerformed
 
     private void btnSuaKHActionPerformed2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaKHActionPerformed2
-        int selectedRow = tblKhachHang.getSelectedRow();
+         int selectedRow = tblKhachHang.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một khách hàng để sửa!");
             return; // Thoát ra khỏi phương thức nếu chưa có dòng nào được chọn
         }
-        String ma = txtMaKH.getText();
-        if (ma.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Không để trống mã");
-            return;
+        int check = JOptionPane.showConfirmDialog(this, "Xác nhận sửa!");
+        if (check == JOptionPane.YES_OPTION) {
+            KhachHang kh = new KhachHang();
+        // Lấy thông tin từ giao diện và thiết lập các giá trị cho đối tượng KhachHang
+            kh.setMaKH(txtMaKH.getText());
+            kh.setTenKH(txtTenKH.getText());
+
+            kh.setNgaySinh(txtNgaySinh.getText());
+            kh.setGioiTinh(rdoNam.isSelected() == true ? 1 : 0);
+            kh.setSdt(txtSdt.getText());
+            kh.setDiaChi(taDiaChi.getText());
+
+            service.update(kh);
+            loadTableKhachHang();
+            xoa();
+            JOptionPane.showMessageDialog(this, "Sửa thành công!");
+        }else{
+            JOptionPane.showMessageDialog(this, "Sửa thất bại!");
         }
-        String ten = txtTenKH.getText();
-        if (ten.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Không để trống tên khách hàng");
-            return;
-        }
-        String ngaySinh = txtNgaySinh.getText();
-        int gioiTinh = rdoNam.isSelected() == true ? 1 : 0;
-        String sdt = txtSdt.getText();
-        if (sdt.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Không để trống sdt khách hàng");
-            return;
-        }
-        String diaChi = taDiaChi.getText();
-        KhachHang kh = new KhachHang();
-        kh.setMaKH(ma);
-        kh.setTenKH(ten);
-        kh.setNgaySinh(ngaySinh.isEmpty() ? null : ngaySinh);
-        kh.setGioiTinh(gioiTinh);
-        kh.setSdt(sdt);
-        kh.setDiaChi(diaChi);
-        service.update(kh);
-        loadTableKhachHang();
-        xoa();
-        JOptionPane.showMessageDialog(this, "Sửa thành công");
     }//GEN-LAST:event_btnSuaKHActionPerformed2
 
     private void btnLamMoiLKHActionPerformed2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiLKHActionPerformed2
-        xoa();
+
     }//GEN-LAST:event_btnLamMoiLKHActionPerformed2
 
     private void tblKhachHangMouseClicked2(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhachHangMouseClicked2
