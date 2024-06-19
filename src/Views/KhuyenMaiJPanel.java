@@ -578,6 +578,7 @@ public class KhuyenMaiJPanel extends javax.swing.JPanel {
 
         this.LoadTable();
         lammoi();
+        
     }//GEN-LAST:event_btnaddActionPerformed
 
     private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed

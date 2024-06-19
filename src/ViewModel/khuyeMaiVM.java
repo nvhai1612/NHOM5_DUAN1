@@ -113,5 +113,13 @@ public class khuyeMaiVM {
         return TenKM; // return the name or whatever you want to display in the JComboBox
     }
 
+    @Override
+    public int hashCode() {
+        return SoLuong;
+    }
+
+    
+   
+
     
 }

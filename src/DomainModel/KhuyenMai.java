@@ -111,6 +111,7 @@ public class KhuyenMai {
     public void setSoLuong(int SoLuong) {
         this.SoLuong = SoLuong;
     }
+    
 
     
 }

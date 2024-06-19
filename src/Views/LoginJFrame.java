@@ -92,6 +92,11 @@ public class LoginJFrame extends javax.swing.JFrame {
 
         txtUN.setBackground(new java.awt.Color(222, 231, 227));
         txtUN.setBorder(null);
+        txtUN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUNActionPerformed(evt);
+            }
+        });
 
         btnShowPW.setBackground(new java.awt.Color(222, 231, 227));
         btnShowPW.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/showpass.png"))); // NOI18N
@@ -218,6 +223,10 @@ public class LoginJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Email hoặc mật khẩu không đúng");
         }
     }//GEN-LAST:event_btnDangNhapActionPerformed
+
+    private void txtUNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUNActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUNActionPerformed
 
     /**
      * @param args the command line arguments

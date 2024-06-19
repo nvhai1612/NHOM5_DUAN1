@@ -76,5 +76,10 @@ public class KhuyenMaiService implements IkhuyenMaiSeviec{
     public Boolean existsBymakm(String makm) {
         return respon.existsBymakm(makm);
     }
+     
+    public void soluong(String MA, int sl) {
+        respon.updateSL(MA, sl);
+    }
+
       
 }

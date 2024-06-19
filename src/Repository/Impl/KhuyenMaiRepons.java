@@ -219,5 +219,15 @@ public ArrayList<KhuyenMai> getListHieuLuc() {
         }
         return false;
     }
+       public void updateSL(String MaKM, int sl) {
+        try (
+                Connection con = Connection.getConnection(); PreparedStatement ps = con.prepareStatement("UPDATE KHUYENMAI SET SOLUONG= ?  WHERE MAKM= ?")) {       
+            ps.setString(2, MaKM);
+            ps.setInt(1,sl);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

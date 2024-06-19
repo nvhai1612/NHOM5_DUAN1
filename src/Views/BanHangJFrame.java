@@ -31,9 +31,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -59,7 +61,6 @@ public class BanHangJFrame extends javax.swing.JFrame {
     private KhachHangService khs = new KhachHangService();
     private SPCTJPanel spctjp = new SPCTJPanel();
     KhuyenMaiService khuyenMaiService = new KhuyenMaiService();
-    
 
     CardLayout card;
 
@@ -91,6 +92,57 @@ public class BanHangJFrame extends javax.swing.JFrame {
         LoadTableGioHang();
         loadTableKhachHang();
         spctjp.LoadTableSPCT();
+//        
+    }
+
+//    public void loadKM() {       
+//        cbbKm = (DefaultComboBoxModel) cbbKhuyenMai.getModel();
+//        cbbKm.addAll(khuyenMaiService.getAllKMHieuLuc());
+//        for (int i = 0; i < cbbKm.getSize(); i++) {
+//        }
+//        cbbKhuyenMai.revalidate();
+//        cbbKhuyenMai.repaint();
+//        
+//    }
+//    private boolean isKMLoaded = false;
+//
+//    public void loadKM() {
+//    if (!isKMLoaded) {
+//        // Tiến hành load dữ liệu
+//        cbbKm = (DefaultComboBoxModel) cbbKhuyenMai.getModel();
+//        cbbKm.addAll(khuyenMaiService.getAllKMHieuLuc());
+//        
+//        // Nếu cần, thực hiện các thao tác khác sau khi load dữ liệu
+//        // Ví dụ:
+//         for (int i = 0; i < cbbKm.getSize(); i++) {
+//         }
+//        
+//        // Làm mới combobox
+//        cbbKhuyenMai.revalidate();
+//        cbbKhuyenMai.repaint();
+//        
+//        // Đánh dấu là đã load
+//        isKMLoaded = true;
+//        
+//    }
+    public List<KhuyenMai> filterValidKMs(List<KhuyenMai> khuyenMais) {
+        List<KhuyenMai> validKMs = new ArrayList<>();
+        for (KhuyenMai km : khuyenMais) {
+            if (km.getSoLuong() >= 1) {
+                validKMs.add(km);
+                JOptionPane.showMessageDialog(this, "khuyến mại đã hết số lượng");
+            }
+        }
+        return validKMs;
+    }
+
+    public void loadKM() {
+        cbbKm = (DefaultComboBoxModel) cbbKhuyenMai.getModel();
+        cbbKm.removeAllElements();
+        cbbKm.addElement("Chọn");
+        cbbKm.addAll(khuyenMaiService.getAllKMHieuLuc());
+        for (int i = 0; i < cbbKm.getSize(); i++) {
+        }
     }
 
     public BanHangJFrame(String MaNV) {
@@ -103,6 +155,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
         LoadTableSanPham();
         LoadTableGioHang();
         txtNguoiDung.setText(MaNV);
+
     }
 
     private void LoadTableSanPham() {
@@ -182,9 +235,10 @@ public class BanHangJFrame extends javax.swing.JFrame {
         txtSDTKH.setText("");
         dtmgh = (DefaultTableModel) tblGioHang.getModel();
         dtmgh.setRowCount(0);
+        cbbKhuyenMai.setSelectedIndex(0);
     }
 
-   public void TinhTien() {
+    public void TinhTien() {
         float CanThanhToan = 0;
         float ThanhTien = 0;
         int Tienkhachdua = 0;
@@ -212,6 +266,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
         txtCanThanhToan.setText(String.valueOf(CanThanhToan));
         txtTienKhachDua.setText(String.valueOf(Tienkhachdua));
         txtTienThua.setText(String.valueOf(Tienthua));
+
     }
 
     public void setTenNhanVien(String TenNV) {
@@ -227,7 +282,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
                 kh.getMaKH(),
                 kh.getTenKH(),
                 kh.getNgaySinh(),
-                kh.getGioiTinh() == 1 ? "Nam" : "Nữ" ,
+                kh.getGioiTinh() == 1 ? "Nam" : "Nữ",
                 kh.getSdt(),
                 kh.getDiaChi()
             });
@@ -1276,6 +1331,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
             pnlCards.revalidate();
             LoadTableSanPham();
             LoadTableHoaDon();
+            loadKM();
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnBanHangActionPerformed
@@ -1420,6 +1476,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
 
         hoaDonService.HoaDonCho(MaHD);
         LoadHoaDonCho(MaHD);
+
     }//GEN-LAST:event_tblHoaDonMouseClicked
 
     private void tblDanhSachSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDanhSachSPMouseClicked
@@ -1429,7 +1486,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
     private void txtTimKiemSPCTKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemSPCTKeyReleased
         String keyword = txtTimKiemSPCT.getText().trim();
         if (keyword != null) {
-             model = (DefaultTableModel) tblDanhSachSP.getModel();
+            model = (DefaultTableModel) tblDanhSachSP.getModel();
             model.setRowCount(0);
             ArrayList<SPCT> list = spctrp.serachByMaSpct(keyword);
             for (SPCT spct : list) {
@@ -1552,10 +1609,10 @@ public class BanHangJFrame extends javax.swing.JFrame {
         SessionData.maHD = new Random().nextInt(10000) + "";
         hoaDonRes.add(new HoaDon(SessionData.maHD, 0, new Date()));
         LoadTableHoaDon();
-         cbbKm = (DefaultComboBoxModel) cbbKhuyenMai.getModel();
-        cbbKm.addAll(khuyenMaiService.getAllKMHieuLuc());
-        for (int i = 0; i < cbbKm.getSize(); i++) {
-        }
+//         cbbKm = (DefaultComboBoxModel) cbbKhuyenMai.getModel();
+//        cbbKm.addAll(khuyenMaiService.getAllKMHieuLuc());
+//        for (int i = 0; i < cbbKm.getSize(); i++) {
+//        }
     }//GEN-LAST:event_btnTaoHoaDonActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
@@ -1627,10 +1684,12 @@ public class BanHangJFrame extends javax.swing.JFrame {
         hd.setDonGiaSauGiam(Float.parseFloat(txtCanThanhToan.getText()));
         int sl = ((khuyeMaiVM) cbbKhuyenMai.getSelectedItem()).getSoLuong() - 1;
         String makm = ((khuyeMaiVM) cbbKhuyenMai.getSelectedItem()).getMaKM();
+        khuyenMaiService.soluong(makm, sl);
         hoaDonService.updateTrangThaiHoaDon(MaHD, TrangThaiHD, Float.valueOf(TongTien), MaHD);
         LoadTableHoaDon();
         reset();
         JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
+        loadKM();
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void btnThemKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKHActionPerformed
@@ -1661,7 +1720,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
         KhachHang kh = new KhachHang();
         kh.setMaKH(ma);
         kh.setTenKH(ten);
-          kh.setNgaySinh(ngaySinh.isEmpty() ? null : ngaySinh); 
+        kh.setNgaySinh(ngaySinh.isEmpty() ? null : ngaySinh);
         kh.setGioiTinh(gioiTinh);
         kh.setSdt(sdt);
         kh.setDiaChi(diaChi);
@@ -1672,7 +1731,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThemKHActionPerformed
 
     private void btnSuaKHActionPerformed2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaKHActionPerformed2
-         int selectedRow = tblKhachHang.getSelectedRow();
+        int selectedRow = tblKhachHang.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một khách hàng để sửa!");
             return; // Thoát ra khỏi phương thức nếu chưa có dòng nào được chọn
@@ -1680,7 +1739,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
         int check = JOptionPane.showConfirmDialog(this, "Xác nhận sửa!");
         if (check == JOptionPane.YES_OPTION) {
             KhachHang kh = new KhachHang();
-        // Lấy thông tin từ giao diện và thiết lập các giá trị cho đối tượng KhachHang
+            // Lấy thông tin từ giao diện và thiết lập các giá trị cho đối tượng KhachHang
             kh.setMaKH(txtMaKH.getText());
             kh.setTenKH(txtTenKH.getText());
 
@@ -1693,7 +1752,7 @@ public class BanHangJFrame extends javax.swing.JFrame {
             loadTableKhachHang();
             xoa();
             JOptionPane.showMessageDialog(this, "Sửa thành công!");
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Sửa thất bại!");
         }
     }//GEN-LAST:event_btnSuaKHActionPerformed2
@@ -1718,14 +1777,14 @@ public class BanHangJFrame extends javax.swing.JFrame {
         txtMaKH.setText(MaKH);
         txtTenKH2.setText(TenKH);
         txtNgaySinh.setText(NgaySinh);
-        if(GioiTinh.equalsIgnoreCase("Nam")){
+        if (GioiTinh.equalsIgnoreCase("Nam")) {
             rdoNam.setSelected(true);
         } else {
             rdoNu.setSelected(true);
         }
         txtSdt.setText(SDT);
         taDiaChi.setText(DiaChi);
-        
+
         showHoaDonHistory(MaKH);
     }//GEN-LAST:event_tblKhachHangMouseClicked2
 
@@ -1768,7 +1827,10 @@ public class BanHangJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_cbbChonKH2ActionPerformed
 
     private void cbbKhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbKhuyenMaiActionPerformed
-       TinhTien();
+        cbbKhuyenMai.revalidate();
+        cbbKhuyenMai.repaint();
+
+        TinhTien();
     }//GEN-LAST:event_cbbKhuyenMaiActionPerformed
     public Boolean UpdateLaiGioHang(String MaSP, String TenSP, int SoLuong, float DonGia, String mahd) {
         if (tblGioHang.getRowCount() == 0) {
@@ -1921,8 +1983,6 @@ public class BanHangJFrame extends javax.swing.JFrame {
             tongtien += hoaDon.getTongTien();
         }
         txtTongTien.setText(String.valueOf(tongtien));
-       
-      
 
     }
 
