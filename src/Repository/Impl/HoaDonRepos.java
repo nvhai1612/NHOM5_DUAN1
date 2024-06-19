@@ -258,7 +258,7 @@ public class HoaDonRepos implements IHoaDonRepos {
         }
     }
 
-    public void UpdateSPGH(String MaHD, String MaSPCT, Integer SL, Integer SLTon) {
+    public void UpdateSPGH(String MaHD, String MaSPCT, Integer SL, Integer SLTon, Integer SLGHNEW) {
         String mahdct = findMaaHDCtBySpct(MaSPCT, MaHD);
         try (Connection con = connection.getConnection(); PreparedStatement ps = con.prepareStatement("update hoadonct set soluong = ? where mahdct = ?")) {
 
@@ -267,7 +267,7 @@ public class HoaDonRepos implements IHoaDonRepos {
 
             ps.executeUpdate();
 
-            UpdateSP(MaSPCT, SLTon - SL);
+            UpdateSP(MaSPCT, SLTon + SLGHNEW - SL);
         } catch (Exception e) {
             e.printStackTrace();
         }

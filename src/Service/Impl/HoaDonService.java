@@ -66,8 +66,8 @@ public class HoaDonService implements IHoaDonService{
         return hoadonrepos.HoaDonCho(MaHD);
     }
     
-    public void UpdateSPGH(String MaHD, String MaSPCT, Integer SL, Integer SLTon){
-        hoadonrepos.UpdateSPGH(MaHD, MaSPCT, SL, SLTon);
+    public void UpdateSPGH(String MaHD, String MaSPCT, Integer SL, Integer SLTon, Integer SLGHNEW){
+        hoadonrepos.UpdateSPGH(MaHD, MaSPCT, SL, SLTon, SLGHNEW);
     }
     
     public void DeleteSPGH(String MaHD, String MaSPCT, Integer SL, Integer SLTon){

@@ -4,18 +4,19 @@
  */
 package Views;
 
-import DomainModel.KhachHang;
 import DomainModel.SPCT;
 import Repository.Impl.HDCTRepos;
 import Service.Impl.HoaDonService;
 import ViewModel.HoaDonDTO;
-import ViewModel.HoaDonVM;
-import ViewModel.KhachHangVM;
 import ViewModel.SPCTVM;
+import Views.PDF.PDFGenerator;
+import com.itextpdf.text.DocumentException;
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -91,6 +92,7 @@ public class LichSuJPanel extends javax.swing.JPanel {
         String trangThaiStr = (trangThai == 1) ? "Đã thanh toán" : "Hủy";
         txtTrangThai.setText(trangThaiStr);
         txtNgayThanhToan.setText(kh.getNgayTao());
+        txtLyDoHuy.setText(kh.getLyDoHuy());
     }
 
     /**
@@ -131,6 +133,7 @@ public class LichSuJPanel extends javax.swing.JPanel {
         cboTrangThai = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         txtLyDoHuy = new javax.swing.JLabel();
+        btnXuatHD = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(222, 231, 227));
         jPanel1.setMaximumSize(new java.awt.Dimension(825, 520));
@@ -286,6 +289,13 @@ public class LichSuJPanel extends javax.swing.JPanel {
 
         txtLyDoHuy.setText("-");
 
+        btnXuatHD.setText("xuất hóa đơn");
+        btnXuatHD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXuatHDActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -331,7 +341,10 @@ public class LichSuJPanel extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNgayThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtTrangThai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtLyDoHuy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(txtLyDoHuy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnXuatHD)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -384,7 +397,9 @@ public class LichSuJPanel extends javax.swing.JPanel {
                             .addComponent(jLabel9)
                             .addComponent(txtLyDoHuy))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnXuatHD))
                 .addGap(32, 32, 32))
         );
 
@@ -429,8 +444,36 @@ public class LichSuJPanel extends javax.swing.JPanel {
             
     }//GEN-LAST:event_cboTrangThaiActionPerformed
 
+    private void btnXuatHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatHDActionPerformed
+        int row = tblHoaDon.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một hóa đơn để xuất.");
+            return;
+        }
+
+        String MaHD = tblHoaDon.getValueAt(row, 0).toString();
+        HoaDonDTO hoaDon = hDCTCTRepos.getHoaDonByMa(MaHD);
+        ArrayList<SPCT> products = hoaDonService.HoaDonCho(MaHD);
+
+        PDFGenerator pdfGenerator = new PDFGenerator();
+        String filePath = "HoaDon_" + MaHD + ".pdf";
+        
+        
+       try {
+           pdfGenerator.exportInvoiceToPDF(filePath, hoaDon, products);
+       } catch (IOException ex) {
+           Logger.getLogger(LichSuJPanel.class.getName()).log(Level.SEVERE, null, ex);
+       } catch (DocumentException ex) {
+           Logger.getLogger(LichSuJPanel.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        
+        JOptionPane.showMessageDialog(this, "Hóa đơn đã được xuất ra file: " + filePath);
+
+    }//GEN-LAST:event_btnXuatHDActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnXuatHD;
     private javax.swing.JComboBox<String> cboTrangThai;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

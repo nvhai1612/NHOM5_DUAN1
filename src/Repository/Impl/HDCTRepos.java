@@ -32,19 +32,22 @@ public class HDCTRepos implements IHDCTRepos {
         ArrayList<HoaDonDTO> ListHDDTO = new ArrayList<>();
 
         try (Connection con = connection.getConnection();
-                PreparedStatement ps = con.prepareStatement("SELECT MAHD, TENNV, TENKH, kh.SDT, kh.DIACHI, TRANGTHAIHD,hd.NGAYTAO,TONGTIEN FROM HOADON hd  LEFT JOIN KHACHHANG kh ON kh.ID = hd.IDKH LEFT JOIN NHANVIEN nv ON nv.ID = hd.IDNV ")) {
+                PreparedStatement ps = con.prepareStatement("SELECT MAHD, TENNV, TENKH, kh.SDT, kh.DIACHI, TRANGTHAIHD,hd.NGAYTAO,hd.LYDOHUY, TONGTIEN FROM HOADON hd  LEFT JOIN KHACHHANG kh ON kh.ID = hd.IDKH LEFT JOIN NHANVIEN nv ON nv.ID = hd.IDNV ")) {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 HoaDonDTO hddto = new HoaDonDTO();
-                hddto.setMaHD(rs.getString(1));
-                hddto.setTenNV(rs.getString(2));
-                hddto.setTenKH(rs.getString(3));
-                hddto.setSDT(rs.getString(4));
-                hddto.setDiachi(rs.getString(5));
-                hddto.setTrangThai(rs.getInt(6));
-                hddto.setNgayTao(rs.getString(7));  
-                hddto.setDonGia(rs.getInt(8));
+                hddto.setMaHD(rs.getString("MAHD"));
+                hddto.setTenNV(rs.getString("TENNV"));
+                hddto.setTenKH(rs.getString("TENKH"));
+                hddto.setSDT(rs.getString("SDT"));
+                hddto.setDiachi(rs.getString("DIACHI"));
+                hddto.setTrangThai(rs.getInt("TRANGTHAIHD"));
+                hddto.setNgayTao(rs.getString("NGAYTAO"));
+                hddto.setLyDoHuy(rs.getString("LYDOHUY"));
+                hddto.setDonGia(rs.getFloat("TONGTIEN"));
+                
+             
                 ListHDDTO.add(hddto);
             }
 

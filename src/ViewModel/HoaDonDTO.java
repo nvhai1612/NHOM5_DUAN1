@@ -9,14 +9,14 @@ package ViewModel;
  * @author Admin
  */
 public class HoaDonDTO {
-    private String MaHD, TenNV, TenKH, MaSP, TenSP,Diachi,SDT,ngayTao;
+    private String MaHD, TenNV, TenKH, MaSP, TenSP,Diachi,SDT,ngayTao,LyDoHuy;
     private int TrangThai, SoLuong;
     private float DonGia;
 
     public HoaDonDTO() {
     }
 
-    public HoaDonDTO(String MaHD, String TenNV, String TenKH, String MaSP, String TenSP, String Diachi, String SDT, String ngayTao, int TrangThai, int SoLuong, float DonGia) {
+    public HoaDonDTO(String MaHD, String TenNV, String TenKH, String MaSP, String TenSP, String Diachi, String SDT, String ngayTao, String LyDoHuy, int TrangThai, int SoLuong, float DonGia) {
         this.MaHD = MaHD;
         this.TenNV = TenNV;
         this.TenKH = TenKH;
@@ -25,6 +25,7 @@ public class HoaDonDTO {
         this.Diachi = Diachi;
         this.SDT = SDT;
         this.ngayTao = ngayTao;
+        this.LyDoHuy = LyDoHuy;
         this.TrangThai = TrangThai;
         this.SoLuong = SoLuong;
         this.DonGia = DonGia;
@@ -94,6 +95,14 @@ public class HoaDonDTO {
         this.ngayTao = ngayTao;
     }
 
+    public String getLyDoHuy() {
+        return LyDoHuy;
+    }
+
+    public void setLyDoHuy(String LyDoHuy) {
+        this.LyDoHuy = LyDoHuy;
+    }
+
     public int getTrangThai() {
         return TrangThai;
     }
@@ -120,6 +129,8 @@ public class HoaDonDTO {
 
     @Override
     public String toString() {
-        return "hoadonDTO{" + "MaHD=" + MaHD + ", TenNV=" + TenNV + ", TenKH=" + TenKH + ", MaSP=" + MaSP + ", TenSP=" + TenSP + ", TrangThai=" + TrangThai + ", SoLuong=" + SoLuong + ", DonGia=" + DonGia + '}';
+        return "HoaDonDTO{" + "MaHD=" + MaHD + ", TenNV=" + TenNV + ", TenKH=" + TenKH + ", MaSP=" + MaSP + ", TenSP=" + TenSP + ", Diachi=" + Diachi + ", SDT=" + SDT + ", ngayTao=" + ngayTao + ", LyDoHuy=" + LyDoHuy + ", TrangThai=" + TrangThai + ", SoLuong=" + SoLuong + ", DonGia=" + DonGia + '}';
     }
+
+    
 }

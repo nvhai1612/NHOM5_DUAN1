@@ -101,6 +101,10 @@
                               <Component id="txtLyDoHuy" max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="btnXuatHD" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -169,7 +173,10 @@
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnXuatHD" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -432,9 +439,6 @@
               </Border>
             </Property>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Lo&#x323;c"/>
-          </AccessibilityProperties>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -485,6 +489,14 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="-"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnXuatHD">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="xu&#xe2;&#x301;t ho&#x301;a &#x111;&#x1a1;n"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXuatHDActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
